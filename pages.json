@@ -1,0 +1,47 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#a6b5d5",
+		"selectedColor": "#333333",
+		"borderStyle": "white",
+		"list": [{
+			"selectedIconPath": "",
+			"iconPath": "",
+			"pagePath": "",
+			"text": "首页"
+		}, {
+			"selectedIconPath": "",
+			"iconPath": "",
+			"pagePath": "",
+			"text": "排尿日记"
+		}, {
+			"selectedIconPath": "",
+			"iconPath": "",
+			"pagePath": "",
+			"text": "在线咨询"
+		}, {
+			"selectedIconPath": "",
+			"iconPath": "",
+			"pagePath": "",
+			"text": "教育视频"
+		}, {
+			"selectedIconPath": "",
+			"iconPath": "",
+			"pagePath": "",
+			"text": "个人中心"
+		}]
+	}
+}
