@@ -3,7 +3,37 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "神经源性膀胱管理"
+			}
+		},
+		{
+			"path": "pages/index/risk/risk",
+			"style":{
+				"navigationBarTitleText": "风险评估"
+			}
+		},
+		{
+			"path": "pages/diary/diary",
+			"style": {
+				"navigationBarTitleText": "排尿日记"
+			}
+		},
+		{
+			"path": "pages/consultant/consultant",
+			"style": {
+				"navigationBarTitleText": "在线咨询"
+			}
+		}, 
+		{
+			"path": "pages/video/video",
+			"style": {
+				"navigationBarTitleText": "教育视频"
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "个人中心"
 			}
 		}
 	],
@@ -16,31 +46,31 @@
 	"tabBar": {
 		"color": "#a6b5d5",
 		"selectedColor": "#333333",
-		"borderStyle": "white",
+		"borderStyle": "black",
 		"list": [{
-			"selectedIconPath": "",
-			"iconPath": "",
-			"pagePath": "",
+			"selectedIconPath": "./static/矢量智能对象.png",
+			"iconPath": "./static/矢量智能对象.png",
+			"pagePath": "pages/index/index",
 			"text": "首页"
 		}, {
-			"selectedIconPath": "",
-			"iconPath": "",
-			"pagePath": "",
+			"selectedIconPath": "./static/矢量智能对象.png",
+			"iconPath": "./static/矢量智能对象.png",
+			"pagePath": "pages/diary/diary",
 			"text": "排尿日记"
 		}, {
-			"selectedIconPath": "",
-			"iconPath": "",
-			"pagePath": "",
+			"selectedIconPath": "./static/矢量智能对象.png",
+			"iconPath": "./static/矢量智能对象.png",
+			"pagePath": "pages/consultant/consultant",
 			"text": "在线咨询"
 		}, {
-			"selectedIconPath": "",
-			"iconPath": "",
-			"pagePath": "",
+			"selectedIconPath": "./static/矢量智能对象.png",
+			"iconPath": "./static/矢量智能对象.png",
+			"pagePath": "pages/video/video",
 			"text": "教育视频"
 		}, {
-			"selectedIconPath": "",
-			"iconPath": "",
-			"pagePath": "",
+			"selectedIconPath": "./static/矢量智能对象.png",
+			"iconPath": "./static/矢量智能对象.png",
+			"pagePath": "pages/user/user",
 			"text": "个人中心"
 		}]
 	}

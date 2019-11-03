@@ -7492,9 +7492,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!*********************************************!*\
-  !*** F:/谭鑫锋/miniProgram/uni-app/pages.json ***!
-  \*********************************************/
+/*!*********************************************************!*\
+  !*** C:/Users/Thinkpad/Desktop/ShenJingYuan/pages.json ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8399,20 +8399,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 
 /***/ }),
 /* 7 */
-/*!**************************************************************!*\
-  !*** F:/谭鑫锋/miniProgram/uni-app/pages.json?{"type":"style"} ***!
-  \**************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/Thinkpad/Desktop/ShenJingYuan/pages.json?{"type":"style"} ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "uni-app", "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "神经源性膀胱管理", "usingComponents": {} }, "pages/index/risk/risk": { "navigationBarTitleText": "风险评估", "usingComponents": {} }, "pages/diary/diary": { "navigationBarTitleText": "排尿日记", "usingComponents": {} }, "pages/consultant/consultant": { "navigationBarTitleText": "在线咨询", "usingComponents": {} }, "pages/video/video": { "navigationBarTitleText": "教育视频", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "个人中心", "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!*************************************************************!*\
-  !*** F:/谭鑫锋/miniProgram/uni-app/pages.json?{"type":"stat"} ***!
-  \*************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/Thinkpad/Desktop/ShenJingYuan/pages.json?{"type":"stat"} ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
