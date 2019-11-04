@@ -8,6 +8,7 @@
 					<text class='test'>测试评估风险值</text>
 				</view>
 				<view class="canvasView">
+					<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts"></canvas>
 				</view>
 			</view>
 		</view>
@@ -15,48 +16,18 @@
 </template>
 
 <script>
+	import uCharts from '../../../public/js/u-charts.js';
 	export default {
 		data() {
 			return {
-				updateStatus: false,
-				line: {
-					legend: {
-						data: ['邮件营销']
-					},
-					xAxis: {
-						type: 'category',
-						data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-					},
-					yAxis: {
-						type: 'value',
-						data: []
-					},
-					dataZoom: [{
-						type: 'slider',
-						start: 30,
-						end: 100,
-						zoomLock: false,
-					}],
-					grid: {
-						left: 40,
-						right: 40,
-						bottom: 20,
-						top: 40,
-						containLabel: true
-					},
-					series: [{
-						data: [],
-						data: [820, 932, 901, 934, 1290, 1330, 1320],
-						type: 'line',
-						color: ['#5eb4e2'], //折线条的颜色
-					}]
-				}
+				cWidth: '',
+				cHeight: '',
+				pixelRatio: 1,
+				serverData: ''
 			}
 		},
-		methods: {
-		}, 
-		components: {
-		}
+	methods: {},
+		components: {}
 	}
 </script>
 

@@ -122,64 +122,42 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {var _ref;
-    return {
-      updateStatus: false,
-      line: {
-        legend: {
-          data: ['邮件营销'] },
-
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
-
-        yAxis: {
-          type: 'value',
-          data: [] },
-
-        dataZoom: [{
-          type: 'slider',
-          start: 30,
-          end: 100,
-          zoomLock: false }],
-
-        grid: {
-          left: 40,
-          right: 40,
-          bottom: 20,
-          top: 40,
-          containLabel: true },
-
-        series: [(_ref = {
-          data: [] }, _defineProperty(_ref, "data",
-        [820, 932, 901, 934, 1290, 1330, 1320]), _defineProperty(_ref, "type",
-        'line'), _defineProperty(_ref, "color",
-        ['#5eb4e2']), _ref)] } };
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
-  },
-  methods: {},
 
-  components: {} };exports.default = _default;
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uCharts = _interopRequireDefault(__webpack_require__(/*! ../../../public/js/u-charts.js */ 85));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { cWidth: '', cHeight: '', pixelRatio: 1, serverData: '' };}, methods: {}, components: {} };exports.default = _default;
 
 /***/ }),
 
