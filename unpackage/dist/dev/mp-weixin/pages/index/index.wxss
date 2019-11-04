@@ -17,6 +17,7 @@
 	-webkit-justify-content: center;
 	    -ms-flex-pack: center;
 	        justify-content: center;
+	height: 100vh;
 	padding: 10px;
 	background-color: #f9fafd;
 	-webkit-box-shadow: inset 0px -2px 5px 0px rgba(168, 168, 168, 0.46);
@@ -92,7 +93,7 @@
 }
 .tabBar .flex text {
 	display: block;
-	font-size: 32rpx;
+	font-size: 34rpx;
 }
 .tabBar .flex .en-text {
 	position: relative;
@@ -101,7 +102,6 @@
 .en-text::after {
 	content: "";
 	position: absolute;
-	display: inline-block;
 	right: 0;
 	bottom: 0;
 	width: 30rpx;

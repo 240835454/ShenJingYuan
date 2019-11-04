@@ -1,0 +1,77 @@
+.page {
+  background-color: #f9fafd;
+}
+.content {
+  padding: 20rpx;
+  font-family: PingFang-SC-Medium;
+}
+.content .box {
+  padding: 40rpx 20rpx;
+  background-color: #fff;
+  text-align: center;
+}
+.content .box .title {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 28rpx;
+  color: #80899c;
+}
+.content .box .title .standard {
+  display: block;
+  position: relative;
+}
+.content .box .title .standard::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -50rpx;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  width: 20rpx;
+  height: 20rpx;
+  border: 6rpx solid #a69eff;
+  border-radius: 50%;
+}
+.content .box .title .test {
+  display: block;
+  position: relative;
+}
+.content .box .title .test::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -50rpx;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  width: 20rpx;
+  height: 20rpx;
+  border: 6rpx solid #a69eff;
+  border-radius: 50%;
+}
+.content .box .title .test::after {
+  border-color: #a6b5d5;
+}
+.ec-canvas {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.canvasView {
+  width: 700rpx;
+  height: 500rpx;
+}
+

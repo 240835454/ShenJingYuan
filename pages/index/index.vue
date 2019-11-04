@@ -37,7 +37,7 @@
 					<image src="../../static/图层22.png" mode="aspectFill"></image>
 					<view class="text-box">
 						<text>在线评测</text>
-						<text class='en-text'>The online evaluation 123</text>
+						<text class='en-text'>The online evaluation</text>
 					</view> 
 				</view>
 			</view>
@@ -74,6 +74,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		height: 100vh;
 		padding: 10px;
 		background-color: #f9fafd;
 		box-shadow: inset 0px -2px 5px 0px rgba(168, 168, 168, 0.46);
@@ -141,7 +142,7 @@
 
 	.tabBar .flex text {
 		display: block;
-		font-size: 32rpx;
+		font-size: 34rpx;
 	}
 
 	.tabBar .flex .en-text {
@@ -152,7 +153,6 @@
 	.en-text::after {
 		content: "";
 		position: absolute;
-		display: inline-block;
 		right: 0;
 		bottom: 0;
 		width: 30rpx;

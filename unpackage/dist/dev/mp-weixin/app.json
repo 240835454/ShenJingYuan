@@ -2,6 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/index/risk/risk",
+    "pages/index/risk/evaluate",
+    "pages/index/risk/report",
+    "pages/index/risk/historyRecord",
     "pages/diary/diary",
     "pages/consultant/consultant",
     "pages/video/video",
@@ -20,37 +23,36 @@
     "borderStyle": "black",
     "list": [
       {
-        "selectedIconPath": "./static/矢量智能对象.png",
-        "iconPath": "./static/矢量智能对象.png",
+        "selectedIconPath": "./static/index-active.png",
+        "iconPath": "./static/index.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "selectedIconPath": "./static/矢量智能对象.png",
-        "iconPath": "./static/矢量智能对象.png",
+        "selectedIconPath": "./static/diary-active.png",
+        "iconPath": "./static/diary.png",
         "pagePath": "pages/diary/diary",
         "text": "排尿日记"
       },
       {
-        "selectedIconPath": "./static/矢量智能对象.png",
-        "iconPath": "./static/矢量智能对象.png",
+        "selectedIconPath": "./static/consultant-active.png",
+        "iconPath": "./static/consultant.png",
         "pagePath": "pages/consultant/consultant",
         "text": "在线咨询"
       },
       {
-        "selectedIconPath": "./static/矢量智能对象.png",
-        "iconPath": "./static/矢量智能对象.png",
+        "selectedIconPath": "./static/video-active.png",
+        "iconPath": "./static/video.png",
         "pagePath": "pages/video/video",
         "text": "教育视频"
       },
       {
-        "selectedIconPath": "./static/矢量智能对象.png",
-        "iconPath": "./static/矢量智能对象.png",
+        "selectedIconPath": "./static/user-active.png",
+        "iconPath": "./static/user.png",
         "pagePath": "pages/user/user",
         "text": "个人中心"
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap56.json"
+  "usingComponents": {}
 }

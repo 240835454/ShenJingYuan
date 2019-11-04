@@ -6,10 +6,32 @@
 				"navigationBarTitleText": "神经源性膀胱管理"
 			}
 		},
+		// 首页-风险评估
 		{
 			"path": "pages/index/risk/risk",
 			"style":{
 				"navigationBarTitleText": "风险评估"
+			}
+		},
+		// 首页-风险评估-测试评估
+		{
+			"path": "pages/index/risk/evaluate",
+			"style":{
+				"navigationBarTitleText": "测试评估"
+			}
+		},
+		// 首页-风险评估-查看评估风险报告
+		{
+			"path": "pages/index/risk/report",
+			"style":{
+				"navigationBarTitleText": "风险评估报告"
+			}
+		},
+		// 首页-风险评估-查看历史评估记录 
+		{
+			"path": "pages/index/risk/historyRecord",
+			"style":{
+				"navigationBarTitleText": "风险评估记录"
 			}
 		},
 		{
@@ -48,28 +70,28 @@
 		"selectedColor": "#333333",
 		"borderStyle": "black",
 		"list": [{
-			"selectedIconPath": "./static/矢量智能对象.png",
-			"iconPath": "./static/矢量智能对象.png",
+			"selectedIconPath": "./static/index-active.png",
+			"iconPath": "./static/index.png",
 			"pagePath": "pages/index/index",
 			"text": "首页"
 		}, {
-			"selectedIconPath": "./static/矢量智能对象.png",
-			"iconPath": "./static/矢量智能对象.png",
+			"selectedIconPath": "./static/diary-active.png",
+			"iconPath": "./static/diary.png",
 			"pagePath": "pages/diary/diary",
 			"text": "排尿日记"
 		}, {
-			"selectedIconPath": "./static/矢量智能对象.png",
-			"iconPath": "./static/矢量智能对象.png",
+			"selectedIconPath": "./static/consultant-active.png",
+			"iconPath": "./static/consultant.png",
 			"pagePath": "pages/consultant/consultant",
 			"text": "在线咨询"
 		}, {
-			"selectedIconPath": "./static/矢量智能对象.png",
-			"iconPath": "./static/矢量智能对象.png",
+			"selectedIconPath": "./static/video-active.png",
+			"iconPath": "./static/video.png",
 			"pagePath": "pages/video/video",
 			"text": "教育视频"
 		}, {
-			"selectedIconPath": "./static/矢量智能对象.png",
-			"iconPath": "./static/矢量智能对象.png",
+			"selectedIconPath": "./static/user-active.png",
+			"iconPath": "./static/user.png",
 			"pagePath": "pages/user/user",
 			"text": "个人中心"
 		}]
