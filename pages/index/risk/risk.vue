@@ -25,7 +25,7 @@
 			<template v-for='(item,index) in infoList'>
 				<view class="info-item" :key='index'>
 					<text class='name'>
-						{{item.name}}
+						{{item.name}} 
 					</text>
 					<text class='value'>
 						{{item.value}}

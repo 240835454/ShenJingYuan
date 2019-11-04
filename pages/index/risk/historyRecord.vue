@@ -7,8 +7,8 @@
 					<text class='standard'>评估风险标准值</text>
 					<text class='test'>测试评估风险值</text>
 				</view>
-				<view class="canvasView">
-					<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts"></canvas>
+				<view class="qiun-charts">
+					<canvas canvas-id="canvasArea" id="canvasArea" class="charts" @touchstart="touchArea"></canvas>
 				</view>
 			</view>
 		</view>
@@ -17,17 +17,92 @@
 
 <script>
 	import uCharts from '../../../public/js/u-charts.js';
+	var _self;
+	var canvaArea = null;
+
 	export default {
 		data() {
 			return {
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1,
-				serverData: ''
 			}
 		},
-	methods: {},
-		components: {}
+		onLoad() {
+			_self = this;
+			this.cWidth = uni.upx2px(750);
+			this.cHeight = uni.upx2px(500);
+			this.getServerData();
+		},
+		methods: {
+			getServerData() {
+				uni.request({
+					url: 'https://www.ucharts.cn/data.json',
+					data: {},
+					success: function(res) {
+						console.log(res.data.data)
+						let Area = {
+							categories: [],
+							series: []
+						};
+						//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
+						Area.categories = res.data.data.Area.categories;
+						Area.series = res.data.data.Area.series;
+						_self.showArea("canvasArea", Area);
+					},
+					fail: () => {
+						_self.tips = "网络错误，小程序端请检查合法域名";
+					},
+				});
+			},
+			showArea(canvasId, chartData) {
+				canvaArea = new uCharts({
+					$this: _self,
+					canvasId: canvasId,
+					type: 'area',
+					fontSize: 11,
+					legend: true,
+					dataLabel: false,
+					dataPointShape: true,
+					background: '#FFFFFF',
+					pixelRatio: _self.pixelRatio,
+					categories: chartData.categories,
+					series: chartData.series,
+					animation: true,
+					xAxis: {
+						type: 'grid',
+						gridColor: '#CCCCCC',
+						gridType: 'dash',
+						dashLength: 8
+					},
+					yAxis: {
+						gridType: 'dash',
+						gridColor: '#CCCCCC',
+						dashLength: 8,
+						splitNumber: 5,
+						min: 10,
+						max: 180,
+					},
+					width: _self.cWidth * _self.pixelRatio,
+					height: _self.cHeight * _self.pixelRatio,
+					extra: {
+						area: {
+							type: 'straight',
+							opacity: 0.2,
+							addLine: true,
+							width: 2
+						}
+					}
+				});
+			},
+			touchArea(e) {
+				canvaArea.showToolTip(e, {
+					format: function(item, category) {
+						return category + ' ' + item.name + ':' + item.data
+					}
+				});
+			}
+		}
 	}
 </script>
 
@@ -79,14 +154,15 @@
 		}
 	}
 
-	.ec-canvas {
-		display: flex;
-		height: 100%;
-		flex: 1;
+	.qiun-charts {
+		width: 650rpx;
+		height: 500rpx;
+		background-color: #FFFFFF;
 	}
 
-	.canvasView {
-		width: 700upx;
-		height: 500upx;
+	.charts {
+		width: 650rpx;
+		height: 500rpx;
+		background-color: #FFFFFF;
 	}
 </style>
