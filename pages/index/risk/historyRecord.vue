@@ -29,7 +29,7 @@
 	methods: {},
 		components: {}
 	}
-</script>
+</script> 
 
 <style lang='less'>
 	.page {
