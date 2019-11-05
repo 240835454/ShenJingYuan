@@ -196,6 +196,16 @@ var _default =
       uni.navigateTo({
         url: 'risk/risk' });
 
+    },
+    enterHealth: function enterHealth() {
+      uni.navigateTo({
+        url: 'health/health' });
+
+    },
+    enterBladder: function enterBladder() {
+      uni.navigateTo({
+        url: 'bladder/bladder' });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

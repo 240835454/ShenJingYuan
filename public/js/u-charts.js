@@ -1689,7 +1689,8 @@ function drawPointShape(points, color, shape, context, opts) {
 	if(opts.dataPointShapeType == 'hollow'){
 		context.setStrokeStyle(color);
 		context.setFillStyle(opts.background);
-		context.setLineWidth(2 * opts.pixelRatio);
+		// context.setLineWidth(2 * opts.pixelRatio);
+		context.setLineWidth(3 * opts.pixelRatio);
 	}else{
 		context.setStrokeStyle("#ffffff");
 		context.setFillStyle(color);
@@ -1708,8 +1709,10 @@ function drawPointShape(points, color, shape, context, opts) {
   } else if (shape === 'circle') {
     points.forEach(function(item, index) {
       if (item !== null) {
-        context.moveTo(item.x + 2.5 * opts.pixelRatio, item.y);
-        context.arc(item.x, item.y, 3 * opts.pixelRatio, 0, 2 * Math.PI, false);
+        // context.moveTo(item.x + 2.5 * opts.pixelRatio, item.y);
+        // context.arc(item.x, item.y, 3 * opts.pixelRatio, 0, 2 * Math.PI, false);  //圆点大小
+		context.moveTo(item.x + 5.5 * opts.pixelRatio, item.y);
+		context.arc(item.x, item.y, 7 * opts.pixelRatio, 0, 2 * Math.PI, false);
       }
     });
   } else if (shape === 'rect') {

@@ -34,6 +34,34 @@
 				"navigationBarTitleText": "风险评估记录"
 			}
 		},
+		// 首页-健康知识
+		{
+			"path": "pages/index/health/health",
+			"style":{
+				"navigationBarTitleText": "健康知识"
+			}
+		},
+		// 首页-健康知识-文章详情
+		{
+			"path": "pages/index/health/article",
+			"style":{
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		// 首页-健康知识-视频详情
+		{
+			"path": "pages/index/health/video",
+			"style":{
+				"navigationBarTitleText": "视频详情"
+			}
+		},
+		// 首页-膀胱管理
+		{
+			"path": "pages/index/bladder/bladder",
+			"style":{
+				"navigationBarTitleText": "膀胱管理"
+			}
+		},
 		{
 			"path": "pages/diary/diary",
 			"style": {

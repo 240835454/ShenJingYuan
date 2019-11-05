@@ -17,7 +17,7 @@
 						<text class='en-text'>The risk assessment</text>
 					</view>
 				</view>
-				<view class="item">
+				<view class="item" @click='enterHealth'>
 					<image src="../../static/图层20.png" mode="aspectFill"></image>
 					<view class="text-box">
 						<text>健康知识</text>
@@ -25,9 +25,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="flex">
-				<view class="item">
-					<image src="../../static/图层19.png" mode="aspectFill"></image>
+			<view class="flex"> 
+				<view class="item" @click='enterBladder'>
+					<image src="../../static/图层19.png" mode="widthFix"></image>
 					<view class="text-box">
 						<text>膀胱管理</text>
 						<text class='en-text'>Bladder management</text>
@@ -56,12 +56,22 @@
 					'http://img2.imgtn.bdimg.com/it/u=3659188243,1562659949&fm=26&gp=0.jpg',
 				],
 			}
-		},
+		},  
 		onLoad() {},
 		methods: {
 			enterRisk(){
 				uni.navigateTo({
 					url:'risk/risk'
+				})
+			},
+			enterHealth(){
+				uni.navigateTo({
+					url: 'health/health'
+				})
+			},
+			enterBladder(){
+				uni.navigateTo({
+					url: 'bladder/bladder'
 				})
 			}
 		}
@@ -69,15 +79,18 @@
 </script>
 
 <style>
+	page{
+		height: 100%;
+		background-color: #f9fafd;
+	}
+	
 	.content {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		height: 100vh;
-		padding: 10px;
+		padding: 10px 20rpx 0rpx;
 		background-color: #f9fafd;
-		box-shadow: inset 0px -2px 5px 0px rgba(168, 168, 168, 0.46);
 	}
 
 	.logo {

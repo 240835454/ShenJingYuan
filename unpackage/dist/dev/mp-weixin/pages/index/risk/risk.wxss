@@ -29,7 +29,7 @@
   left: 38%;
   bottom: 15rpx;
   border-bottom: 6rpx solid #a69eff;
-  border-radius: 3px;
+  border-radius: 5rpx;
 }
 .content {
   padding: 10rpx 20rpx 40rpx;

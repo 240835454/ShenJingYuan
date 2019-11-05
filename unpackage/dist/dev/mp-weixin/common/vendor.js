@@ -10199,7 +10199,8 @@ function drawPointShape(points, color, shape, context, opts) {
   if (opts.dataPointShapeType == 'hollow') {
     context.setStrokeStyle(color);
     context.setFillStyle(opts.background);
-    context.setLineWidth(2 * opts.pixelRatio);
+    // context.setLineWidth(2 * opts.pixelRatio);
+    context.setLineWidth(3 * opts.pixelRatio);
   } else {
     context.setStrokeStyle("#ffffff");
     context.setFillStyle(color);
@@ -10218,8 +10219,10 @@ function drawPointShape(points, color, shape, context, opts) {
   } else if (shape === 'circle') {
     points.forEach(function (item, index) {
       if (item !== null) {
-        context.moveTo(item.x + 2.5 * opts.pixelRatio, item.y);
-        context.arc(item.x, item.y, 3 * opts.pixelRatio, 0, 2 * Math.PI, false);
+        // context.moveTo(item.x + 2.5 * opts.pixelRatio, item.y);
+        // context.arc(item.x, item.y, 3 * opts.pixelRatio, 0, 2 * Math.PI, false);  //圆点大小
+        context.moveTo(item.x + 5.5 * opts.pixelRatio, item.y);
+        context.arc(item.x, item.y, 7 * opts.pixelRatio, 0, 2 * Math.PI, false);
       }
     });
   } else if (shape === 'rect') {
@@ -14163,7 +14166,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "神经源性膀胱管理" }, "pages/index/risk/risk": { "navigationBarTitleText": "风险评估" }, "pages/index/risk/evaluate": { "navigationBarTitleText": "测试评估" }, "pages/index/risk/report": { "navigationBarTitleText": "风险评估报告" }, "pages/index/risk/historyRecord": { "navigationBarTitleText": "风险评估记录" }, "pages/diary/diary": { "navigationBarTitleText": "排尿日记" }, "pages/consultant/consultant": { "navigationBarTitleText": "在线咨询" }, "pages/video/video": { "navigationBarTitleText": "教育视频" }, "pages/user/user": { "navigationBarTitleText": "个人中心" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "神经源性膀胱管理" }, "pages/index/risk/risk": { "navigationBarTitleText": "风险评估" }, "pages/index/risk/evaluate": { "navigationBarTitleText": "测试评估" }, "pages/index/risk/report": { "navigationBarTitleText": "风险评估报告" }, "pages/index/risk/historyRecord": { "navigationBarTitleText": "风险评估记录" }, "pages/index/health/health": { "navigationBarTitleText": "健康知识" }, "pages/index/health/article": { "navigationBarTitleText": "文章详情" }, "pages/index/health/video": { "navigationBarTitleText": "视频详情" }, "pages/index/bladder/bladder": { "navigationBarTitleText": "膀胱管理" }, "pages/diary/diary": { "navigationBarTitleText": "排尿日记" }, "pages/consultant/consultant": { "navigationBarTitleText": "在线咨询" }, "pages/video/video": { "navigationBarTitleText": "教育视频" }, "pages/user/user": { "navigationBarTitleText": "个人中心" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

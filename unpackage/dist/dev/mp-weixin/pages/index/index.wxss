@@ -1,4 +1,8 @@
 
+page{
+	height: 100%;
+	background-color: #f9fafd;
+}
 .content {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -17,11 +21,8 @@
 	-webkit-justify-content: center;
 	    -ms-flex-pack: center;
 	        justify-content: center;
-	height: 100vh;
-	padding: 10px;
+	padding: 10px 20rpx 0rpx;
 	background-color: #f9fafd;
-	-webkit-box-shadow: inset 0px -2px 5px 0px rgba(168, 168, 168, 0.46);
-	        box-shadow: inset 0px -2px 5px 0px rgba(168, 168, 168, 0.46);
 }
 .logo {
 	height: 200rpx;

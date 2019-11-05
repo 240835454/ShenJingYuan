@@ -122,7 +122,20 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -157,7 +170,109 @@ var _uCharts = _interopRequireDefault(__webpack_require__(/*! ../../../public/js
 //
 //
 //
-var _default = { data: function data() {return { cWidth: '', cHeight: '', pixelRatio: 1, serverData: '' };}, methods: {}, components: {} };exports.default = _default;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _self;var canvaArea = null;var _default = { data: function data() {return { cWidth: '', cHeight: '', pixelRatio: 1, series: [{ color: "#a69eff", data: [100, 80, 95, 150, 112, 132], index: 0 }, { color: "#a6b5d5", data: [70, 40, 65, 100, 44, 68], index: 0 }], reportList: [{ name: '评估报告2019.10.30', value: '低风险' }, { name: '评估报告2019.10.30', value: '高风险' }] };
+  },
+  onLoad: function onLoad() {
+    _self = this;
+    this.cWidth = uni.upx2px(750);
+    this.cHeight = uni.upx2px(500);
+    this.getServerData();
+  },
+  methods: {
+    enterReport: function enterReport() {
+      uni.navigateTo({
+        url: 'report' });
+
+    },
+    getServerData: function getServerData() {
+      uni.request({
+        url: 'https://www.ucharts.cn/data.json',
+        data: {},
+        success: function success(res) {
+          console.log(res.data.data);
+          var Area = {
+            categories: [],
+            series: [] };
+
+          //这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
+          Area.categories = res.data.data.Area.categories;
+          // Area.series = res.data.data.Area.series;
+          Area.series = _self.series;
+          _self.showArea("canvasArea", Area);
+        },
+        fail: function fail() {
+          _self.tips = "网络错误，小程序端请检查合法域名";
+        } });
+
+    },
+    showArea: function showArea(canvasId, chartData) {
+      canvaArea = new _uCharts.default({
+        $this: _self,
+        canvasId: canvasId,
+        type: 'area',
+        fontSize: 11,
+        legend: {
+          show: false },
+
+        dataLabel: false,
+        dataPointShape: true,
+        dataPointShapeType: 'hollow',
+        background: '#FFFFFF',
+        pixelRatio: _self.pixelRatio,
+        categories: chartData.categories,
+        series: chartData.series,
+        animation: true,
+        xAxis: {
+          type: 'grid',
+          gridColor: '#cccccc',
+          gridType: 'solid',
+          dashLength: 8,
+          splitNumber: 5 },
+
+        yAxis: {
+          data: [{
+            min: 10,
+            max: 180 }],
+
+          gridType: 'solid',
+          gridColor: '#cccccc',
+          dashLength: 8,
+          splitNumber: 5 },
+
+        width: _self.cWidth * _self.pixelRatio,
+        height: _self.cHeight * _self.pixelRatio,
+        extra: {
+          area: {
+            type: 'curve',
+            opacity: 0.4,
+            addLine: true,
+            width: 2,
+            gradient: true } } });
+
+
+
+    },
+    touchArea: function touchArea(e) {
+      canvaArea.showToolTip(e, {
+        format: function format(item, category) {
+          return category + ' ' + item.name + ':' + item.data;
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

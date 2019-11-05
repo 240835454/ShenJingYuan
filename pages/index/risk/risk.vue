@@ -25,7 +25,7 @@
 			<template v-for='(item,index) in infoList'>
 				<view class="info-item" :key='index'>
 					<text class='name'>
-						{{item.name}}
+						{{item.name}} 
 					</text>
 					<text class='value'>
 						{{item.value}}
@@ -134,7 +134,7 @@
 				left: 38%;
 				bottom: 15rpx;
 				border-bottom: 6rpx solid #a69eff;
-				border-radius: 3px;
+				border-radius: 5rpx;
 			}
 		}
 	}

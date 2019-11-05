@@ -92,7 +92,8 @@
 </script>
 
 <style lang="less">
-	.page {
+	page {
+		height: 100%;
 		background-color: #f9fafd;
 	}
 
