@@ -13,7 +13,7 @@
 					<image :src="item.img" mode=""></image>
 					<view class="message">
 						<text class='title'>{{item.title}}</text>
-						<text class='text'>{{item.text}}</text>
+						<text class='text'>{{item.text}}</text> 
 						<view class="info">
 							<view class='date'> 
 								<image src="../../../static/icon_time.png" mode="widthFix"></image>
@@ -164,7 +164,8 @@
 				position: absolute;
 				width: 80rpx;
 				height: 1rpx;
-				left: 22%;
+				left: 50%;
+				transform: translate(-50%,0);
 				bottom: 15rpx;
 				border-bottom: 6rpx solid #a69eff;
 				border-radius: 5rpx;

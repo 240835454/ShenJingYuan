@@ -33,7 +33,7 @@
 						<text class='en-text'>Bladder management</text>
 					</view>
 				</view>
-				<view class="item">
+				<view class="item" @click='enterOnline'>
 					<image src="../../static/图层22.png" mode="aspectFill"></image>
 					<view class="text-box">
 						<text>在线评测</text>
@@ -72,6 +72,11 @@
 			enterBladder(){
 				uni.navigateTo({
 					url: 'bladder/bladder'
+				})
+			},
+			enterOnline(){
+				uni.navigateTo({
+					url: 'online/online'
 				})
 			}
 		}

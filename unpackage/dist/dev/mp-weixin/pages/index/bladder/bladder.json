@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "膀胱管理",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-calendar": "/components/uni-calendar/uni-calendar"
+  }
 }

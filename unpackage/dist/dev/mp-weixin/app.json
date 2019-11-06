@@ -9,6 +9,8 @@
     "pages/index/health/article",
     "pages/index/health/video",
     "pages/index/bladder/bladder",
+    "pages/index/bladder/intervene",
+    "pages/index/online/online",
     "pages/diary/diary",
     "pages/consultant/consultant",
     "pages/video/video",

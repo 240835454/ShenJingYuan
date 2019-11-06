@@ -62,6 +62,20 @@
 				"navigationBarTitleText": "膀胱管理"
 			}
 		},
+		// 首页-膀胱管理-干预方案
+		{
+			"path": "pages/index/bladder/intervene",
+			"style":{
+				"navigationBarTitleText": "干预方案"
+			}
+		},
+		// 首页-在线评测
+		{
+			"path": "pages/index/online/online",
+			"style":{
+				"navigationBarTitleText": "在线评测"
+			}
+		},
 		{
 			"path": "pages/diary/diary",
 			"style": {

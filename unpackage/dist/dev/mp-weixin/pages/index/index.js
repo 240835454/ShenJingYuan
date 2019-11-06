@@ -206,6 +206,11 @@ var _default =
       uni.navigateTo({
         url: 'bladder/bladder' });
 
+    },
+    enterOnline: function enterOnline() {
+      uni.navigateTo({
+        url: 'online/online' });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

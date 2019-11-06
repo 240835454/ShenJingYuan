@@ -131,7 +131,8 @@
 				position: absolute;
 				width: 80rpx;
 				height: 1rpx;
-				left: 38%;
+				left: 50%;
+				transform: translate(-50%,0);
 				bottom: 15rpx;
 				border-bottom: 6rpx solid #a69eff;
 				border-radius: 5rpx;
