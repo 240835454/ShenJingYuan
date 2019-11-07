@@ -1,1 +1,1 @@
-<view class="_div"></view>
+<view class="page"><view class="calendar"><uni-calendar class="vue-ref" vue-id="1" insert="{{true}}" selected="{{selected}}" data-ref="calendar" data-event-opts="{{[['^change',[['change']]]]}}" bind:change="__e" bind:__l="__l"></uni-calendar></view><view class="content"><text data-event-opts="{{[['tap',[['enterRecord',['$event']]]]]}}" class="button" bindtap="__e">开始记录</text></view></view>

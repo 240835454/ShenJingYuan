@@ -41,7 +41,9 @@
 		},
 		methods: {
 			enterDetail() {
-
+				uni.navigateTo({
+					url: 'evaluate'
+				})
 			}
 		}
 	}

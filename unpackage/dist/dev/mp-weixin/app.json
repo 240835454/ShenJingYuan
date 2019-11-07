@@ -11,7 +11,9 @@
     "pages/index/bladder/bladder",
     "pages/index/bladder/intervene",
     "pages/index/online/online",
+    "pages/index/online/evaluate",
     "pages/diary/diary",
+    "pages/diary/record",
     "pages/consultant/consultant",
     "pages/video/video",
     "pages/user/user"
@@ -60,5 +62,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap52.json"
 }

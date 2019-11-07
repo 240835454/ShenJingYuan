@@ -69,17 +69,32 @@
 				"navigationBarTitleText": "干预方案"
 			}
 		},
-		// 首页-在线评测
+		// 首页-在线评测问卷
 		{
 			"path": "pages/index/online/online",
 			"style":{
 				"navigationBarTitleText": "在线评测"
 			}
 		},
+		// 首页-在线评测
+		{
+			"path": "pages/index/online/evaluate",
+			"style":{
+				"navigationBarTitleText": "在线评测"
+			}
+		},
+		// 排尿日记
 		{
 			"path": "pages/diary/diary",
 			"style": {
 				"navigationBarTitleText": "排尿日记"
+			}
+		},
+		// 排尿日记-开始记录
+		{
+			"path": "pages/diary/record",
+			"style": {
+				"navigationBarTitleText": "开始记录"
 			}
 		},
 		{

@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "排尿日记",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-calendar": "/components/uni-calendar/uni-calendar"
+  }
 }

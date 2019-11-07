@@ -1,0 +1,107 @@
+page {
+  height: 100%;
+  background-color: #f9fafd;
+}
+.box {
+  padding: 20rpx;
+}
+.box .content {
+  background-color: #fff;
+  padding: 30rpx;
+}
+.box .content .title {
+  position: relative;
+  display: block;
+  font-size: 34rpx;
+  color: #333333;
+}
+.box .content .title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10rpx;
+  width: 80rpx;
+  height: 6rpx;
+  background-color: #a69eff;
+  border-radius: 3rpx;
+}
+.box .item {
+  color: #80899c;
+  background-color: #fff;
+  padding: 0 20rpx;
+}
+.box .item .name {
+  display: block;
+  padding-left: 30rpx;
+  font-size: 34rpx;
+  position: relative;
+}
+.box .item .name::before {
+  content: "";
+  position: absolute;
+  top: 25rpx;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  left: 10rpx;
+  width: 4rpx;
+  height: 20rpx;
+  border-left: 4rpx solid #b2b9c9;
+}
+.box .item picker {
+  font-size: 34rpx;
+  color: red;
+}
+.box .item .water::after {
+  content: " (\4E00\676F\5927\7EA6  250ml)";
+  font-size: 28rpx;
+}
+.box .item .surplus::after {
+  content: "\FF08\6D4B\91CF\540E\586B\5199\FF0C\672A\6D4B\91CF\4E0D\586B\5199\FF09";
+  font-size: 28rpx;
+}
+.box .item .input-box {
+  position: relative;
+  height: 70rpx;
+  padding-left: 20rpx;
+  margin: 20rpx 0;
+  border: 2rpx solid #e0e4ee;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-size: 30rpx;
+}
+.box .item .input-box::after {
+  content: "";
+  position: absolute;
+  top: 55%;
+  -webkit-transform: translateY(-45%);
+      -ms-transform: translateY(-45%);
+          transform: translateY(-45%);
+  right: 20rpx;
+  width: 0;
+  height: 0;
+  border: solid;
+  border-color: #e0e5ee transparent transparent transparent;
+  border-width: 17rpx;
+}
+.box .item .phcolor {
+  font-size: 30rpx;
+  color: #cccccc;
+}
+.box .footer {
+  padding: 40rpx 0 60rpx 0;
+  text-align: center;
+  background-color: #fff;
+}
+.box .footer .button {
+  display: inline-block;
+  padding: 20rpx 240rpx;
+  font-size: 34rpx;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#a69eff), to(#ccc7ff)), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+  background-image: -o-linear-gradient(bottom, #a69eff 0%, #ccc7ff 100%), -o-linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #a69eff 0%, #ccc7ff 100%), linear-gradient(#ffffff, #ffffff);
+  background-blend-mode: normal,
+				normal;
+  color: #fff;
+}
+

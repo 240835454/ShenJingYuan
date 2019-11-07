@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "开始记录",
+  "usingComponents": {
+    "w-picker": "/components/w-picker/w-picker"
+  }
+}
