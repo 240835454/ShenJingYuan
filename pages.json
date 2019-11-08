@@ -97,16 +97,32 @@
 				"navigationBarTitleText": "开始记录"
 			}
 		},
+		// 在线咨询
 		{
 			"path": "pages/consultant/consultant",
 			"style": {
 				"navigationBarTitleText": "在线咨询"
 			}
 		}, 
+		// 咨询详情
+		{
+			"path": "pages/consultant/community",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		// 教育视频
 		{
 			"path": "pages/video/video",
 			"style": {
 				"navigationBarTitleText": "教育视频"
+			}
+		},
+		// 教育视频-视频详情
+		{
+			"path": "pages/video/detail",
+			"style": {
+				"navigationBarTitleText": "视频详情"
 			}
 		},
 		{

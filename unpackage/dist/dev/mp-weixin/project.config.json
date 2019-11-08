@@ -8,7 +8,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.0",
-	"appid": "touristappid",
+	"appid": "wxc6a48542bbeceaad",
 	"projectname": "uni-app",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -21,13 +21,28 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/user/user",
+					"scene": null
+				}
+			]
 		}
 	}
 }

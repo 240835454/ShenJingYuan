@@ -213,6 +213,9 @@
 				// top: 5upx;
 				// right: 5upx;
 				// margin: auto;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
 				width: 70rpx;
 				height: 70rpx;
 				border-radius: 50%;
@@ -230,6 +233,9 @@
 			
 			.uni-calender__data-circle_single{    // 选中  日期的背景颜色  只完成一个
 				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
 				width: 70rpx;
 				height: 70rpx;
 				border: 2upx solid #a69eff;

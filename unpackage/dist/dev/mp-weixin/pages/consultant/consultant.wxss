@@ -1,0 +1,62 @@
+page {
+  height: 100%;
+  background-color: #f9fafd;
+}
+.box {
+  padding: 20rpx;
+}
+.box .content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+}
+.box .content .image {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 120rpx;
+      -ms-flex: 0 0 120rpx;
+          flex: 0 0 120rpx;
+  height: 120rpx;
+}
+.box .content .info {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  padding-left: 20rpx;
+  font-size: 28rpx;
+  color: #cccccc;
+}
+.box .content .info .name {
+  font-size: 34rpx;
+  color: #80899c;
+}
+.box .content .info text {
+  display: block;
+  width: 400rpx;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.box .content .time {
+  width: 120rpx;
+  padding-left: 10rpx;
+  text-align: right;
+  font-size: 28rpx;
+  color: #80899c;
+}
+

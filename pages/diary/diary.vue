@@ -4,7 +4,7 @@
 			<uni-calendar :insert="true" @change="change" :selected="selected" ref="calendar"></uni-calendar>
 		</view>
 		<view class="content">
-			<text class='button' @click='enterRecord'>开始记录</text>
+			<text @click='enterRecord' :class="hasRecord ? 'hasRecord' : 'button'" v-text="hasRecord ? '已记录': '开始记录'"></text>
 		</view>
 	</view>
 </template>
@@ -49,14 +49,14 @@
 						value: '未完成'
 					}
 				],
+				hasRecord: false
 			};
 		},
 		methods: {
 			change(e) {
-				console.log(e);
-			},
-			toClick(e) {
-				console.log(e);
+				console.log(e.clockinfo.have);
+				e.clockinfo.have ? this.hasRecord = true : this.hasRecord = false;
+				console.log(this.hasRecord)
 			},
 			confirm(e) {
 				console.log(e);
@@ -130,7 +130,17 @@
 				#ffffff);
 			background-blend-mode: normal,
 				normal;
-			border-radius: 40px;
+			border-radius: 60rpx;
+		}
+		
+		.hasRecord{
+			padding: 24rpx 135rpx;
+			font-size: 34rpx;
+			background-color: #fff;
+			border: solid 2rpx #a69eff;
+			border-radius: 60rpx;
+			color: #a69eff;
+			letter-spacing: 10rpx;
 		}
 	}
 </style>

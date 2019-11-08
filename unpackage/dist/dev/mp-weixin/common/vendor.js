@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1607,7 +1607,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 151:
+/***/ 171:
 /*!**********************************************************************!*\
   !*** F:/谭鑫锋/miniProgram/uni-app/components/uni-calendar/calendar.js ***!
   \**********************************************************************/
@@ -2164,7 +2164,7 @@ calendar;exports.default = _default;
 
 /***/ }),
 
-/***/ 183:
+/***/ 179:
 /*!****************************************************************************!*\
   !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/province.js ***!
   \****************************************************************************/
@@ -2314,7 +2314,7 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 184:
+/***/ 180:
 /*!************************************************************************!*\
   !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/city.js ***!
   \************************************************************************/
@@ -3828,7 +3828,7 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 185:
+/***/ 181:
 /*!************************************************************************!*\
   !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/area.js ***!
   \************************************************************************/
@@ -16381,7 +16381,7 @@ areaData;exports.default = _default;
 
 /***/ }),
 
-/***/ 186:
+/***/ 182:
 /*!******************************************************************!*\
   !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/w-picker.js ***!
   \******************************************************************/
@@ -22461,7 +22461,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -22482,14 +22482,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -22565,7 +22565,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -29538,7 +29538,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "神经源性膀胱管理" }, "pages/index/risk/risk": { "navigationBarTitleText": "风险评估" }, "pages/index/risk/evaluate": { "navigationBarTitleText": "测试评估" }, "pages/index/risk/report": { "navigationBarTitleText": "风险评估报告" }, "pages/index/risk/historyRecord": { "navigationBarTitleText": "风险评估记录" }, "pages/index/health/health": { "navigationBarTitleText": "健康知识" }, "pages/index/health/article": { "navigationBarTitleText": "文章详情" }, "pages/index/health/video": { "navigationBarTitleText": "视频详情" }, "pages/index/bladder/bladder": { "navigationBarTitleText": "膀胱管理" }, "pages/index/bladder/intervene": { "navigationBarTitleText": "干预方案" }, "pages/index/online/online": { "navigationBarTitleText": "在线评测" }, "pages/index/online/evaluate": { "navigationBarTitleText": "在线评测" }, "pages/diary/diary": { "navigationBarTitleText": "排尿日记" }, "pages/diary/record": { "navigationBarTitleText": "开始记录" }, "pages/consultant/consultant": { "navigationBarTitleText": "在线咨询" }, "pages/video/video": { "navigationBarTitleText": "教育视频" }, "pages/user/user": { "navigationBarTitleText": "个人中心" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "神经源性膀胱管理" }, "pages/index/risk/risk": { "navigationBarTitleText": "风险评估" }, "pages/index/risk/evaluate": { "navigationBarTitleText": "测试评估" }, "pages/index/risk/report": { "navigationBarTitleText": "风险评估报告" }, "pages/index/risk/historyRecord": { "navigationBarTitleText": "风险评估记录" }, "pages/index/health/health": { "navigationBarTitleText": "健康知识" }, "pages/index/health/article": { "navigationBarTitleText": "文章详情" }, "pages/index/health/video": { "navigationBarTitleText": "视频详情" }, "pages/index/bladder/bladder": { "navigationBarTitleText": "膀胱管理" }, "pages/index/bladder/intervene": { "navigationBarTitleText": "干预方案" }, "pages/index/online/online": { "navigationBarTitleText": "在线评测" }, "pages/index/online/evaluate": { "navigationBarTitleText": "在线评测" }, "pages/diary/diary": { "navigationBarTitleText": "排尿日记" }, "pages/diary/record": { "navigationBarTitleText": "开始记录" }, "pages/consultant/consultant": { "navigationBarTitleText": "在线咨询" }, "pages/consultant/community": { "navigationBarTitleText": "" }, "pages/video/video": { "navigationBarTitleText": "教育视频" }, "pages/video/detail": { "navigationBarTitleText": "视频详情" }, "pages/user/user": { "navigationBarTitleText": "个人中心" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

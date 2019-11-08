@@ -1,1 +1,1 @@
-<view class="_div"></view>
+<view class="page"><view class="box"><block wx:for="{{chatList}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view data-event-opts="{{[['tap',[['enterChat',['$event']]]]]}}" class="content" bindtap="__e"><image class="image" src="{{item.img}}" mode="aspectFill"></image><view class="info"><text class="name">{{item.name}}</text><text>{{item.text}}</text></view><view class="time">{{''+item.time+''}}</view></view></block></view></view>

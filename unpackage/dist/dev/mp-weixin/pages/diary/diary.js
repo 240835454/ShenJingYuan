@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniCalendar = function uniCalendar() {return Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar */ 146));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniCalendar = function uniCalendar() {return Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar */ 166));};var _default =
 
 
 
@@ -170,17 +170,17 @@ __webpack_require__.r(__webpack_exports__);
 
       {
         name: '预防泌尿系感染',
-        value: '未完成' }] };
+        value: '未完成' }],
 
 
+      hasRecord: false };
 
   },
   methods: {
     change: function change(e) {
-      console.log(e);
-    },
-    toClick: function toClick(e) {
-      console.log(e);
+      console.log(e.clockinfo.have);
+      e.clockinfo.have ? this.hasRecord = true : this.hasRecord = false;
+      console.log(this.hasRecord);
     },
     confirm: function confirm(e) {
       console.log(e);

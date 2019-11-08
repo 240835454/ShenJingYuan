@@ -152,6 +152,11 @@
 }
 .uni-calender__body-date-week .uni-calender__date .uni-calender__data-circle {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
       width: 70rpx;
       height: 70rpx;
       border-radius: 50%;
@@ -163,6 +168,11 @@
 }
 .uni-calender__body-date-week .uni-calender__date .uni-calender__data-circle_single {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
       width: 70rpx;
       height: 70rpx;
       border: 2rpx solid #a69eff;

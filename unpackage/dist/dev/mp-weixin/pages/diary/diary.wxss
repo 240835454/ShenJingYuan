@@ -47,6 +47,15 @@ page {
   background-image: linear-gradient(0deg, #a69eff 0%, #ccc7ff 100%), linear-gradient(#ffffff, #ffffff);
   background-blend-mode: normal,
 			normal;
-  border-radius: 40px;
+  border-radius: 60rpx;
+}
+.content .hasRecord {
+  padding: 24rpx 135rpx;
+  font-size: 34rpx;
+  background-color: #fff;
+  border: solid 2rpx #a69eff;
+  border-radius: 60rpx;
+  color: #a69eff;
+  letter-spacing: 10rpx;
 }
 

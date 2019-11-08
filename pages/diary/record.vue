@@ -83,7 +83,9 @@
 				this.surplusValue = e.result;
 			},
 			confirm(){
-				
+				uni.navigateBack({
+					delta: 1
+				});
 			}
 		},
 		components: {

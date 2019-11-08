@@ -15,7 +15,9 @@
     "pages/diary/diary",
     "pages/diary/record",
     "pages/consultant/consultant",
+    "pages/consultant/community",
     "pages/video/video",
+    "pages/video/detail",
     "pages/user/user"
   ],
   "subPackages": [],
@@ -63,5 +65,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap52.json"
+  "sitemapLocation": "sitemap72.json"
 }
