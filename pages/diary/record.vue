@@ -9,28 +9,28 @@
 			<view>
 				<view class="item">
 					<text class='name water'>饮水量</text>
-					<input type="text" :value="waterValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择饮水量" maxlength="5"
-					 @click="openOne" />
+					<input type="text" :value="waterValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择饮水量"
+					 maxlength="5" @click="openOne" />
 					<text class='name'>排尿量</text>
-					<input type="text" :value="urinateValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择排尿量" maxlength="5"
-					 @click="openTwo" />
+					<input type="text" :value="urinateValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择排尿量"
+					 maxlength="5" @click="openTwo" />
 					<text class='name surplus'>残留量</text>
-					<input type="text" :value="surplusValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择残留量" maxlength="5"
-					 @click="openThree" />
+					<input type="text" :value="surplusValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择残留量"
+					 maxlength="5" @click="openThree" />
 					<view class="footer">
 						<text class='button' @click='confirm'>
-							确定 
+							确定
 						</text>
 					</view>
 				</view>
 			</view>
 		</view>
 		<w-picker v-if="selectList.length!=0" mode="selector" :defaultVal="['女']" @confirm="onConfirmWater" ref="selectorOne"
-		 themeColor="#f00" :selectList="selectList" :themeColor='themeColor' :leftTopText='water'></w-picker>
+		 :selectList="selectList" :themeColor='themeColor' :leftTopText='water'></w-picker>
 		<w-picker v-if="selectList.length!=0" mode="selector" :defaultVal="['女']" @confirm="onConfirmUrinate" ref="selectorTwo"
-		 themeColor="#f00" :selectList="selectList" :themeColor='themeColor' :leftTopText='urinate'></w-picker>
+		 :selectList="selectList" :themeColor='themeColor' :leftTopText='urinate'></w-picker>
 		<w-picker v-if="selectList.length!=0" mode="selector" :defaultVal="['女']" @confirm="onConfirmSurplus" ref="selectorThree"
-		 themeColor="#f00" :selectList="selectList" :themeColor='themeColor' :leftTopText='surplus'></w-picker>
+		 :selectList="selectList" :themeColor='themeColor' :leftTopText='surplus'></w-picker>
 	</view>
 </template>
 
@@ -71,18 +71,18 @@
 				this.$refs.selectorTwo.show();
 			},
 			openThree() {
-				this.$refs.selectorThree.show(); 
+				this.$refs.selectorThree.show();
 			},
-			onConfirmWater(e){
+			onConfirmWater(e) {
 				this.waterValue = e.result;
 			},
-			onConfirmUrinate(e){
+			onConfirmUrinate(e) {
 				this.urinateValue = e.result;
 			},
-			onConfirmSurplus(e){
+			onConfirmSurplus(e) {
 				this.surplusValue = e.result;
 			},
-			confirm(){
+			confirm() {
 				uni.navigateBack({
 					delta: 1
 				});
@@ -92,7 +92,7 @@
 			wPicker
 		}
 	}
-</script> 
+</script>
 
 <style lang="less">
 	page {
@@ -174,8 +174,8 @@
 				padding-left: 20rpx;
 				margin: 20rpx 0;
 				border: 2rpx solid #e0e4ee;
-				box-sizing: border-box;
 				font-size: 30rpx;
+
 				&::after {
 					content: "";
 					position: absolute;
@@ -186,7 +186,7 @@
 					height: 0;
 					border: solid;
 					border-color: #e0e5ee transparent transparent transparent;
-					border-width: 17rpx;
+					border-width: 12rpx;
 				}
 			}
 

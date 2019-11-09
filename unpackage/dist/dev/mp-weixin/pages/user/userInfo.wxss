@@ -2,76 +2,19 @@ page {
   height: 100%;
   background-color: #f9fafd;
 }
-.tabBar {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: space-around;
-      -ms-flex-pack: distribute;
-          justify-content: space-around;
-  height: 90rpx;
-  line-height: 90rpx;
-  font-size: 28rpx;
-  color: #80899c;
-  background-color: #fff;
-  font-family: PingFang-SC-Bold;
-}
-.tabBar .tab-active {
-  font-size: 34rpx;
-  color: #333;
-  position: relative;
-}
-.tabBar .tab-active::after {
-  content: "";
-  position: absolute;
-  width: 80rpx;
-  height: 1rpx;
-  left: 50%;
-  -webkit-transform: translate(-50%, 0);
-      -ms-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
-  bottom: 15rpx;
-  border-bottom: 6rpx solid #a69eff;
-  border-radius: 5rpx;
-}
 .content {
-  padding: 10rpx 20rpx 40rpx;
+  padding: 20rpx 20rpx 40rpx;
   color: #80899c;
 }
 .content .box {
   background-color: #fff;
-  font-family: PingFang-SC-Medium;
 }
-.content .box .picture {
-  padding: 40rpx 80rpx 20rpx;
-  text-align: center;
-  position: relative;
-}
-.content .box .picture image {
-  width: 550rpx;
-  height: 230rpx;
-}
-.content .box .picture .test-result {
-  display: inline-block;
-  position: absolute;
-  top: 110rpx;
-  left: 40%;
-  font-size: 72rpx;
-  font-family: '064-CAI978';
-  color: #fffefe;
-}
-.content .box .picture .test-result::after {
-  content: "%";
-  padding-left: 20rpx;
-  font-size: 40rpx;
-}
-.content .box .picture .result {
+.content .box .result {
   display: block;
   padding-top: 20rpx;
   font-size: 34rpx;
 }
-.content .box .picture .report {
+.content .box .report {
   display: inline-block;
   padding: 20rpx 64rpx;
   margin: 20rpx 0;
@@ -97,6 +40,9 @@ page {
   font-size: 30rpx;
   border-top: 1rpx solid #e6e7eb;
   background-color: #fff;
+}
+.content .info-item:first-child {
+  border: none;
 }
 .content .info-item .name::before {
   content: "";
@@ -127,11 +73,19 @@ page {
           transform: rotate(45deg);
   position: absolute;
 }
+.content .imgList {
+  padding-left: 80rpx;
+  background-color: #fff;
+}
+.content .imgList .image {
+  width: 180rpx;
+  height: 180rpx;
+  padding-right: 30rpx;
+}
 .content .footer {
-  padding: 40rpx 0 20rpx 0;
+  padding: 80rpx 0;
   text-align: center;
   background-color: #fff;
-  border-top: 1rpx solid #e6e7eb;
 }
 .content .footer .button {
   display: inline-block;

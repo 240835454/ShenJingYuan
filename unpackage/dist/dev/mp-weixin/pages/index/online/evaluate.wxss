@@ -47,8 +47,7 @@ page {
   padding-left: 20rpx;
   margin: 20rpx 0;
   border: 2rpx solid #e0e4ee;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  font-size: 30rpx;
 }
 .box .item .textarea-box {
   width: 100%;
@@ -58,6 +57,7 @@ page {
   border: 2rpx solid #e0e4ee;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-size: 30rpx;
 }
 .box .item .phcolor {
   font-size: 30rpx;

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "修改个人资料",
+  "usingComponents": {
+    "w-picker": "/components/w-picker/w-picker"
+  }
+}

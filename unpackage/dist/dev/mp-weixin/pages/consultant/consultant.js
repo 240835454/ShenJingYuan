@@ -174,7 +174,7 @@ var _default =
   methods: {
     enterChat: function enterChat() {
       uni.navigateTo({
-        url: 'community' });
+        url: 'communicate' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

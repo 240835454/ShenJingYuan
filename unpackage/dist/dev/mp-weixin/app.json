@@ -15,10 +15,12 @@
     "pages/diary/diary",
     "pages/diary/record",
     "pages/consultant/consultant",
-    "pages/consultant/community",
+    "pages/consultant/communicate",
     "pages/video/video",
     "pages/video/detail",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/user/userInfo",
+    "pages/user/changeInfo"
   ],
   "subPackages": [],
   "window": {
@@ -65,5 +67,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap72.json"
+  "sitemapLocation": "sitemap62.json"
 }

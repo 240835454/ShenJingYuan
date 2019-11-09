@@ -233,7 +233,7 @@
 				padding-left:20rpx;
 				margin: 20rpx 0;
 				border: 2rpx solid #e0e4ee;
-				box-sizing: border-box;
+				font-size: 30rpx;
 			}
 			
 			.textarea-box{
@@ -243,6 +243,7 @@
 				margin-top: 20rpx;
 				border: 2rpx solid #e0e4ee;
 				box-sizing: border-box;
+				font-size: 30rpx;
 			}
 			
 			.phcolor{

@@ -50,7 +50,7 @@
 		methods:{
 			enterChat(){
 				uni.navigateTo({
-					url: 'community'
+					url: 'communicate'
 				}) 
 			}
 		}

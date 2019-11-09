@@ -106,7 +106,7 @@
 		}, 
 		// 咨询详情
 		{
-			"path": "pages/consultant/community",
+			"path": "pages/consultant/communicate",
 			"style": {
 				"navigationBarTitleText": ""
 			}
@@ -125,10 +125,25 @@
 				"navigationBarTitleText": "视频详情"
 			}
 		},
+		// 个人中心
 		{
 			"path": "pages/user/user",
 			"style": {
 				"navigationBarTitleText": "个人中心"
+			}
+		},
+		// 个人中心-个人资料
+		{
+			"path": "pages/user/userInfo",
+			"style": {
+				"navigationBarTitleText": "个人资料" 
+			}
+		},
+		// 个人中心-修改个人资料
+		{
+			"path": "pages/user/changeInfo",
+			"style":{
+				"navigationBarTitleText": "修改个人资料"
 			}
 		}
 	],

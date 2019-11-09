@@ -1,27 +1,6 @@
 <template>
 	<view class="page">
-		<view class="tabBar">
-			<template v-for="(item,index) in TabList">
-				<text :key='index' :class="activeIndex == index ? 'tab-active' : ''" @click="changeTab(index)">
-					{{item}}
-				</text>
-			</template>
-		</view>
 		<view class="content">
-			<view class="box">
-				<view class="picture">
-					<image src="../../../static/fengxian.png" mode="widthFix">
-					</image>
-					<text class='test-result'>
-						{{rate}}
-					</text>
-					<text class='result'>测试结果为：{{result}}</text>
-					<text class='result'>最佳风险值：{{best}}</text>
-					<text class='report' @click='enterReport'>
-						查看评估风险报告
-					</text>
-				</view>
-			</view>
 			<template v-for='(item,index) in infoList'>
 				<view class="info-item" :key='index'>
 					<text class='name'>
@@ -34,15 +13,20 @@
 			</template>
 			<view class="info-item" @click="historyRecord">
 				<text class="name">
-					查看历史评估记录
+					检查化验单
 				</text>
 				<text class='value'>
 					&nbsp;
 				</text>
 			</view>
+			<view class="imgList">
+				<template v-for="(item,index) in imgList">
+					<image :src="item" mode="" :key='index' class='image'></image>
+				</template>
+			</view>
 			<view class="footer">
-				<text class='button' @click='beginEvaluate'>
-					开始评估
+				<text class='button' @click='enterChangeInfo'>
+					修改资料
 				</text>
 			</view>
 		</view>
@@ -57,7 +41,21 @@
 					'上尿路损害发生率',
 					'神经源性膀胱泌尿系感染'
 				],
-				infoList: [{
+				imgList:[
+					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg',
+					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg',
+					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg'
+				],
+				infoList: [
+					{
+						name: '姓名',
+						value: '陈臻William'
+					},
+					{
+						name: '年龄',
+						value: 25
+					},
+					{
 						name: '性别',
 						value: '男性'
 					},
@@ -83,23 +81,10 @@
 				rate: '1.5'
 			}
 		},
-		methods: { 
-			changeTab(e) {
-				this.activeIndex = e;
-			},
-			beginEvaluate(){ 
+		methods: {
+			enterChangeInfo(){
 				uni.navigateTo({
-					url: 'evaluate'
-				})
-			},
-			enterReport(){
-				uni.navigateTo({
-					url: 'report'
-				})
-			},
-			historyRecord(){
-				uni.navigateTo({
-					url: 'historyRecord'
+					url: 'changeInfo'
 				})
 			}
 		}
@@ -111,70 +96,13 @@
 		height: 100%;
 		background-color: #f9fafd;
 	}
-
-	.tabBar {
-		display: flex;
-		justify-content: space-around;
-		height: 90rpx;
-		line-height: 90rpx;
-		font-size: 28rpx;
-		color: #80899c;
-		background-color: #fff;
-		font-family: PingFang-SC-Bold;
-
-		.tab-active {
-			font-size: 34rpx;
-			color: #333;
-			position: relative;
-
-			&::after {
-				content: "";
-				position: absolute;
-				width: 80rpx;
-				height: 1rpx;
-				left: 50%;
-				transform: translate(-50%,0);
-				bottom: 15rpx;
-				border-bottom: 6rpx solid #a69eff;
-				border-radius: 5rpx;
-			}
-		}
-	}
-
+	
 	.content {
-		padding: 10rpx 20rpx 40rpx;
+		padding: 20rpx 20rpx 40rpx;
 		color: #80899c;
 
 		.box {
 			background-color: #fff;
-			font-family: PingFang-SC-Medium;
-
-			.picture {
-				padding: 40rpx 80rpx 20rpx;
-				text-align: center;
-				position: relative;
-
-				image {
-					width: 550rpx;
-					height: 230rpx;
-				}
-
-				.test-result {
-					display: inline-block;
-					position: absolute;
-					top: 110rpx;
-					left: 40%;
-					font-size: 72rpx;
-					font-family: '064-CAI978';
-					color: #fffefe;
-
-					&::after {
-						content: "%";
-						padding-left: 20rpx;
-						font-size: 40rpx;
-					}
-				}
-
 				.result {
 					display: block;
 					padding-top: 20rpx;
@@ -190,7 +118,6 @@
 					font-size: 34rpx;
 				}
 			}
-		}
 
 		.info-item {
 			display: flex;
@@ -201,6 +128,9 @@
 			font-size: 30rpx;
 			border-top: 1rpx solid #e6e7eb;
 			background-color: #fff;
+			&:first-child{
+				border: none;
+			}
 
 			.name {
 				&::before {
@@ -235,12 +165,21 @@
 				}
 			}
 		}
+		
+		.imgList{
+			padding-left: 80rpx;
+			background-color: #fff;
+			.image{
+				width: 180rpx;
+				height: 180rpx;
+				padding-right: 30rpx;
+			}
+		}
 
 		.footer {
-			padding: 40rpx 0 20rpx 0;
+			padding: 80rpx 0;
 			text-align: center;
 			background-color: #fff;
-			border-top: 1rpx solid #e6e7eb;
 			.button {
 				display: inline-block;
 				padding: 20rpx 200rpx;

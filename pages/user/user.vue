@@ -7,7 +7,7 @@
 		</view>
 		<view class="box">
 			<view class="content">
-				<view class="item">
+				<view class="item" @click="enterUserInfo">
 					<image src="../../static/icon_personal_data.png" mode="" class='icon'></image>
 					<text>个人资料</text>
 					<text class='right'>请完善资料</text>
@@ -44,16 +44,22 @@
 		},
 		methods: {
 			wxGetUserInfo: function(res) {
-				if (!res.detail.iv) {
-					uni.showToast({
-						title: "您取消了授权,登录失败",
-						icon: "none"
-					});
-					return false;
-				}
-				console.log(res.detail);
-				this.userInfo = res.detail.userInfo;
+				console.log(res);
+				// if (!res.detail.iv) {
+				// 	uni.showToast({
+				// 		title: "您取消了授权,登录失败",
+				// 		icon: "none"
+				// 	});
+				// 	return false;
+				// }
+				// console.log(res.detail);
+				// this.userInfo = res.detail.userInfo;
 			},
+			enterUserInfo(){
+				uni.navigateTo({
+					url: 'userInfo'
+				})
+			}
 		}
 	}
 </script>

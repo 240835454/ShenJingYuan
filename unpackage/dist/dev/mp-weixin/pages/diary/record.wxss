@@ -66,8 +66,6 @@ page {
   padding-left: 20rpx;
   margin: 20rpx 0;
   border: 2rpx solid #e0e4ee;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   font-size: 30rpx;
 }
 .box .item .input-box::after {
@@ -82,7 +80,7 @@ page {
   height: 0;
   border: solid;
   border-color: #e0e5ee transparent transparent transparent;
-  border-width: 17rpx;
+  border-width: 12rpx;
 }
 .box .item .phcolor {
   font-size: 30rpx;
