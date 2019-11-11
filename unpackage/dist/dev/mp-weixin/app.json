@@ -20,7 +20,9 @@
     "pages/video/detail",
     "pages/user/user",
     "pages/user/userInfo",
-    "pages/user/changeInfo"
+    "pages/user/changeInfo",
+    "pages/user/message",
+    "pages/user/changePhone"
   ],
   "subPackages": [],
   "window": {
@@ -66,6 +68,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap62.json"
+  "usingComponents": {}
 }

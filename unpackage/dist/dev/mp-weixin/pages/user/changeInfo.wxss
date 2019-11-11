@@ -40,11 +40,44 @@ page {
 .content .box .item .imgList {
   padding: 30rpx 0 0 30rpx;
   background-color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
-.content .box .item .imgList .image {
+.content .box .item .imgList .image-item {
+  position: relative;
+}
+.content .box .item .imgList .image-item .image {
   width: 180rpx;
   height: 180rpx;
   padding-right: 30rpx;
+}
+.content .box .item .imgList .image-item .clear-icon {
+  position: absolute;
+  display: block;
+  right: 15rpx;
+  top: -15rpx;
+  width: 36rpx;
+  height: 36rpx;
+}
+.content .box .item .imgList .camera {
+  width: 180rpx;
+  height: 180rpx;
+  display: inline-block;
+  border: 2rpx solid #e0e4ee;
+  vertical-align: top;
+  position: relative;
+}
+.content .box .item .imgList .camera image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 60rpx;
+  height: 57rpx;
 }
 .content .box .item .phcolor {
   font-size: 30rpx;
@@ -69,12 +102,14 @@ page {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 30rpx 0;
   font-size: 30rpx;
+  color: #a6b5d5;
 }
 .content .box .item .radio .radio-group {
   display: -webkit-box;
@@ -83,12 +118,21 @@ page {
   display: flex;
 }
 .content .box .item .radio .radio-group label {
-  width: 200rpx;
   padding: 0 60rpx 0 30rpx;
 }
 .content .box .item .radio .radio-group text {
-  display: inline-block;
   padding-left: 20rpx;
+}
+.content .box .item .radio .isChoose {
+  color: #80899c;
+}
+.content .box .item .twoGroup {
+  padding-bottom: 80rpx;
+}
+.content .box .item .other {
+  position: absolute;
+  padding: 20rpx 0;
+  bottom: 20rpx;
 }
 .content .box .footer {
   padding: 60rpx 0;

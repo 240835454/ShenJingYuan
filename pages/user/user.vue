@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<view class=" header">
+		<view class="header">
 			<button class="" open-type="getUserInfo" @getuserinfo="wxGetUserInfo" withCredentials="true">未授权</button>
 			<image :src="userInfo.avatarUrl" mode="" class='avatar'></image>
 			<text class='nickName'>{{userInfo.nickName}}</text>
@@ -12,12 +12,12 @@
 					<text>个人资料</text>
 					<text class='right'>请完善资料</text>
 				</view>
-				<view class="item">
+				<view class="item" @click='enterMessage'>
 					<image src="../../static/icon_personal_message.png" mode="" class='icon'></image>
 					<text>消息通知</text>
 					<text class='right'>消息通知</text>
 				</view>
-				<view class="item">
+				<view class="item" @click='enterChangePhone'>
 					<image src="../../static/icon_personal_phone.png" mode="" class='short-icon'></image>
 					<text>修改手机</text>
 					<text class='right'>修改手机</text>
@@ -58,6 +58,16 @@
 			enterUserInfo(){
 				uni.navigateTo({
 					url: 'userInfo'
+				})
+			},
+			enterMessage(){
+				uni.navigateTo({
+					url: 'message'
+				})
+			},
+			enterChangePhone(){
+				uni.navigateTo({
+					url: 'changePhone'
 				})
 			}
 		}

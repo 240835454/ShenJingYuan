@@ -21,7 +21,7 @@
 			</view>
 			<view class="imgList">
 				<template v-for="(item,index) in imgList">
-					<image :src="item" mode="" :key='index' class='image'></image>
+					<image :src="item" mode="" :key='index' class='image' @click='previewImg' :data-src='item'></image>
 				</template>
 			</view>
 			<view class="footer">
@@ -42,9 +42,9 @@
 					'神经源性膀胱泌尿系感染'
 				],
 				imgList:[
-					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg',
-					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg',
-					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg'
+					'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573461179335&di=743743eaa389cb83a9c0766e93f9e6d4&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F6491c748440e49a77286875012fcdf98a4a419f0.jpg',
+					'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573461179335&di=8128673ba06e73b4285c3cf4eed3d885&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201512%2F08%2F20151208113424_X35Yr.thumb.700_0.jpeg',
+					'http://i.caigoubao.cc/619923/eks-7.jpg'
 				],
 				infoList: [
 					{
@@ -85,6 +85,22 @@
 			enterChangeInfo(){
 				uni.navigateTo({
 					url: 'changeInfo'
+				})
+			},
+			previewImg(e){
+				let current = e.target.dataset.src;
+				wx.previewImage({ 
+					current: current,
+					urls: this.imgList,
+					success: function(res){
+						console.log(res)
+					},
+					fail: function(err){
+						// console.log(err);
+					},
+					complete: function(res){
+						console.log(res);
+					}
 				})
 			}
 		}

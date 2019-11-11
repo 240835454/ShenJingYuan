@@ -8,7 +8,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.0",
-	"appid": "wxc6a48542bbeceaad",
+	"appid": "touristappid",
 	"projectname": "uni-app",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -38,8 +38,29 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "咨询详情",
-					"pathName": "pages/consultant/communicate",
+					"name": "个人中心",
+					"pathName": "pages/user/userInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改个人资料",
+					"pathName": "pages/user/changeInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "消息通知",
+					"pathName": "pages/user/message",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改手机",
+					"pathName": "pages/user/changePhone",
 					"scene": null
 				}
 			]

@@ -13,66 +13,61 @@
 				</view>
 				<view class="item">
 					<text class='name'>性别</text>
-					<view class="radio">
-						<radio-group class='radio-group' @click='selectGender(value)'>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>男性</text>
-							</label>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>女性</text>
-							</label>
+					<view class="radio twoGroup">
+						<radio-group class='radio-group'>
+							<template v-for="(item,index) in gender">
+								<label :key='index' class="radio" :class="index == gender.length-1 ? 'other': ''" @click='selectGender(index)'>
+									<radio :value="value" color="#fff" /><text :class="genderIndex == index ? 'isChoose' : ''">{{item}}</text>
+								</label>
+							</template>
 						</radio-group>
 					</view>
 				</view>
 				<view class="item">
 					<text class='name'>是否有感染病史</text>
 					<view class="radio">
-						<radio-group class='radio-group' @click='selectGender(value)'>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>有</text>
-							</label>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>无</text>
-							</label>
+						<radio-group class='radio-group'>
+							<template v-for="(item,index) in isInfect">
+								<label :key='index' class="radio" @click='selectInfect(index)'>
+									<radio :value="value" color="#fff" /><text :class="isInfectIndex == index ? 'isChoose' : ''">{{item}}</text>
+								</label>
+							</template>
 						</radio-group>
 					</view>
 				</view>
 				<view class="item">
 					<text class='name'>膀胱顺应性</text>
 					<view class="radio">
-						<radio-group class='radio-group' @click='selectGender(value)'>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>正常或高</text>
-							</label>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>低</text>
-							</label>
+						<radio-group class='radio-group'>
+							<template v-for="(item,index) in bladder">
+								<label :key='index' class="radio"  @click='selectBladder(index)'>
+									<radio :value="value" color="#fff" /><text :class="bladderIndex == index ? 'isChoose' : ''">{{item}}</text>
+								</label>
+							</template>
 						</radio-group>
 					</view>
 				</view>
 				<view class="item">
 					<text class='name'>疾病病程</text>
 					<view class="radio">
-						<radio-group class='radio-group' @click='selectGender(value)'>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>{{year}}</text>
-							</label>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>>5年</text>
-							</label>
+						<radio-group class='radio-group'>
+							<template v-for="(item,index) in course">
+								<label :key='index' class="radio" @click='selectCourse(index)'>
+									<radio :value="value" color="#fff" /><text :class="courseIndex == index ? 'isChoose' : ''">{{item}}</text>
+								</label>
+							</template>
 						</radio-group>
 					</view>
 				</view>
 				<view class="item">
 					<text class='name'>大小便失禁</text>
 					<view class="radio">
-						<radio-group class='radio-group' @click='selectGender(value)'>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>有</text>
-							</label>
-							<label class="radio">
-								<radio :value="value" color='#fff' /><text>无</text>
-							</label>
+						<radio-group class='radio-group'>
+							<template v-for="(item,index) in incontinence">
+								<label :key='index' class="radio" @click='selectIncontinence(index)'>
+									<radio :value="value" color="#fff" /><text :class="incontinenceIndex == index ? 'isChoose' : ''">{{item}}</text>
+								</label>
+							</template>
 						</radio-group>
 					</view>
 				</view>
@@ -80,8 +75,15 @@
 					<text class='name'>检查化验单</text>
 					<view class="imgList">
 						<template v-for="(item,index) in imgList">
-							<image :src="item" mode="" :key='index' class='image'></image>
+							<view class="image-item" :key='index'>
+								<image :src="item" mode=""  class='image' @click="previewImg" :data-src='item'>
+								</image>
+								<image src="../../static/icon_picture_del.png" mode="" class='clear-icon' @click='deleteImg(index)'></image>
+							</view>
 						</template>
+						<view class="camera" @click="addImg" v-if="imgList.length<3">
+							<image src="../../static/camera.png" mode="" class=''></image>
+						</view>
 					</view>
 				</view>
 				<view class="footer">
@@ -113,26 +115,68 @@
 						value: '23'
 					}
 				],
+				gender: ['男性','女性','其他'],
+				isInfect: ['有','无'],
+				bladder: ['正常或高','低'],
+				course: ['<=5年','>5年'],
+				incontinence: ['有','无'],
+				genderIndex: -1,
+				isInfectIndex: -1,
+				bladderIndex: -1,
+				courseIndex: -1,
+				incontinenceIndex: -1,
 				themeColor: '#a69eff',
 				leftTopText: '年龄',
 				age: '',
-				imgList: [
-					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg',
-					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg',
-					'http://img0.imgtn.bdimg.com/it/u=1563847232,2166245740&fm=26&gp=0.jpg'
+				imgList:[
+					'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573461179335&di=743743eaa389cb83a9c0766e93f9e6d4&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farchive%2F6491c748440e49a77286875012fcdf98a4a419f0.jpg',
+					'http://i.caigoubao.cc/619923/eks-7.jpg'
 				],
 			}
 		},
 		methods: {
 			selectGender(e) {
-				console.log(e);
+				this.genderIndex = e;
+			},
+			selectInfect(e){
+				this.isInfectIndex = e;
+			},
+			selectBladder(e){
+				this.bladderIndex = e;
+			},
+			selectCourse(e){
+				this.courseIndex = e; 
+			},
+			selectIncontinence(e){
+				this.incontinenceIndex = e;
+			},
+			previewImg(e){
+				let current = e.target.dataset.src;
+				uni.previewImage({
+					current: current,
+					urls: this.imgList
+				})
+			},
+			deleteImg(index){
+				this.imgList.splice(index,1);
+			},
+			addImg(){
+				uni.chooseImage({
+					count:3-this.imgList.length,
+					success:res=>{
+						this.imgList.push(res.tempFilePaths)
+					},
+					fail: err=>{
+						console.log(err);
+					}
+				})
 			},
 			open() {
 				this.$refs.selector.show();
 			},
 			onConfirm(e) {
-				this.age = e.result
-			}
+				this.age = e.result;
+			} 
 		},
 		components: {
 			wPicker
@@ -185,11 +229,39 @@
 				.imgList {
 					padding: 30rpx 0 0 30rpx;
 					background-color: #fff;
-
+					display: flex;
+				.image-item{
+					position: relative;
 					.image {
 						width: 180rpx;
 						height: 180rpx;
 						padding-right: 30rpx;
+					}
+					.clear-icon{
+						position: absolute;
+						display: block;
+						right: 15rpx;
+						top: -15rpx;
+						width: 36rpx;
+						height: 36rpx;
+					}
+				}
+					
+					.camera{
+						width: 180rpx;
+						height: 180rpx;
+						display: inline-block;
+						border: 2rpx solid #e0e4ee;
+						vertical-align: top;
+						position: relative;
+						image{
+							position: absolute;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%,-50%);
+							width: 60rpx;
+							height: 57rpx;
+						}
 					}
 				}
 
@@ -216,24 +288,35 @@
 
 				.radio {
 					display: flex;
+					position: relative;
 					align-items: center;
 					padding: 30rpx 0;
 					font-size: 30rpx;
-
+					color: #a6b5d5;
 					.radio-group {
 						display: flex;
-
 						label {
-							width: 200rpx;
 							padding: 0 60rpx 0 30rpx;
 						}
-
 						text {
-							display: inline-block;
 							padding-left: 20rpx;
 						}
 					}
+					.isChoose {
+						color: #80899c;
+					}
 				}
+				
+				.twoGroup{
+					padding-bottom: 80rpx;
+				}
+				
+				.other{
+					position: absolute;
+					padding: 20rpx 0;
+					bottom: 20rpx;
+				}
+				
 			}
 
 			.footer {

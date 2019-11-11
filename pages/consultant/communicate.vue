@@ -14,7 +14,7 @@
 		</view>
 		<view class="footer">
 			<textarea v-model="message" placeholder="请输入您想咨询的问题..." class='textarea-box' auto-height="true" placeholder-class="phcolor"
-			 @linechange='lineChange' @confirm='sendMsg' fixed="true" />
+			 @linechange='lineChange' @confirm='sendMsg' fixed="true" type='text' />
 			<image src="../../static/icon_consulting_expression.png" mode="" class='icon' @click='showEmojiList'></image>
 				<image src="../../static/icon_consulting_more.png" mode="" class='icon'></image>
 			</view>
@@ -106,22 +106,24 @@
 				this.showEmoji = false;
 			},
 			sendMsg(){
-				if(this.message != ''){
+				if(this.message != '' && this.message != null){
 					this.chatList.push({
 						user:2,
 						avatar: "http://img3.imgtn.bdimg.com/it/u=1928846916,3022680481&fm=26&gp=0.jpg",
 						text: this.message
 					})
-					this.message = ''; 
+					this.message = null; 
 					this.showEmoji = false;
 					//回到底部
-					uni.createSelectorQuery().select('#x_chat').boundingClientRect(function(rect){
+					wx.createSelectorQuery().select('#x_chat').boundingClientRect(function(rect){
 						console.log(rect);
-						uni.pageScrollTo({
-							scrollTop: rect.height,
+						wx.pageScrollTo({
+							scrollTop: rect.height + 200,
 							duration: 100
 						})
 					}).exec(); 
+				}else{
+					this.message = '';
 				}
 			}
 		}  
@@ -136,7 +138,6 @@
 	}
 	
 	.chat-box{
-		overflow-y: hidden;
 		padding-bottom: 150rpx;
 		.chat-item{
 			padding-top:40rpx;
@@ -176,6 +177,7 @@
 			width: 100%;
 			padding: 20rpx;
 			background-color: #fff;
+			box-sizing: border-box;
 			bottom: 0;
 			z-index: 10;
 			.textarea-box{
@@ -187,8 +189,6 @@
 				font-size: 30rpx;
 			}
 			.phcolor{
-				position: fixed;
-				bottom: 0;
 				font-size: 30rpx;
 				color: #cccccc;
 			}
