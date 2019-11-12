@@ -95,11 +95,6 @@
 </script>
 
 <style lang="less">
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
 	.box {
 		padding: 20rpx;
 

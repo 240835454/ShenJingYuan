@@ -230,6 +230,7 @@ var _default =
         date: '2019.10.30  20:43',
         visiter: '185' }],
 
+
       videoList: [{
         img: 'http://img0.imgtn.bdimg.com/it/u=1901739916,3856785126&fm=26&gp=0.jpg',
         title: '防止便秘-多吃蔬菜就可以解决便秘？',
@@ -241,6 +242,7 @@ var _default =
         title: '防止便秘-多吃蔬菜就可以解决便秘？',
         date: '2019.10.30  20:43',
         visiter: '1855' }] };
+
 
 
   },

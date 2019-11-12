@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/uni-calendar/uni-calendar":1,"components/w-picker/w-picker":1,"components/uni-calendar/uni-calendar-item":1};
+/******/ 		var cssChunks = {"components/w-picker/w-picker":1,"components/uni-calendar/uni-calendar":1,"components/uni-calendar/uni-calendar-item":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/uni-calendar/uni-calendar":"components/uni-calendar/uni-calendar","components/w-picker/w-picker":"components/w-picker/w-picker","components/uni-calendar/uni-calendar-item":"components/uni-calendar/uni-calendar-item"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/w-picker/w-picker":"components/w-picker/w-picker","components/uni-calendar/uni-calendar":"components/uni-calendar/uni-calendar","components/uni-calendar/uni-calendar-item":"components/uni-calendar/uni-calendar-item"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

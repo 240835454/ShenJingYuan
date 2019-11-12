@@ -74,11 +74,6 @@
 </script>
 
 <style lang="less">
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
 	.page {
 		video {
 			display: block;
@@ -152,70 +147,5 @@
 	
 	.footer {
 		padding: 10rpx 20rpx 120rpx 20rpx;
-		.video {
-			margin-top: 10rpx;
-			background-color: #fff;
-	
-			.picture {
-				position: relative;
-	
-				image {
-					width: 100%;
-					height: 355rpx;
-				}
-	
-				.play-icon {
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -50%);
-					width: 80rpx;
-					height: 80rpx;
-				}
-			}
-	
-			.message {
-				padding: 0 30rpx;
-	
-				.title {
-					font-size: 30rpx;
-					color: #80899c;
-				}
-	
-				.info {
-					display: flex;
-					justify-content: space-between;
-					width: 380rpx;
-					padding: 20rpx 0;
-					margin-bottom: 30rpx;
-					font-size: 24rpx;
-					color: #cccccc;
-	
-					.date {
-						display: flex;
-						align-items: center;
-	
-						image {
-							flex: 0 0 26rpx;
-							width: 26rpx;
-							heihgt: 26rpx;
-							padding-right: 12rpx;
-						}
-					}
-	
-					.visit {
-						display: flex;
-						align-items: center;
-	
-						image {
-							flex: 1 1 30rpx;
-							width: 30rpx;
-							height: 25rpx;
-							padding-right: 12rpx;
-						}
-					}
-				}
-			}
-		}
 	}
 </style>

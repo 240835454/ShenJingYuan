@@ -107,40 +107,6 @@
 </script>
 
 <style lang='less'>
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
-	.tabBar {
-		display: flex;
-		justify-content: space-around;
-		height: 90rpx;
-		line-height: 90rpx;
-		font-size: 28rpx;
-		color: #80899c;
-		background-color: #fff;
-		font-family: PingFang-SC-Bold;
-
-		.tab-active {
-			font-size: 34rpx;
-			color: #333;
-			position: relative;
-
-			&::after {
-				content: "";
-				position: absolute;
-				width: 80rpx;
-				height: 1rpx;
-				left: 50%;
-				transform: translate(-50%,0);
-				bottom: 15rpx;
-				border-bottom: 6rpx solid #a69eff;
-				border-radius: 5rpx;
-			}
-		}
-	}
-
 	.content {
 		padding: 10rpx 20rpx 40rpx;
 		color: #80899c;

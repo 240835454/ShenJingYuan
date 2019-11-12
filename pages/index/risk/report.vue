@@ -51,10 +51,6 @@
 </script>
 
 <style lang="less">
-	.page {
-		background-color: #f9fafd;
-	}
-
 	.content {
 		padding: 20rpx;
 		font-family: PingFang-SC-Medium;

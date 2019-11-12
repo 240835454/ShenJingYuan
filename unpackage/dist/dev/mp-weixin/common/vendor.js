@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1617,2227 +1617,6 @@ function normalizeComponent (
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = [
 "😀", "😃", "😄", "😁", "😆", "😅", "😂", "🙂", "🙃", "😉", "😊", "😇", "😍", "😘", "😗", "😚", "😙", "😋", "😛", "😜", "😝", "😐", "😑", "😶", "😏", "😒", "🙄", "😬", "😌", "😔", "😪", "😴", "😷", "😵", "😎", "😕", "😟", "🙁", "😮", "😯", "😲", "😳", "😦", "😧", "😨", "😰", "😥", "😢", "😭", "😱", "😖", "😣", "😞", "😓", "😩", "😫", "😤", "😡", "😠"];exports.default = _default;
-
-/***/ }),
-
-/***/ 190:
-/*!**********************************************************************!*\
-  !*** F:/谭鑫锋/miniProgram/uni-app/components/uni-calendar/calendar.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
-                                                                                                     * @1900-2100区间内的公历、农历互转
-                                                                                                     * @charset UTF-8
-                                                                                                     * @github  https://github.com/jjonline/calendar.js
-                                                                                                     * @Author  Jea杨(JJonline@JJonline.Cn)
-                                                                                                     * @Time    2014-7-21
-                                                                                                     * @Time    2016-8-13 Fixed 2033hex、Attribution Annals
-                                                                                                     * @Time    2016-9-25 Fixed lunar LeapMonth Param Bug
-                                                                                                     * @Time    2017-7-24 Fixed use getTerm Func Param Error.use solar year,NOT lunar year
-                                                                                                     * @Version 1.0.3
-                                                                                                     * @公历转农历：calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
-                                                                                                     * @农历转公历：calendar.lunar2solar(1987,09,10); //[you can ignore params of prefix 0]
-                                                                                                     */
-/* eslint-disable */
-var calendar = {
-
-  /**
-                     * 农历1900-2100的润大小信息表
-                     * @Array Of Property
-                     * @return Hex
-                     */
-  lunarInfo: [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
-  0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
-  0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
-  0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950, // 1930-1939
-  0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2, 0x0a950, 0x0b557, // 1940-1949
-  0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5b0, 0x14573, 0x052b0, 0x0a9a8, 0x0e950, 0x06aa0, // 1950-1959
-  0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950, 0x05b57, 0x056a0, // 1960-1969
-  0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540, 0x0b6a0, 0x195a6, // 1970-1979
-  0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46, 0x0ab60, 0x09570, // 1980-1989
-  0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x05ac0, 0x0ab60, 0x096d5, 0x092e0, // 1990-1999
-  0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5, // 2000-2009
-  0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930, // 2010-2019
-  0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530, // 2020-2029
-  0x05aa0, 0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, // 2030-2039
-  0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0, // 2040-2049
-  /** Add By JJonline@JJonline.Cn**/
-  0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0, // 2050-2059
-  0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4, // 2060-2069
-  0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0, // 2070-2079
-  0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160, // 2080-2089
-  0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252, // 2090-2099
-  0x0d520], // 2100
-
-  /**
-      * 公历每个月份的天数普通表
-      * @Array Of Property
-      * @return Number
-      */
-  solarMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-
-  /**
-                                                                    * 天干地支之天干速查表
-                                                                    * @Array Of Property trans["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"]
-                                                                    * @return Cn string
-                                                                    */
-  Gan: ["\u7532", "\u4E59", "\u4E19", "\u4E01", "\u620A", "\u5DF1", "\u5E9A", "\u8F9B", "\u58EC", "\u7678"],
-
-  /**
-                                                                                                                 * 天干地支之地支速查表
-                                                                                                                 * @Array Of Property
-                                                                                                                 * @trans["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"]
-                                                                                                                 * @return Cn string
-                                                                                                                 */
-  Zhi: ["\u5B50", "\u4E11", "\u5BC5", "\u536F", "\u8FB0", "\u5DF3", "\u5348", "\u672A", "\u7533", "\u9149", "\u620C", "\u4EA5"],
-
-  /**
-                                                                                                                                     * 天干地支之地支速查表<=>生肖
-                                                                                                                                     * @Array Of Property
-                                                                                                                                     * @trans["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"]
-                                                                                                                                     * @return Cn string
-                                                                                                                                     */
-  Animals: ["\u9F20", "\u725B", "\u864E", "\u5154", "\u9F99", "\u86C7", "\u9A6C", "\u7F8A", "\u7334", "\u9E21", "\u72D7", "\u732A"],
-
-  /**
-                                                                                                                                         * 24节气速查表
-                                                                                                                                         * @Array Of Property
-                                                                                                                                         * @trans["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"]
-                                                                                                                                         * @return Cn string
-                                                                                                                                         */
-  solarTerm: ["\u5C0F\u5BD2", "\u5927\u5BD2", "\u7ACB\u6625", "\u96E8\u6C34", "\u60CA\u86F0", "\u6625\u5206", "\u6E05\u660E", "\u8C37\u96E8", "\u7ACB\u590F", "\u5C0F\u6EE1", "\u8292\u79CD", "\u590F\u81F3", "\u5C0F\u6691", "\u5927\u6691", "\u7ACB\u79CB", "\u5904\u6691", "\u767D\u9732", "\u79CB\u5206", "\u5BD2\u9732", "\u971C\u964D", "\u7ACB\u51AC", "\u5C0F\u96EA", "\u5927\u96EA", "\u51AC\u81F3"],
-
-  /**
-                                                                                                                                                                                                                                                                                                                                                                                                                   * 1900-2100各年的24节气日期速查表
-                                                                                                                                                                                                                                                                                                                                                                                                                   * @Array Of Property
-                                                                                                                                                                                                                                                                                                                                                                                                                   * @return 0x string For splice
-                                                                                                                                                                                                                                                                                                                                                                                                                   */
-  sTermInfo: ['9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf97c3598082c95f8c965cc920f',
-  '97bd0b06bdb0722c965ce1cfcc920f', 'b027097bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
-  '97bcf97c359801ec95f8c965cc920f', '97bd0b06bdb0722c965ce1cfcc920f', 'b027097bd097c36b0b6fc9274c91aa',
-  '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f', '97bd0b06bdb0722c965ce1cfcc920f',
-  'b027097bd097c36b0b6fc9274c91aa', '9778397bd19801ec9210c965cc920e', '97b6b97bd19801ec95f8c965cc920f',
-  '97bd09801d98082c95f8e1cfcc920f', '97bd097bd097c36b0b6fc9210c8dc2', '9778397bd197c36c9210c9274c91aa',
-  '97b6b97bd19801ec95f8c965cc920e', '97bd09801d98082c95f8e1cfcc920f', '97bd097bd097c36b0b6fc9210c8dc2',
-  '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec95f8c965cc920e', '97bcf97c3598082c95f8e1cfcc920f',
-  '97bd097bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec9210c965cc920e',
-  '97bcf97c3598082c95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
-  '97b6b97bd19801ec9210c965cc920e', '97bcf97c3598082c95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722',
-  '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f',
-  '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
-  '97bcf97c359801ec95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
-  '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f', '97bd097bd07f595b0b6fc920fb0722',
-  '9778397bd097c36b0b6fc9210c8dc2', '9778397bd19801ec9210c9274c920e', '97b6b97bd19801ec95f8c965cc920f',
-  '97bd07f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c920e',
-  '97b6b97bd19801ec95f8c965cc920f', '97bd07f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2',
-  '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bd07f1487f595b0b0bc920fb0722',
-  '7f0e397bd097c36b0b6fc9210c8dc2', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
-  '97bcf7f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
-  '97b6b97bd19801ec9210c965cc920e', '97bcf7f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
-  '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf7f1487f531b0b0bb0b6fb0722',
-  '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
-  '97bcf7f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
-  '97b6b97bd19801ec9210c9274c920e', '97bcf7f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
-  '9778397bd097c36b0b6fc9210c91aa', '97b6b97bd197c36c9210c9274c920e', '97bcf7f0e47f531b0b0bb0b6fb0722',
-  '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c920e',
-  '97b6b7f0e47f531b0723b0b6fb0722', '7f0e37f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2',
-  '9778397bd097c36b0b70c9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721', '7f0e37f1487f595b0b0bb0b6fb0722',
-  '7f0e397bd097c35b0b6fc9210c8dc2', '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721',
-  '7f0e27f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
-  '97b6b7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
-  '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
-  '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721',
-  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
-  '97b6b7f0e47f531b0723b0787b0721', '7f0e27f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
-  '9778397bd097c36b0b6fc9210c91aa', '97b6b7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
-  '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9210c8dc2', '977837f0e37f149b0723b0787b0721',
-  '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f5307f595b0b0bc920fb0722', '7f0e397bd097c35b0b6fc9210c8dc2',
-  '977837f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e37f1487f595b0b0bb0b6fb0722',
-  '7f0e397bd097c35b0b6fc9210c8dc2', '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
-  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '977837f0e37f14998082b0787b06bd',
-  '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
-  '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
-  '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
-  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14998082b0787b06bd',
-  '7f07e7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
-  '977837f0e37f14998082b0723b06bd', '7f07e7f0e37f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
-  '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b0721',
-  '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f1487f595b0b0bb0b6fb0722', '7f0e37f0e37f14898082b0723b02d5',
-  '7ec967f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f1487f531b0b0bb0b6fb0722',
-  '7f0e37f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
-  '7f0e37f1487f531b0b0bb0b6fb0722', '7f0e37f0e37f14898082b072297c35', '7ec967f0e37f14998082b0787b06bd',
-  '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e37f0e37f14898082b072297c35',
-  '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
-  '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f149b0723b0787b0721',
-  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14998082b0723b06bd',
-  '7f07e7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722', '7f0e37f0e366aa89801eb072297c35',
-  '7ec967f0e37f14998082b0723b06bd', '7f07e7f0e37f14998083b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
-  '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14898082b0723b02d5', '7f07e7f0e37f14998082b0787b0721',
-  '7f07e7f0e47f531b0723b0b6fb0722', '7f0e36665b66aa89801e9808297c35', '665f67f0e37f14898082b0723b02d5',
-  '7ec967f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0722', '7f0e36665b66a449801e9808297c35',
-  '665f67f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
-  '7f0e36665b66a449801e9808297c35', '665f67f0e37f14898082b072297c35', '7ec967f0e37f14998082b0787b06bd',
-  '7f07e7f0e47f531b0723b0b6fb0721', '7f0e26665b66a449801e9808297c35', '665f67f0e37f1489801eb072297c35',
-  '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722'],
-
-  /**
-                                                                                                             * 数字转中文速查表
-                                                                                                             * @Array Of Property
-                                                                                                             * @trans ['日','一','二','三','四','五','六','七','八','九','十']
-                                                                                                             * @return Cn string
-                                                                                                             */
-  nStr1: ["\u65E5", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341"],
-
-  /**
-                                                                                                                             * 日期转农历称呼速查表
-                                                                                                                             * @Array Of Property
-                                                                                                                             * @trans ['初','十','廿','卅']
-                                                                                                                             * @return Cn string
-                                                                                                                             */
-  nStr2: ["\u521D", "\u5341", "\u5EFF", "\u5345"],
-
-  /**
-                                                       * 月份转农历称呼速查表
-                                                       * @Array Of Property
-                                                       * @trans ['正','一','二','三','四','五','六','七','八','九','十','冬','腊']
-                                                       * @return Cn string
-                                                       */
-  nStr3: ["\u6B63", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u51AC", "\u814A"],
-
-  /**
-                                                                                                                                       * 返回农历y年一整年的总天数
-                                                                                                                                       * @param lunar Year
-                                                                                                                                       * @return Number
-                                                                                                                                       * @eg:var count = calendar.lYearDays(1987) ;//count=387
-                                                                                                                                       */
-  lYearDays: function lYearDays(y) {
-    var i;var sum = 348;
-    for (i = 0x8000; i > 0x8; i >>= 1) {sum += this.lunarInfo[y - 1900] & i ? 1 : 0;}
-    return sum + this.leapDays(y);
-  },
-
-  /**
-         * 返回农历y年闰月是哪个月；若y年没有闰月 则返回0
-         * @param lunar Year
-         * @return Number (0-12)
-         * @eg:var leapMonth = calendar.leapMonth(1987) ;//leapMonth=6
-         */
-  leapMonth: function leapMonth(y) {// 闰字编码 \u95f0
-    return this.lunarInfo[y - 1900] & 0xf;
-  },
-
-  /**
-         * 返回农历y年闰月的天数 若该年没有闰月则返回0
-         * @param lunar Year
-         * @return Number (0、29、30)
-         * @eg:var leapMonthDay = calendar.leapDays(1987) ;//leapMonthDay=29
-         */
-  leapDays: function leapDays(y) {
-    if (this.leapMonth(y)) {
-      return this.lunarInfo[y - 1900] & 0x10000 ? 30 : 29;
-    }
-    return 0;
-  },
-
-  /**
-         * 返回农历y年m月（非闰月）的总天数，计算m为闰月时的天数请使用leapDays方法
-         * @param lunar Year
-         * @return Number (-1、29、30)
-         * @eg:var MonthDay = calendar.monthDays(1987,9) ;//MonthDay=29
-         */
-  monthDays: function monthDays(y, m) {
-    if (m > 12 || m < 1) {return -1;} // 月份参数从1至12，参数错误返回-1
-    return this.lunarInfo[y - 1900] & 0x10000 >> m ? 30 : 29;
-  },
-
-  /**
-         * 返回公历(!)y年m月的天数
-         * @param solar Year
-         * @return Number (-1、28、29、30、31)
-         * @eg:var solarMonthDay = calendar.leapDays(1987) ;//solarMonthDay=30
-         */
-  solarDays: function solarDays(y, m) {
-    if (m > 12 || m < 1) {return -1;} // 若参数错误 返回-1
-    var ms = m - 1;
-    if (ms == 1) {// 2月份的闰平规律测算后确认返回28或29
-      return y % 4 == 0 && y % 100 != 0 || y % 400 == 0 ? 29 : 28;
-    } else {
-      return this.solarMonth[ms];
-    }
-  },
-
-  /**
-        * 农历年份转换为干支纪年
-        * @param  lYear 农历年的年份数
-        * @return Cn string
-        */
-  toGanZhiYear: function toGanZhiYear(lYear) {
-    var ganKey = (lYear - 3) % 10;
-    var zhiKey = (lYear - 3) % 12;
-    if (ganKey == 0) ganKey = 10; // 如果余数为0则为最后一个天干
-    if (zhiKey == 0) zhiKey = 12; // 如果余数为0则为最后一个地支
-    return this.Gan[ganKey - 1] + this.Zhi[zhiKey - 1];
-  },
-
-  /**
-        * 公历月、日判断所属星座
-        * @param  cMonth [description]
-        * @param  cDay [description]
-        * @return Cn string
-        */
-  toAstro: function toAstro(cMonth, cDay) {
-    var s = "\u9B54\u7FAF\u6C34\u74F6\u53CC\u9C7C\u767D\u7F8A\u91D1\u725B\u53CC\u5B50\u5DE8\u87F9\u72EE\u5B50\u5904\u5973\u5929\u79E4\u5929\u874E\u5C04\u624B\u9B54\u7FAF";
-    var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
-    return s.substr(cMonth * 2 - (cDay < arr[cMonth - 1] ? 2 : 0), 2) + "\u5EA7"; // 座
-  },
-
-  /**
-         * 传入offset偏移量返回干支
-         * @param offset 相对甲子的偏移量
-         * @return Cn string
-         */
-  toGanZhi: function toGanZhi(offset) {
-    return this.Gan[offset % 10] + this.Zhi[offset % 12];
-  },
-
-  /**
-         * 传入公历(!)y年获得该年第n个节气的公历日期
-         * @param y公历年(1900-2100)；n二十四节气中的第几个节气(1~24)；从n=1(小寒)算起
-         * @return day Number
-         * @eg:var _24 = calendar.getTerm(1987,3) ;//_24=4;意即1987年2月4日立春
-         */
-  getTerm: function getTerm(y, n) {
-    if (y < 1900 || y > 2100) {return -1;}
-    if (n < 1 || n > 24) {return -1;}
-    var _table = this.sTermInfo[y - 1900];
-    var _info = [
-    parseInt('0x' + _table.substr(0, 5)).toString(),
-    parseInt('0x' + _table.substr(5, 5)).toString(),
-    parseInt('0x' + _table.substr(10, 5)).toString(),
-    parseInt('0x' + _table.substr(15, 5)).toString(),
-    parseInt('0x' + _table.substr(20, 5)).toString(),
-    parseInt('0x' + _table.substr(25, 5)).toString()];
-
-    var _calday = [
-    _info[0].substr(0, 1),
-    _info[0].substr(1, 2),
-    _info[0].substr(3, 1),
-    _info[0].substr(4, 2),
-
-    _info[1].substr(0, 1),
-    _info[1].substr(1, 2),
-    _info[1].substr(3, 1),
-    _info[1].substr(4, 2),
-
-    _info[2].substr(0, 1),
-    _info[2].substr(1, 2),
-    _info[2].substr(3, 1),
-    _info[2].substr(4, 2),
-
-    _info[3].substr(0, 1),
-    _info[3].substr(1, 2),
-    _info[3].substr(3, 1),
-    _info[3].substr(4, 2),
-
-    _info[4].substr(0, 1),
-    _info[4].substr(1, 2),
-    _info[4].substr(3, 1),
-    _info[4].substr(4, 2),
-
-    _info[5].substr(0, 1),
-    _info[5].substr(1, 2),
-    _info[5].substr(3, 1),
-    _info[5].substr(4, 2)];
-
-    return parseInt(_calday[n - 1]);
-  },
-
-  /**
-         * 传入农历数字月份返回汉语通俗表示法
-         * @param lunar month
-         * @return Cn string
-         * @eg:var cnMonth = calendar.toChinaMonth(12) ;//cnMonth='腊月'
-         */
-  toChinaMonth: function toChinaMonth(m) {// 月 => \u6708
-    if (m > 12 || m < 1) {return -1;} // 若参数错误 返回-1
-    var s = this.nStr3[m - 1];
-    s += "\u6708"; // 加上月字
-    return s;
-  },
-
-  /**
-         * 传入农历日期数字返回汉字表示法
-         * @param lunar day
-         * @return Cn string
-         * @eg:var cnDay = calendar.toChinaDay(21) ;//cnMonth='廿一'
-         */
-  toChinaDay: function toChinaDay(d) {// 日 => \u65e5
-    var s;
-    switch (d) {
-      case 10:
-        s = "\u521D\u5341";break;
-      case 20:
-        s = "\u4E8C\u5341";break;
-        break;
-      case 30:
-        s = "\u4E09\u5341";break;
-        break;
-      default:
-        s = this.nStr2[Math.floor(d / 10)];
-        s += this.nStr1[d % 10];}
-
-    return s;
-  },
-
-  /**
-         * 年份转生肖[!仅能大致转换] => 精确划分生肖分界线是“立春”
-         * @param y year
-         * @return Cn string
-         * @eg:var animal = calendar.getAnimal(1987) ;//animal='兔'
-         */
-  getAnimal: function getAnimal(y) {
-    return this.Animals[(y - 4) % 12];
-  },
-
-  /**
-         * 传入阳历年月日获得详细的公历、农历object信息 <=>JSON
-         * @param y  solar year
-         * @param m  solar month
-         * @param d  solar day
-         * @return JSON object
-         * @eg:console.log(calendar.solar2lunar(1987,11,01));
-         */
-  solar2lunar: function solar2lunar(y, m, d) {// 参数区间1900.1.31~2100.12.31
-    // 年份限定、上限
-    if (y < 1900 || y > 2100) {
-      return -1; // undefined转换为数字变为NaN
-    }
-    // 公历传参最下限
-    if (y == 1900 && m == 1 && d < 31) {
-      return -1;
-    }
-    // 未传参  获得当天
-    if (!y) {
-      var objDate = new Date();
-    } else {
-      var objDate = new Date(y, parseInt(m) - 1, d);
-    }
-    var i;var leap = 0;var temp = 0;
-    // 修正ymd参数
-    var y = objDate.getFullYear();
-    var m = objDate.getMonth() + 1;
-    var d = objDate.getDate();
-    var offset = (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) - Date.UTC(1900, 0, 31)) / 86400000;
-    for (i = 1900; i < 2101 && offset > 0; i++) {
-      temp = this.lYearDays(i);
-      offset -= temp;
-    }
-    if (offset < 0) {
-      offset += temp;i--;
-    }
-
-    // 是否今天
-    var isTodayObj = new Date();
-    var isToday = false;
-    if (isTodayObj.getFullYear() == y && isTodayObj.getMonth() + 1 == m && isTodayObj.getDate() == d) {
-      isToday = true;
-    }
-    // 星期几
-    var nWeek = objDate.getDay();
-    var cWeek = this.nStr1[nWeek];
-    // 数字表示周几顺应天朝周一开始的惯例
-    if (nWeek == 0) {
-      nWeek = 7;
-    }
-    // 农历年
-    var year = i;
-    var leap = this.leapMonth(i); // 闰哪个月
-    var isLeap = false;
-
-    // 效验闰月
-    for (i = 1; i < 13 && offset > 0; i++) {
-      // 闰月
-      if (leap > 0 && i == leap + 1 && isLeap == false) {
-        --i;
-        isLeap = true;temp = this.leapDays(year); // 计算农历闰月天数
-      } else {
-        temp = this.monthDays(year, i); // 计算农历普通月天数
-      }
-      // 解除闰月
-      if (isLeap == true && i == leap + 1) {isLeap = false;}
-      offset -= temp;
-    }
-    // 闰月导致数组下标重叠取反
-    if (offset == 0 && leap > 0 && i == leap + 1) {
-      if (isLeap) {
-        isLeap = false;
-      } else {
-        isLeap = true;--i;
-      }
-    }
-    if (offset < 0) {
-      offset += temp;--i;
-    }
-    // 农历月
-    var month = i;
-    // 农历日
-    var day = offset + 1;
-    // 天干地支处理
-    var sm = m - 1;
-    var gzY = this.toGanZhiYear(year);
-
-    // 当月的两个节气
-    // bugfix-2017-7-24 11:03:38 use lunar Year Param `y` Not `year`
-    var firstNode = this.getTerm(y, m * 2 - 1); // 返回当月「节」为几日开始
-    var secondNode = this.getTerm(y, m * 2); // 返回当月「节」为几日开始
-
-    // 依据12节气修正干支月
-    var gzM = this.toGanZhi((y - 1900) * 12 + m + 11);
-    if (d >= firstNode) {
-      gzM = this.toGanZhi((y - 1900) * 12 + m + 12);
-    }
-
-    // 传入的日期的节气与否
-    var isTerm = false;
-    var Term = null;
-    if (firstNode == d) {
-      isTerm = true;
-      Term = this.solarTerm[m * 2 - 2];
-    }
-    if (secondNode == d) {
-      isTerm = true;
-      Term = this.solarTerm[m * 2 - 1];
-    }
-    // 日柱 当月一日与 1900/1/1 相差天数
-    var dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10;
-    var gzD = this.toGanZhi(dayCyclical + d - 1);
-    // 该日期所属的星座
-    var astro = this.toAstro(m, d);
-
-    return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': this.getAnimal(year), 'IMonthCn': (isLeap ? "\u95F0" : '') + this.toChinaMonth(month), 'IDayCn': this.toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': "\u661F\u671F" + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro };
-  },
-
-  /**
-         * 传入农历年月日以及传入的月份是否闰月获得详细的公历、农历object信息 <=>JSON
-         * @param y  lunar year
-         * @param m  lunar month
-         * @param d  lunar day
-         * @param isLeapMonth  lunar month is leap or not.[如果是农历闰月第四个参数赋值true即可]
-         * @return JSON object
-         * @eg:console.log(calendar.lunar2solar(1987,9,10));
-         */
-  lunar2solar: function lunar2solar(y, m, d, isLeapMonth) {// 参数区间1900.1.31~2100.12.1
-    var isLeapMonth = !!isLeapMonth;
-    var leapOffset = 0;
-    var leapMonth = this.leapMonth(y);
-    var leapDay = this.leapDays(y);
-    if (isLeapMonth && leapMonth != m) {return -1;} // 传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
-    if (y == 2100 && m == 12 && d > 1 || y == 1900 && m == 1 && d < 31) {return -1;} // 超出了最大极限值
-    var day = this.monthDays(y, m);
-    var _day = day;
-    // bugFix 2016-9-25
-    // if month is leap, _day use leapDays method
-    if (isLeapMonth) {
-      _day = this.leapDays(y, m);
-    }
-    if (y < 1900 || y > 2100 || d > _day) {return -1;} // 参数合法性效验
-
-    // 计算农历的时间差
-    var offset = 0;
-    for (var i = 1900; i < y; i++) {
-      offset += this.lYearDays(i);
-    }
-    var leap = 0;var isAdd = false;
-    for (var i = 1; i < m; i++) {
-      leap = this.leapMonth(y);
-      if (!isAdd) {// 处理闰月
-        if (leap <= i && leap > 0) {
-          offset += this.leapDays(y);isAdd = true;
-        }
-      }
-      offset += this.monthDays(y, i);
-    }
-    // 转换闰月农历 需补充该年闰月的前一个月的时差
-    if (isLeapMonth) {offset += day;}
-    // 1900年农历正月一日的公历时间为1900年1月30日0时0分0秒(该时间也是本农历的最开始起始点)
-    var stmap = Date.UTC(1900, 1, 30, 0, 0, 0);
-    var calObj = new Date((offset + d - 31) * 86400000 + stmap);
-    var cY = calObj.getUTCFullYear();
-    var cM = calObj.getUTCMonth() + 1;
-    var cD = calObj.getUTCDate();
-
-    return this.solar2lunar(cY, cM, cD);
-  } };var _default =
-
-
-calendar;exports.default = _default;
-
-/***/ }),
-
-/***/ 198:
-/*!****************************************************************************!*\
-  !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/province.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /* eslint-disable */
-var provinceData = [{
-  "label": "北京市",
-  "value": "11" },
-
-{
-  "label": "天津市",
-  "value": "12" },
-
-{
-  "label": "河北省",
-  "value": "13" },
-
-{
-  "label": "山西省",
-  "value": "14" },
-
-{
-  "label": "内蒙古自治区",
-  "value": "15" },
-
-{
-  "label": "辽宁省",
-  "value": "21" },
-
-{
-  "label": "吉林省",
-  "value": "22" },
-
-{
-  "label": "黑龙江省",
-  "value": "23" },
-
-{
-  "label": "上海市",
-  "value": "31" },
-
-{
-  "label": "江苏省",
-  "value": "32" },
-
-{
-  "label": "浙江省",
-  "value": "33" },
-
-{
-  "label": "安徽省",
-  "value": "34" },
-
-{
-  "label": "福建省",
-  "value": "35" },
-
-{
-  "label": "江西省",
-  "value": "36" },
-
-{
-  "label": "山东省",
-  "value": "37" },
-
-{
-  "label": "河南省",
-  "value": "41" },
-
-{
-  "label": "湖北省",
-  "value": "42" },
-
-{
-  "label": "湖南省",
-  "value": "43" },
-
-{
-  "label": "广东省",
-  "value": "44" },
-
-{
-  "label": "广西壮族自治区",
-  "value": "45" },
-
-{
-  "label": "海南省",
-  "value": "46" },
-
-{
-  "label": "重庆市",
-  "value": "50" },
-
-{
-  "label": "四川省",
-  "value": "51" },
-
-{
-  "label": "贵州省",
-  "value": "52" },
-
-{
-  "label": "云南省",
-  "value": "53" },
-
-{
-  "label": "西藏自治区",
-  "value": "54" },
-
-{
-  "label": "陕西省",
-  "value": "61" },
-
-{
-  "label": "甘肃省",
-  "value": "62" },
-
-{
-  "label": "青海省",
-  "value": "63" },
-
-{
-  "label": "宁夏回族自治区",
-  "value": "64" },
-
-{
-  "label": "新疆维吾尔自治区",
-  "value": "65" },
-
-{
-  "label": "台湾",
-  "value": "66" },
-
-{
-  "label": "香港",
-  "value": "67" },
-
-{
-  "label": "澳门",
-  "value": "68" }];var _default =
-
-
-provinceData;exports.default = _default;
-
-/***/ }),
-
-/***/ 199:
-/*!************************************************************************!*\
-  !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/city.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /* eslint-disable */
-var cityData = [
-[{
-  "label": "市辖区",
-  "value": "1101" }],
-
-[{
-  "label": "市辖区",
-  "value": "1201" }],
-
-[{
-  "label": "石家庄市",
-  "value": "1301" },
-
-{
-  "label": "唐山市",
-  "value": "1302" },
-
-{
-  "label": "秦皇岛市",
-  "value": "1303" },
-
-{
-  "label": "邯郸市",
-  "value": "1304" },
-
-{
-  "label": "邢台市",
-  "value": "1305" },
-
-{
-  "label": "保定市",
-  "value": "1306" },
-
-{
-  "label": "张家口市",
-  "value": "1307" },
-
-{
-  "label": "承德市",
-  "value": "1308" },
-
-{
-  "label": "沧州市",
-  "value": "1309" },
-
-{
-  "label": "廊坊市",
-  "value": "1310" },
-
-{
-  "label": "衡水市",
-  "value": "1311" }],
-
-
-[{
-  "label": "太原市",
-  "value": "1401" },
-
-{
-  "label": "大同市",
-  "value": "1402" },
-
-{
-  "label": "阳泉市",
-  "value": "1403" },
-
-{
-  "label": "长治市",
-  "value": "1404" },
-
-{
-  "label": "晋城市",
-  "value": "1405" },
-
-{
-  "label": "朔州市",
-  "value": "1406" },
-
-{
-  "label": "晋中市",
-  "value": "1407" },
-
-{
-  "label": "运城市",
-  "value": "1408" },
-
-{
-  "label": "忻州市",
-  "value": "1409" },
-
-{
-  "label": "临汾市",
-  "value": "1410" },
-
-{
-  "label": "吕梁市",
-  "value": "1411" }],
-
-
-[{
-  "label": "呼和浩特市",
-  "value": "1501" },
-
-{
-  "label": "包头市",
-  "value": "1502" },
-
-{
-  "label": "乌海市",
-  "value": "1503" },
-
-{
-  "label": "赤峰市",
-  "value": "1504" },
-
-{
-  "label": "通辽市",
-  "value": "1505" },
-
-{
-  "label": "鄂尔多斯市",
-  "value": "1506" },
-
-{
-  "label": "呼伦贝尔市",
-  "value": "1507" },
-
-{
-  "label": "巴彦淖尔市",
-  "value": "1508" },
-
-{
-  "label": "乌兰察布市",
-  "value": "1509" },
-
-{
-  "label": "兴安盟",
-  "value": "1522" },
-
-{
-  "label": "锡林郭勒盟",
-  "value": "1525" },
-
-{
-  "label": "阿拉善盟",
-  "value": "1529" }],
-
-
-[{
-  "label": "沈阳市",
-  "value": "2101" },
-
-{
-  "label": "大连市",
-  "value": "2102" },
-
-{
-  "label": "鞍山市",
-  "value": "2103" },
-
-{
-  "label": "抚顺市",
-  "value": "2104" },
-
-{
-  "label": "本溪市",
-  "value": "2105" },
-
-{
-  "label": "丹东市",
-  "value": "2106" },
-
-{
-  "label": "锦州市",
-  "value": "2107" },
-
-{
-  "label": "营口市",
-  "value": "2108" },
-
-{
-  "label": "阜新市",
-  "value": "2109" },
-
-{
-  "label": "辽阳市",
-  "value": "2110" },
-
-{
-  "label": "盘锦市",
-  "value": "2111" },
-
-{
-  "label": "铁岭市",
-  "value": "2112" },
-
-{
-  "label": "朝阳市",
-  "value": "2113" },
-
-{
-  "label": "葫芦岛市",
-  "value": "2114" }],
-
-
-[{
-  "label": "长春市",
-  "value": "2201" },
-
-{
-  "label": "吉林市",
-  "value": "2202" },
-
-{
-  "label": "四平市",
-  "value": "2203" },
-
-{
-  "label": "辽源市",
-  "value": "2204" },
-
-{
-  "label": "通化市",
-  "value": "2205" },
-
-{
-  "label": "白山市",
-  "value": "2206" },
-
-{
-  "label": "松原市",
-  "value": "2207" },
-
-{
-  "label": "白城市",
-  "value": "2208" },
-
-{
-  "label": "延边朝鲜族自治州",
-  "value": "2224" }],
-
-
-[{
-  "label": "哈尔滨市",
-  "value": "2301" },
-
-{
-  "label": "齐齐哈尔市",
-  "value": "2302" },
-
-{
-  "label": "鸡西市",
-  "value": "2303" },
-
-{
-  "label": "鹤岗市",
-  "value": "2304" },
-
-{
-  "label": "双鸭山市",
-  "value": "2305" },
-
-{
-  "label": "大庆市",
-  "value": "2306" },
-
-{
-  "label": "伊春市",
-  "value": "2307" },
-
-{
-  "label": "佳木斯市",
-  "value": "2308" },
-
-{
-  "label": "七台河市",
-  "value": "2309" },
-
-{
-  "label": "牡丹江市",
-  "value": "2310" },
-
-{
-  "label": "黑河市",
-  "value": "2311" },
-
-{
-  "label": "绥化市",
-  "value": "2312" },
-
-{
-  "label": "大兴安岭地区",
-  "value": "2327" }],
-
-
-[{
-  "label": "市辖区",
-  "value": "3101" }],
-
-[{
-  "label": "南京市",
-  "value": "3201" },
-
-{
-  "label": "无锡市",
-  "value": "3202" },
-
-{
-  "label": "徐州市",
-  "value": "3203" },
-
-{
-  "label": "常州市",
-  "value": "3204" },
-
-{
-  "label": "苏州市",
-  "value": "3205" },
-
-{
-  "label": "南通市",
-  "value": "3206" },
-
-{
-  "label": "连云港市",
-  "value": "3207" },
-
-{
-  "label": "淮安市",
-  "value": "3208" },
-
-{
-  "label": "盐城市",
-  "value": "3209" },
-
-{
-  "label": "扬州市",
-  "value": "3210" },
-
-{
-  "label": "镇江市",
-  "value": "3211" },
-
-{
-  "label": "泰州市",
-  "value": "3212" },
-
-{
-  "label": "宿迁市",
-  "value": "3213" }],
-
-
-[{
-  "label": "杭州市",
-  "value": "3301" },
-
-{
-  "label": "宁波市",
-  "value": "3302" },
-
-{
-  "label": "温州市",
-  "value": "3303" },
-
-{
-  "label": "嘉兴市",
-  "value": "3304" },
-
-{
-  "label": "湖州市",
-  "value": "3305" },
-
-{
-  "label": "绍兴市",
-  "value": "3306" },
-
-{
-  "label": "金华市",
-  "value": "3307" },
-
-{
-  "label": "衢州市",
-  "value": "3308" },
-
-{
-  "label": "舟山市",
-  "value": "3309" },
-
-{
-  "label": "台州市",
-  "value": "3310" },
-
-{
-  "label": "丽水市",
-  "value": "3311" }],
-
-
-[{
-  "label": "合肥市",
-  "value": "3401" },
-
-{
-  "label": "芜湖市",
-  "value": "3402" },
-
-{
-  "label": "蚌埠市",
-  "value": "3403" },
-
-{
-  "label": "淮南市",
-  "value": "3404" },
-
-{
-  "label": "马鞍山市",
-  "value": "3405" },
-
-{
-  "label": "淮北市",
-  "value": "3406" },
-
-{
-  "label": "铜陵市",
-  "value": "3407" },
-
-{
-  "label": "安庆市",
-  "value": "3408" },
-
-{
-  "label": "黄山市",
-  "value": "3410" },
-
-{
-  "label": "滁州市",
-  "value": "3411" },
-
-{
-  "label": "阜阳市",
-  "value": "3412" },
-
-{
-  "label": "宿州市",
-  "value": "3413" },
-
-{
-  "label": "六安市",
-  "value": "3415" },
-
-{
-  "label": "亳州市",
-  "value": "3416" },
-
-{
-  "label": "池州市",
-  "value": "3417" },
-
-{
-  "label": "宣城市",
-  "value": "3418" }],
-
-
-[{
-  "label": "福州市",
-  "value": "3501" },
-
-{
-  "label": "厦门市",
-  "value": "3502" },
-
-{
-  "label": "莆田市",
-  "value": "3503" },
-
-{
-  "label": "三明市",
-  "value": "3504" },
-
-{
-  "label": "泉州市",
-  "value": "3505" },
-
-{
-  "label": "漳州市",
-  "value": "3506" },
-
-{
-  "label": "南平市",
-  "value": "3507" },
-
-{
-  "label": "龙岩市",
-  "value": "3508" },
-
-{
-  "label": "宁德市",
-  "value": "3509" }],
-
-
-[{
-  "label": "南昌市",
-  "value": "3601" },
-
-{
-  "label": "景德镇市",
-  "value": "3602" },
-
-{
-  "label": "萍乡市",
-  "value": "3603" },
-
-{
-  "label": "九江市",
-  "value": "3604" },
-
-{
-  "label": "新余市",
-  "value": "3605" },
-
-{
-  "label": "鹰潭市",
-  "value": "3606" },
-
-{
-  "label": "赣州市",
-  "value": "3607" },
-
-{
-  "label": "吉安市",
-  "value": "3608" },
-
-{
-  "label": "宜春市",
-  "value": "3609" },
-
-{
-  "label": "抚州市",
-  "value": "3610" },
-
-{
-  "label": "上饶市",
-  "value": "3611" }],
-
-
-[{
-  "label": "济南市",
-  "value": "3701" },
-
-{
-  "label": "青岛市",
-  "value": "3702" },
-
-{
-  "label": "淄博市",
-  "value": "3703" },
-
-{
-  "label": "枣庄市",
-  "value": "3704" },
-
-{
-  "label": "东营市",
-  "value": "3705" },
-
-{
-  "label": "烟台市",
-  "value": "3706" },
-
-{
-  "label": "潍坊市",
-  "value": "3707" },
-
-{
-  "label": "济宁市",
-  "value": "3708" },
-
-{
-  "label": "泰安市",
-  "value": "3709" },
-
-{
-  "label": "威海市",
-  "value": "3710" },
-
-{
-  "label": "日照市",
-  "value": "3711" },
-
-{
-  "label": "莱芜市",
-  "value": "3712" },
-
-{
-  "label": "临沂市",
-  "value": "3713" },
-
-{
-  "label": "德州市",
-  "value": "3714" },
-
-{
-  "label": "聊城市",
-  "value": "3715" },
-
-{
-  "label": "滨州市",
-  "value": "3716" },
-
-{
-  "label": "菏泽市",
-  "value": "3717" }],
-
-
-[{
-  "label": "郑州市",
-  "value": "4101" },
-
-{
-  "label": "开封市",
-  "value": "4102" },
-
-{
-  "label": "洛阳市",
-  "value": "4103" },
-
-{
-  "label": "平顶山市",
-  "value": "4104" },
-
-{
-  "label": "安阳市",
-  "value": "4105" },
-
-{
-  "label": "鹤壁市",
-  "value": "4106" },
-
-{
-  "label": "新乡市",
-  "value": "4107" },
-
-{
-  "label": "焦作市",
-  "value": "4108" },
-
-{
-  "label": "濮阳市",
-  "value": "4109" },
-
-{
-  "label": "许昌市",
-  "value": "4110" },
-
-{
-  "label": "漯河市",
-  "value": "4111" },
-
-{
-  "label": "三门峡市",
-  "value": "4112" },
-
-{
-  "label": "南阳市",
-  "value": "4113" },
-
-{
-  "label": "商丘市",
-  "value": "4114" },
-
-{
-  "label": "信阳市",
-  "value": "4115" },
-
-{
-  "label": "周口市",
-  "value": "4116" },
-
-{
-  "label": "驻马店市",
-  "value": "4117" },
-
-{
-  "label": "省直辖县级行政区划",
-  "value": "4190" }],
-
-
-[{
-  "label": "武汉市",
-  "value": "4201" },
-
-{
-  "label": "黄石市",
-  "value": "4202" },
-
-{
-  "label": "十堰市",
-  "value": "4203" },
-
-{
-  "label": "宜昌市",
-  "value": "4205" },
-
-{
-  "label": "襄阳市",
-  "value": "4206" },
-
-{
-  "label": "鄂州市",
-  "value": "4207" },
-
-{
-  "label": "荆门市",
-  "value": "4208" },
-
-{
-  "label": "孝感市",
-  "value": "4209" },
-
-{
-  "label": "荆州市",
-  "value": "4210" },
-
-{
-  "label": "黄冈市",
-  "value": "4211" },
-
-{
-  "label": "咸宁市",
-  "value": "4212" },
-
-{
-  "label": "随州市",
-  "value": "4213" },
-
-{
-  "label": "恩施土家族苗族自治州",
-  "value": "4228" },
-
-{
-  "label": "省直辖县级行政区划",
-  "value": "4290" }],
-
-
-[{
-  "label": "长沙市",
-  "value": "4301" },
-
-{
-  "label": "株洲市",
-  "value": "4302" },
-
-{
-  "label": "湘潭市",
-  "value": "4303" },
-
-{
-  "label": "衡阳市",
-  "value": "4304" },
-
-{
-  "label": "邵阳市",
-  "value": "4305" },
-
-{
-  "label": "岳阳市",
-  "value": "4306" },
-
-{
-  "label": "常德市",
-  "value": "4307" },
-
-{
-  "label": "张家界市",
-  "value": "4308" },
-
-{
-  "label": "益阳市",
-  "value": "4309" },
-
-{
-  "label": "郴州市",
-  "value": "4310" },
-
-{
-  "label": "永州市",
-  "value": "4311" },
-
-{
-  "label": "怀化市",
-  "value": "4312" },
-
-{
-  "label": "娄底市",
-  "value": "4313" },
-
-{
-  "label": "湘西土家族苗族自治州",
-  "value": "4331" }],
-
-
-[{
-  "label": "广州市",
-  "value": "4401" },
-
-{
-  "label": "韶关市",
-  "value": "4402" },
-
-{
-  "label": "深圳市",
-  "value": "4403" },
-
-{
-  "label": "珠海市",
-  "value": "4404" },
-
-{
-  "label": "汕头市",
-  "value": "4405" },
-
-{
-  "label": "佛山市",
-  "value": "4406" },
-
-{
-  "label": "江门市",
-  "value": "4407" },
-
-{
-  "label": "湛江市",
-  "value": "4408" },
-
-{
-  "label": "茂名市",
-  "value": "4409" },
-
-{
-  "label": "肇庆市",
-  "value": "4412" },
-
-{
-  "label": "惠州市",
-  "value": "4413" },
-
-{
-  "label": "梅州市",
-  "value": "4414" },
-
-{
-  "label": "汕尾市",
-  "value": "4415" },
-
-{
-  "label": "河源市",
-  "value": "4416" },
-
-{
-  "label": "阳江市",
-  "value": "4417" },
-
-{
-  "label": "清远市",
-  "value": "4418" },
-
-{
-  "label": "东莞市",
-  "value": "4419" },
-
-{
-  "label": "中山市",
-  "value": "4420" },
-
-{
-  "label": "潮州市",
-  "value": "4451" },
-
-{
-  "label": "揭阳市",
-  "value": "4452" },
-
-{
-  "label": "云浮市",
-  "value": "4453" }],
-
-
-[{
-  "label": "南宁市",
-  "value": "4501" },
-
-{
-  "label": "柳州市",
-  "value": "4502" },
-
-{
-  "label": "桂林市",
-  "value": "4503" },
-
-{
-  "label": "梧州市",
-  "value": "4504" },
-
-{
-  "label": "北海市",
-  "value": "4505" },
-
-{
-  "label": "防城港市",
-  "value": "4506" },
-
-{
-  "label": "钦州市",
-  "value": "4507" },
-
-{
-  "label": "贵港市",
-  "value": "4508" },
-
-{
-  "label": "玉林市",
-  "value": "4509" },
-
-{
-  "label": "百色市",
-  "value": "4510" },
-
-{
-  "label": "贺州市",
-  "value": "4511" },
-
-{
-  "label": "河池市",
-  "value": "4512" },
-
-{
-  "label": "来宾市",
-  "value": "4513" },
-
-{
-  "label": "崇左市",
-  "value": "4514" }],
-
-
-[{
-  "label": "海口市",
-  "value": "4601" },
-
-{
-  "label": "三亚市",
-  "value": "4602" },
-
-{
-  "label": "三沙市",
-  "value": "4603" },
-
-{
-  "label": "儋州市",
-  "value": "4604" },
-
-{
-  "label": "省直辖县级行政区划",
-  "value": "4690" }],
-
-
-[{
-  "label": "市辖区",
-  "value": "5001" },
-
-{
-  "label": "县",
-  "value": "5002" }],
-
-
-[{
-  "label": "成都市",
-  "value": "5101" },
-
-{
-  "label": "自贡市",
-  "value": "5103" },
-
-{
-  "label": "攀枝花市",
-  "value": "5104" },
-
-{
-  "label": "泸州市",
-  "value": "5105" },
-
-{
-  "label": "德阳市",
-  "value": "5106" },
-
-{
-  "label": "绵阳市",
-  "value": "5107" },
-
-{
-  "label": "广元市",
-  "value": "5108" },
-
-{
-  "label": "遂宁市",
-  "value": "5109" },
-
-{
-  "label": "内江市",
-  "value": "5110" },
-
-{
-  "label": "乐山市",
-  "value": "5111" },
-
-{
-  "label": "南充市",
-  "value": "5113" },
-
-{
-  "label": "眉山市",
-  "value": "5114" },
-
-{
-  "label": "宜宾市",
-  "value": "5115" },
-
-{
-  "label": "广安市",
-  "value": "5116" },
-
-{
-  "label": "达州市",
-  "value": "5117" },
-
-{
-  "label": "雅安市",
-  "value": "5118" },
-
-{
-  "label": "巴中市",
-  "value": "5119" },
-
-{
-  "label": "资阳市",
-  "value": "5120" },
-
-{
-  "label": "阿坝藏族羌族自治州",
-  "value": "5132" },
-
-{
-  "label": "甘孜藏族自治州",
-  "value": "5133" },
-
-{
-  "label": "凉山彝族自治州",
-  "value": "5134" }],
-
-
-[{
-  "label": "贵阳市",
-  "value": "5201" },
-
-{
-  "label": "六盘水市",
-  "value": "5202" },
-
-{
-  "label": "遵义市",
-  "value": "5203" },
-
-{
-  "label": "安顺市",
-  "value": "5204" },
-
-{
-  "label": "毕节市",
-  "value": "5205" },
-
-{
-  "label": "铜仁市",
-  "value": "5206" },
-
-{
-  "label": "黔西南布依族苗族自治州",
-  "value": "5223" },
-
-{
-  "label": "黔东南苗族侗族自治州",
-  "value": "5226" },
-
-{
-  "label": "黔南布依族苗族自治州",
-  "value": "5227" }],
-
-
-[{
-  "label": "昆明市",
-  "value": "5301" },
-
-{
-  "label": "曲靖市",
-  "value": "5303" },
-
-{
-  "label": "玉溪市",
-  "value": "5304" },
-
-{
-  "label": "保山市",
-  "value": "5305" },
-
-{
-  "label": "昭通市",
-  "value": "5306" },
-
-{
-  "label": "丽江市",
-  "value": "5307" },
-
-{
-  "label": "普洱市",
-  "value": "5308" },
-
-{
-  "label": "临沧市",
-  "value": "5309" },
-
-{
-  "label": "楚雄彝族自治州",
-  "value": "5323" },
-
-{
-  "label": "红河哈尼族彝族自治州",
-  "value": "5325" },
-
-{
-  "label": "文山壮族苗族自治州",
-  "value": "5326" },
-
-{
-  "label": "西双版纳傣族自治州",
-  "value": "5328" },
-
-{
-  "label": "大理白族自治州",
-  "value": "5329" },
-
-{
-  "label": "德宏傣族景颇族自治州",
-  "value": "5331" },
-
-{
-  "label": "怒江傈僳族自治州",
-  "value": "5333" },
-
-{
-  "label": "迪庆藏族自治州",
-  "value": "5334" }],
-
-
-[{
-  "label": "拉萨市",
-  "value": "5401" },
-
-{
-  "label": "日喀则市",
-  "value": "5402" },
-
-{
-  "label": "昌都市",
-  "value": "5403" },
-
-{
-  "label": "林芝市",
-  "value": "5404" },
-
-{
-  "label": "山南市",
-  "value": "5405" },
-
-{
-  "label": "那曲地区",
-  "value": "5424" },
-
-{
-  "label": "阿里地区",
-  "value": "5425" }],
-
-
-[{
-  "label": "西安市",
-  "value": "6101" },
-
-{
-  "label": "铜川市",
-  "value": "6102" },
-
-{
-  "label": "宝鸡市",
-  "value": "6103" },
-
-{
-  "label": "咸阳市",
-  "value": "6104" },
-
-{
-  "label": "渭南市",
-  "value": "6105" },
-
-{
-  "label": "延安市",
-  "value": "6106" },
-
-{
-  "label": "汉中市",
-  "value": "6107" },
-
-{
-  "label": "榆林市",
-  "value": "6108" },
-
-{
-  "label": "安康市",
-  "value": "6109" },
-
-{
-  "label": "商洛市",
-  "value": "6110" }],
-
-
-[{
-  "label": "兰州市",
-  "value": "6201" },
-
-{
-  "label": "嘉峪关市",
-  "value": "6202" },
-
-{
-  "label": "金昌市",
-  "value": "6203" },
-
-{
-  "label": "白银市",
-  "value": "6204" },
-
-{
-  "label": "天水市",
-  "value": "6205" },
-
-{
-  "label": "武威市",
-  "value": "6206" },
-
-{
-  "label": "张掖市",
-  "value": "6207" },
-
-{
-  "label": "平凉市",
-  "value": "6208" },
-
-{
-  "label": "酒泉市",
-  "value": "6209" },
-
-{
-  "label": "庆阳市",
-  "value": "6210" },
-
-{
-  "label": "定西市",
-  "value": "6211" },
-
-{
-  "label": "陇南市",
-  "value": "6212" },
-
-{
-  "label": "临夏回族自治州",
-  "value": "6229" },
-
-{
-  "label": "甘南藏族自治州",
-  "value": "6230" }],
-
-
-[{
-  "label": "西宁市",
-  "value": "6301" },
-
-{
-  "label": "海东市",
-  "value": "6302" },
-
-{
-  "label": "海北藏族自治州",
-  "value": "6322" },
-
-{
-  "label": "黄南藏族自治州",
-  "value": "6323" },
-
-{
-  "label": "海南藏族自治州",
-  "value": "6325" },
-
-{
-  "label": "果洛藏族自治州",
-  "value": "6326" },
-
-{
-  "label": "玉树藏族自治州",
-  "value": "6327" },
-
-{
-  "label": "海西蒙古族藏族自治州",
-  "value": "6328" }],
-
-
-[{
-  "label": "银川市",
-  "value": "6401" },
-
-{
-  "label": "石嘴山市",
-  "value": "6402" },
-
-{
-  "label": "吴忠市",
-  "value": "6403" },
-
-{
-  "label": "固原市",
-  "value": "6404" },
-
-{
-  "label": "中卫市",
-  "value": "6405" }],
-
-
-[{
-  "label": "乌鲁木齐市",
-  "value": "6501" },
-
-{
-  "label": "克拉玛依市",
-  "value": "6502" },
-
-{
-  "label": "吐鲁番市",
-  "value": "6504" },
-
-{
-  "label": "哈密市",
-  "value": "6505" },
-
-{
-  "label": "昌吉回族自治州",
-  "value": "6523" },
-
-{
-  "label": "博尔塔拉蒙古自治州",
-  "value": "6527" },
-
-{
-  "label": "巴音郭楞蒙古自治州",
-  "value": "6528" },
-
-{
-  "label": "阿克苏地区",
-  "value": "6529" },
-
-{
-  "label": "克孜勒苏柯尔克孜自治州",
-  "value": "6530" },
-
-{
-  "label": "喀什地区",
-  "value": "6531" },
-
-{
-  "label": "和田地区",
-  "value": "6532" },
-
-{
-  "label": "伊犁哈萨克自治州",
-  "value": "6540" },
-
-{
-  "label": "塔城地区",
-  "value": "6542" },
-
-{
-  "label": "阿勒泰地区",
-  "value": "6543" },
-
-{
-  "label": "自治区直辖县级行政区划",
-  "value": "6590" }],
-
-
-[{
-  "label": "台北",
-  "value": "6601" },
-
-{
-  "label": "高雄",
-  "value": "6602" },
-
-{
-  "label": "基隆",
-  "value": "6603" },
-
-{
-  "label": "台中",
-  "value": "6604" },
-
-{
-  "label": "台南",
-  "value": "6605" },
-
-{
-  "label": "新竹",
-  "value": "6606" },
-
-{
-  "label": "嘉义",
-  "value": "6607" },
-
-{
-  "label": "宜兰",
-  "value": "6608" },
-
-{
-  "label": "桃园",
-  "value": "6609" },
-
-{
-  "label": "苗栗",
-  "value": "6610" },
-
-{
-  "label": "彰化",
-  "value": "6611" },
-
-{
-  "label": "南投",
-  "value": "6612" },
-
-{
-  "label": "云林",
-  "value": "6613" },
-
-{
-  "label": "屏东",
-  "value": "6614" },
-
-{
-  "label": "台东",
-  "value": "6615" },
-
-{
-  "label": "花莲",
-  "value": "6616" },
-
-{
-  "label": "澎湖",
-  "value": "6617" }],
-
-
-[{
-  "label": "香港岛",
-  "value": "6701" },
-
-{
-  "label": "九龙",
-  "value": "6702" },
-
-{
-  "label": "新界",
-  "value": "6703" }],
-
-
-[{
-  "label": "澳门半岛",
-  "value": "6801" },
-
-{
-  "label": "氹仔岛",
-  "value": "6802" },
-
-{
-  "label": "路环岛",
-  "value": "6803" },
-
-{
-  "label": "路氹城",
-  "value": "6804" }]];var _default =
-
-
-
-cityData;exports.default = _default;
 
 /***/ }),
 
@@ -9323,7 +7102,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9344,14 +7123,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9427,7 +7206,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9804,7 +7583,2228 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 200:
+/***/ 206:
+/*!**********************************************************************!*\
+  !*** F:/谭鑫锋/miniProgram/uni-app/components/uni-calendar/calendar.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                     * @1900-2100区间内的公历、农历互转
+                                                                                                     * @charset UTF-8
+                                                                                                     * @github  https://github.com/jjonline/calendar.js
+                                                                                                     * @Author  Jea杨(JJonline@JJonline.Cn)
+                                                                                                     * @Time    2014-7-21
+                                                                                                     * @Time    2016-8-13 Fixed 2033hex、Attribution Annals
+                                                                                                     * @Time    2016-9-25 Fixed lunar LeapMonth Param Bug
+                                                                                                     * @Time    2017-7-24 Fixed use getTerm Func Param Error.use solar year,NOT lunar year
+                                                                                                     * @Version 1.0.3
+                                                                                                     * @公历转农历：calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
+                                                                                                     * @农历转公历：calendar.lunar2solar(1987,09,10); //[you can ignore params of prefix 0]
+                                                                                                     */
+/* eslint-disable */
+var calendar = {
+
+  /**
+                     * 农历1900-2100的润大小信息表
+                     * @Array Of Property
+                     * @return Hex
+                     */
+  lunarInfo: [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
+  0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
+  0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
+  0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950, // 1930-1939
+  0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2, 0x0a950, 0x0b557, // 1940-1949
+  0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5b0, 0x14573, 0x052b0, 0x0a9a8, 0x0e950, 0x06aa0, // 1950-1959
+  0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950, 0x05b57, 0x056a0, // 1960-1969
+  0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540, 0x0b6a0, 0x195a6, // 1970-1979
+  0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46, 0x0ab60, 0x09570, // 1980-1989
+  0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x05ac0, 0x0ab60, 0x096d5, 0x092e0, // 1990-1999
+  0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5, // 2000-2009
+  0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930, // 2010-2019
+  0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530, // 2020-2029
+  0x05aa0, 0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, // 2030-2039
+  0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0, // 2040-2049
+  /** Add By JJonline@JJonline.Cn**/
+  0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0, // 2050-2059
+  0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4, // 2060-2069
+  0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0, // 2070-2079
+  0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160, // 2080-2089
+  0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252, // 2090-2099
+  0x0d520], // 2100
+
+  /**
+      * 公历每个月份的天数普通表
+      * @Array Of Property
+      * @return Number
+      */
+  solarMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+
+  /**
+                                                                    * 天干地支之天干速查表
+                                                                    * @Array Of Property trans["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"]
+                                                                    * @return Cn string
+                                                                    */
+  Gan: ["\u7532", "\u4E59", "\u4E19", "\u4E01", "\u620A", "\u5DF1", "\u5E9A", "\u8F9B", "\u58EC", "\u7678"],
+
+  /**
+                                                                                                                 * 天干地支之地支速查表
+                                                                                                                 * @Array Of Property
+                                                                                                                 * @trans["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"]
+                                                                                                                 * @return Cn string
+                                                                                                                 */
+  Zhi: ["\u5B50", "\u4E11", "\u5BC5", "\u536F", "\u8FB0", "\u5DF3", "\u5348", "\u672A", "\u7533", "\u9149", "\u620C", "\u4EA5"],
+
+  /**
+                                                                                                                                     * 天干地支之地支速查表<=>生肖
+                                                                                                                                     * @Array Of Property
+                                                                                                                                     * @trans["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"]
+                                                                                                                                     * @return Cn string
+                                                                                                                                     */
+  Animals: ["\u9F20", "\u725B", "\u864E", "\u5154", "\u9F99", "\u86C7", "\u9A6C", "\u7F8A", "\u7334", "\u9E21", "\u72D7", "\u732A"],
+
+  /**
+                                                                                                                                         * 24节气速查表
+                                                                                                                                         * @Array Of Property
+                                                                                                                                         * @trans["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"]
+                                                                                                                                         * @return Cn string
+                                                                                                                                         */
+  solarTerm: ["\u5C0F\u5BD2", "\u5927\u5BD2", "\u7ACB\u6625", "\u96E8\u6C34", "\u60CA\u86F0", "\u6625\u5206", "\u6E05\u660E", "\u8C37\u96E8", "\u7ACB\u590F", "\u5C0F\u6EE1", "\u8292\u79CD", "\u590F\u81F3", "\u5C0F\u6691", "\u5927\u6691", "\u7ACB\u79CB", "\u5904\u6691", "\u767D\u9732", "\u79CB\u5206", "\u5BD2\u9732", "\u971C\u964D", "\u7ACB\u51AC", "\u5C0F\u96EA", "\u5927\u96EA", "\u51AC\u81F3"],
+
+  /**
+                                                                                                                                                                                                                                                                                                                                                                                                                   * 1900-2100各年的24节气日期速查表
+                                                                                                                                                                                                                                                                                                                                                                                                                   * @Array Of Property
+                                                                                                                                                                                                                                                                                                                                                                                                                   * @return 0x string For splice
+                                                                                                                                                                                                                                                                                                                                                                                                                   */
+  sTermInfo: ['9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf97c3598082c95f8c965cc920f',
+  '97bd0b06bdb0722c965ce1cfcc920f', 'b027097bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+  '97bcf97c359801ec95f8c965cc920f', '97bd0b06bdb0722c965ce1cfcc920f', 'b027097bd097c36b0b6fc9274c91aa',
+  '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f', '97bd0b06bdb0722c965ce1cfcc920f',
+  'b027097bd097c36b0b6fc9274c91aa', '9778397bd19801ec9210c965cc920e', '97b6b97bd19801ec95f8c965cc920f',
+  '97bd09801d98082c95f8e1cfcc920f', '97bd097bd097c36b0b6fc9210c8dc2', '9778397bd197c36c9210c9274c91aa',
+  '97b6b97bd19801ec95f8c965cc920e', '97bd09801d98082c95f8e1cfcc920f', '97bd097bd097c36b0b6fc9210c8dc2',
+  '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec95f8c965cc920e', '97bcf97c3598082c95f8e1cfcc920f',
+  '97bd097bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+  '97bcf97c3598082c95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+  '97b6b97bd19801ec9210c965cc920e', '97bcf97c3598082c95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722',
+  '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f',
+  '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+  '97bcf97c359801ec95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+  '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f', '97bd097bd07f595b0b6fc920fb0722',
+  '9778397bd097c36b0b6fc9210c8dc2', '9778397bd19801ec9210c9274c920e', '97b6b97bd19801ec95f8c965cc920f',
+  '97bd07f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c920e',
+  '97b6b97bd19801ec95f8c965cc920f', '97bd07f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2',
+  '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bd07f1487f595b0b0bc920fb0722',
+  '7f0e397bd097c36b0b6fc9210c8dc2', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+  '97bcf7f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+  '97b6b97bd19801ec9210c965cc920e', '97bcf7f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
+  '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf7f1487f531b0b0bb0b6fb0722',
+  '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+  '97bcf7f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+  '97b6b97bd19801ec9210c9274c920e', '97bcf7f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
+  '9778397bd097c36b0b6fc9210c91aa', '97b6b97bd197c36c9210c9274c920e', '97bcf7f0e47f531b0b0bb0b6fb0722',
+  '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c920e',
+  '97b6b7f0e47f531b0723b0b6fb0722', '7f0e37f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2',
+  '9778397bd097c36b0b70c9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721', '7f0e37f1487f595b0b0bb0b6fb0722',
+  '7f0e397bd097c35b0b6fc9210c8dc2', '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721',
+  '7f0e27f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+  '97b6b7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
+  '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
+  '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721',
+  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+  '97b6b7f0e47f531b0723b0787b0721', '7f0e27f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
+  '9778397bd097c36b0b6fc9210c91aa', '97b6b7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
+  '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9210c8dc2', '977837f0e37f149b0723b0787b0721',
+  '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f5307f595b0b0bc920fb0722', '7f0e397bd097c35b0b6fc9210c8dc2',
+  '977837f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e37f1487f595b0b0bb0b6fb0722',
+  '7f0e397bd097c35b0b6fc9210c8dc2', '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '977837f0e37f14998082b0787b06bd',
+  '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
+  '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
+  '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14998082b0787b06bd',
+  '7f07e7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
+  '977837f0e37f14998082b0723b06bd', '7f07e7f0e37f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
+  '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b0721',
+  '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f1487f595b0b0bb0b6fb0722', '7f0e37f0e37f14898082b0723b02d5',
+  '7ec967f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f1487f531b0b0bb0b6fb0722',
+  '7f0e37f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+  '7f0e37f1487f531b0b0bb0b6fb0722', '7f0e37f0e37f14898082b072297c35', '7ec967f0e37f14998082b0787b06bd',
+  '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e37f0e37f14898082b072297c35',
+  '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
+  '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f149b0723b0787b0721',
+  '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14998082b0723b06bd',
+  '7f07e7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722', '7f0e37f0e366aa89801eb072297c35',
+  '7ec967f0e37f14998082b0723b06bd', '7f07e7f0e37f14998083b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
+  '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14898082b0723b02d5', '7f07e7f0e37f14998082b0787b0721',
+  '7f07e7f0e47f531b0723b0b6fb0722', '7f0e36665b66aa89801e9808297c35', '665f67f0e37f14898082b0723b02d5',
+  '7ec967f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0722', '7f0e36665b66a449801e9808297c35',
+  '665f67f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+  '7f0e36665b66a449801e9808297c35', '665f67f0e37f14898082b072297c35', '7ec967f0e37f14998082b0787b06bd',
+  '7f07e7f0e47f531b0723b0b6fb0721', '7f0e26665b66a449801e9808297c35', '665f67f0e37f1489801eb072297c35',
+  '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722'],
+
+  /**
+                                                                                                             * 数字转中文速查表
+                                                                                                             * @Array Of Property
+                                                                                                             * @trans ['日','一','二','三','四','五','六','七','八','九','十']
+                                                                                                             * @return Cn string
+                                                                                                             */
+  nStr1: ["\u65E5", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341"],
+
+  /**
+                                                                                                                             * 日期转农历称呼速查表
+                                                                                                                             * @Array Of Property
+                                                                                                                             * @trans ['初','十','廿','卅']
+                                                                                                                             * @return Cn string
+                                                                                                                             */
+  nStr2: ["\u521D", "\u5341", "\u5EFF", "\u5345"],
+
+  /**
+                                                       * 月份转农历称呼速查表
+                                                       * @Array Of Property
+                                                       * @trans ['正','一','二','三','四','五','六','七','八','九','十','冬','腊']
+                                                       * @return Cn string
+                                                       */
+  nStr3: ["\u6B63", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u51AC", "\u814A"],
+
+  /**
+                                                                                                                                       * 返回农历y年一整年的总天数
+                                                                                                                                       * @param lunar Year
+                                                                                                                                       * @return Number
+                                                                                                                                       * @eg:var count = calendar.lYearDays(1987) ;//count=387
+                                                                                                                                       */
+  lYearDays: function lYearDays(y) {
+    var i;var sum = 348;
+    for (i = 0x8000; i > 0x8; i >>= 1) {sum += this.lunarInfo[y - 1900] & i ? 1 : 0;}
+    return sum + this.leapDays(y);
+  },
+
+  /**
+         * 返回农历y年闰月是哪个月；若y年没有闰月 则返回0
+         * @param lunar Year
+         * @return Number (0-12)
+         * @eg:var leapMonth = calendar.leapMonth(1987) ;//leapMonth=6
+         */
+  leapMonth: function leapMonth(y) {// 闰字编码 \u95f0
+    return this.lunarInfo[y - 1900] & 0xf;
+  },
+
+  /**
+         * 返回农历y年闰月的天数 若该年没有闰月则返回0
+         * @param lunar Year
+         * @return Number (0、29、30)
+         * @eg:var leapMonthDay = calendar.leapDays(1987) ;//leapMonthDay=29
+         */
+  leapDays: function leapDays(y) {
+    if (this.leapMonth(y)) {
+      return this.lunarInfo[y - 1900] & 0x10000 ? 30 : 29;
+    }
+    return 0;
+  },
+
+  /**
+         * 返回农历y年m月（非闰月）的总天数，计算m为闰月时的天数请使用leapDays方法
+         * @param lunar Year
+         * @return Number (-1、29、30)
+         * @eg:var MonthDay = calendar.monthDays(1987,9) ;//MonthDay=29
+         */
+  monthDays: function monthDays(y, m) {
+    if (m > 12 || m < 1) {return -1;} // 月份参数从1至12，参数错误返回-1
+    return this.lunarInfo[y - 1900] & 0x10000 >> m ? 30 : 29;
+  },
+
+  /**
+         * 返回公历(!)y年m月的天数
+         * @param solar Year
+         * @return Number (-1、28、29、30、31)
+         * @eg:var solarMonthDay = calendar.leapDays(1987) ;//solarMonthDay=30
+         */
+  solarDays: function solarDays(y, m) {
+    if (m > 12 || m < 1) {return -1;} // 若参数错误 返回-1
+    var ms = m - 1;
+    if (ms == 1) {// 2月份的闰平规律测算后确认返回28或29
+      return y % 4 == 0 && y % 100 != 0 || y % 400 == 0 ? 29 : 28;
+    } else {
+      return this.solarMonth[ms];
+    }
+  },
+
+  /**
+        * 农历年份转换为干支纪年
+        * @param  lYear 农历年的年份数
+        * @return Cn string
+        */
+  toGanZhiYear: function toGanZhiYear(lYear) {
+    var ganKey = (lYear - 3) % 10;
+    var zhiKey = (lYear - 3) % 12;
+    if (ganKey == 0) ganKey = 10; // 如果余数为0则为最后一个天干
+    if (zhiKey == 0) zhiKey = 12; // 如果余数为0则为最后一个地支
+    return this.Gan[ganKey - 1] + this.Zhi[zhiKey - 1];
+  },
+
+  /**
+        * 公历月、日判断所属星座
+        * @param  cMonth [description]
+        * @param  cDay [description]
+        * @return Cn string
+        */
+  toAstro: function toAstro(cMonth, cDay) {
+    var s = "\u9B54\u7FAF\u6C34\u74F6\u53CC\u9C7C\u767D\u7F8A\u91D1\u725B\u53CC\u5B50\u5DE8\u87F9\u72EE\u5B50\u5904\u5973\u5929\u79E4\u5929\u874E\u5C04\u624B\u9B54\u7FAF";
+    var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+    return s.substr(cMonth * 2 - (cDay < arr[cMonth - 1] ? 2 : 0), 2) + "\u5EA7"; // 座
+  },
+
+  /**
+         * 传入offset偏移量返回干支
+         * @param offset 相对甲子的偏移量
+         * @return Cn string
+         */
+  toGanZhi: function toGanZhi(offset) {
+    return this.Gan[offset % 10] + this.Zhi[offset % 12];
+  },
+
+  /**
+         * 传入公历(!)y年获得该年第n个节气的公历日期
+         * @param y公历年(1900-2100)；n二十四节气中的第几个节气(1~24)；从n=1(小寒)算起
+         * @return day Number
+         * @eg:var _24 = calendar.getTerm(1987,3) ;//_24=4;意即1987年2月4日立春
+         */
+  getTerm: function getTerm(y, n) {
+    if (y < 1900 || y > 2100) {return -1;}
+    if (n < 1 || n > 24) {return -1;}
+    var _table = this.sTermInfo[y - 1900];
+    var _info = [
+    parseInt('0x' + _table.substr(0, 5)).toString(),
+    parseInt('0x' + _table.substr(5, 5)).toString(),
+    parseInt('0x' + _table.substr(10, 5)).toString(),
+    parseInt('0x' + _table.substr(15, 5)).toString(),
+    parseInt('0x' + _table.substr(20, 5)).toString(),
+    parseInt('0x' + _table.substr(25, 5)).toString()];
+
+    var _calday = [
+    _info[0].substr(0, 1),
+    _info[0].substr(1, 2),
+    _info[0].substr(3, 1),
+    _info[0].substr(4, 2),
+
+    _info[1].substr(0, 1),
+    _info[1].substr(1, 2),
+    _info[1].substr(3, 1),
+    _info[1].substr(4, 2),
+
+    _info[2].substr(0, 1),
+    _info[2].substr(1, 2),
+    _info[2].substr(3, 1),
+    _info[2].substr(4, 2),
+
+    _info[3].substr(0, 1),
+    _info[3].substr(1, 2),
+    _info[3].substr(3, 1),
+    _info[3].substr(4, 2),
+
+    _info[4].substr(0, 1),
+    _info[4].substr(1, 2),
+    _info[4].substr(3, 1),
+    _info[4].substr(4, 2),
+
+    _info[5].substr(0, 1),
+    _info[5].substr(1, 2),
+    _info[5].substr(3, 1),
+    _info[5].substr(4, 2)];
+
+    return parseInt(_calday[n - 1]);
+  },
+
+  /**
+         * 传入农历数字月份返回汉语通俗表示法
+         * @param lunar month
+         * @return Cn string
+         * @eg:var cnMonth = calendar.toChinaMonth(12) ;//cnMonth='腊月'
+         */
+  toChinaMonth: function toChinaMonth(m) {// 月 => \u6708
+    if (m > 12 || m < 1) {return -1;} // 若参数错误 返回-1
+    var s = this.nStr3[m - 1];
+    s += "\u6708"; // 加上月字
+    return s;
+  },
+
+  /**
+         * 传入农历日期数字返回汉字表示法
+         * @param lunar day
+         * @return Cn string
+         * @eg:var cnDay = calendar.toChinaDay(21) ;//cnMonth='廿一'
+         */
+  toChinaDay: function toChinaDay(d) {// 日 => \u65e5
+    var s;
+    switch (d) {
+      case 10:
+        s = "\u521D\u5341";break;
+      case 20:
+        s = "\u4E8C\u5341";break;
+        break;
+      case 30:
+        s = "\u4E09\u5341";break;
+        break;
+      default:
+        s = this.nStr2[Math.floor(d / 10)];
+        s += this.nStr1[d % 10];}
+
+    return s;
+  },
+
+  /**
+         * 年份转生肖[!仅能大致转换] => 精确划分生肖分界线是“立春”
+         * @param y year
+         * @return Cn string
+         * @eg:var animal = calendar.getAnimal(1987) ;//animal='兔'
+         */
+  getAnimal: function getAnimal(y) {
+    return this.Animals[(y - 4) % 12];
+  },
+
+  /**
+         * 传入阳历年月日获得详细的公历、农历object信息 <=>JSON
+         * @param y  solar year
+         * @param m  solar month
+         * @param d  solar day
+         * @return JSON object
+         * @eg:console.log(calendar.solar2lunar(1987,11,01));
+         */
+  solar2lunar: function solar2lunar(y, m, d) {// 参数区间1900.1.31~2100.12.31
+    // 年份限定、上限
+    if (y < 1900 || y > 2100) {
+      return -1; // undefined转换为数字变为NaN
+    }
+    // 公历传参最下限
+    if (y == 1900 && m == 1 && d < 31) {
+      return -1;
+    }
+    // 未传参  获得当天
+    if (!y) {
+      var objDate = new Date();
+    } else {
+      var objDate = new Date(y, parseInt(m) - 1, d);
+    }
+    var i;var leap = 0;var temp = 0;
+    // 修正ymd参数
+    var y = objDate.getFullYear();
+    var m = objDate.getMonth() + 1;
+    var d = objDate.getDate();
+    var offset = (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) - Date.UTC(1900, 0, 31)) / 86400000;
+    for (i = 1900; i < 2101 && offset > 0; i++) {
+      temp = this.lYearDays(i);
+      offset -= temp;
+    }
+    if (offset < 0) {
+      offset += temp;i--;
+    }
+
+    // 是否今天
+    var isTodayObj = new Date();
+    var isToday = false;
+    if (isTodayObj.getFullYear() == y && isTodayObj.getMonth() + 1 == m && isTodayObj.getDate() == d) {
+      isToday = true;
+    }
+    // 星期几
+    var nWeek = objDate.getDay();
+    var cWeek = this.nStr1[nWeek];
+    // 数字表示周几顺应天朝周一开始的惯例
+    if (nWeek == 0) {
+      nWeek = 7;
+    }
+    // 农历年
+    var year = i;
+    var leap = this.leapMonth(i); // 闰哪个月
+    var isLeap = false;
+
+    // 效验闰月
+    for (i = 1; i < 13 && offset > 0; i++) {
+      // 闰月
+      if (leap > 0 && i == leap + 1 && isLeap == false) {
+        --i;
+        isLeap = true;temp = this.leapDays(year); // 计算农历闰月天数
+      } else {
+        temp = this.monthDays(year, i); // 计算农历普通月天数
+      }
+      // 解除闰月
+      if (isLeap == true && i == leap + 1) {isLeap = false;}
+      offset -= temp;
+    }
+    // 闰月导致数组下标重叠取反
+    if (offset == 0 && leap > 0 && i == leap + 1) {
+      if (isLeap) {
+        isLeap = false;
+      } else {
+        isLeap = true;--i;
+      }
+    }
+    if (offset < 0) {
+      offset += temp;--i;
+    }
+    // 农历月
+    var month = i;
+    // 农历日
+    var day = offset + 1;
+    // 天干地支处理
+    var sm = m - 1;
+    var gzY = this.toGanZhiYear(year);
+
+    // 当月的两个节气
+    // bugfix-2017-7-24 11:03:38 use lunar Year Param `y` Not `year`
+    var firstNode = this.getTerm(y, m * 2 - 1); // 返回当月「节」为几日开始
+    var secondNode = this.getTerm(y, m * 2); // 返回当月「节」为几日开始
+
+    // 依据12节气修正干支月
+    var gzM = this.toGanZhi((y - 1900) * 12 + m + 11);
+    if (d >= firstNode) {
+      gzM = this.toGanZhi((y - 1900) * 12 + m + 12);
+    }
+
+    // 传入的日期的节气与否
+    var isTerm = false;
+    var Term = null;
+    if (firstNode == d) {
+      isTerm = true;
+      Term = this.solarTerm[m * 2 - 2];
+    }
+    if (secondNode == d) {
+      isTerm = true;
+      Term = this.solarTerm[m * 2 - 1];
+    }
+    // 日柱 当月一日与 1900/1/1 相差天数
+    var dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10;
+    var gzD = this.toGanZhi(dayCyclical + d - 1);
+    // 该日期所属的星座
+    var astro = this.toAstro(m, d);
+
+    return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': this.getAnimal(year), 'IMonthCn': (isLeap ? "\u95F0" : '') + this.toChinaMonth(month), 'IDayCn': this.toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': "\u661F\u671F" + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro };
+  },
+
+  /**
+         * 传入农历年月日以及传入的月份是否闰月获得详细的公历、农历object信息 <=>JSON
+         * @param y  lunar year
+         * @param m  lunar month
+         * @param d  lunar day
+         * @param isLeapMonth  lunar month is leap or not.[如果是农历闰月第四个参数赋值true即可]
+         * @return JSON object
+         * @eg:console.log(calendar.lunar2solar(1987,9,10));
+         */
+  lunar2solar: function lunar2solar(y, m, d, isLeapMonth) {// 参数区间1900.1.31~2100.12.1
+    var isLeapMonth = !!isLeapMonth;
+    var leapOffset = 0;
+    var leapMonth = this.leapMonth(y);
+    var leapDay = this.leapDays(y);
+    if (isLeapMonth && leapMonth != m) {return -1;} // 传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
+    if (y == 2100 && m == 12 && d > 1 || y == 1900 && m == 1 && d < 31) {return -1;} // 超出了最大极限值
+    var day = this.monthDays(y, m);
+    var _day = day;
+    // bugFix 2016-9-25
+    // if month is leap, _day use leapDays method
+    if (isLeapMonth) {
+      _day = this.leapDays(y, m);
+    }
+    if (y < 1900 || y > 2100 || d > _day) {return -1;} // 参数合法性效验
+
+    // 计算农历的时间差
+    var offset = 0;
+    for (var i = 1900; i < y; i++) {
+      offset += this.lYearDays(i);
+    }
+    var leap = 0;var isAdd = false;
+    for (var i = 1; i < m; i++) {
+      leap = this.leapMonth(y);
+      if (!isAdd) {// 处理闰月
+        if (leap <= i && leap > 0) {
+          offset += this.leapDays(y);isAdd = true;
+        }
+      }
+      offset += this.monthDays(y, i);
+    }
+    // 转换闰月农历 需补充该年闰月的前一个月的时差
+    if (isLeapMonth) {offset += day;}
+    // 1900年农历正月一日的公历时间为1900年1月30日0时0分0秒(该时间也是本农历的最开始起始点)
+    var stmap = Date.UTC(1900, 1, 30, 0, 0, 0);
+    var calObj = new Date((offset + d - 31) * 86400000 + stmap);
+    var cY = calObj.getUTCFullYear();
+    var cM = calObj.getUTCMonth() + 1;
+    var cD = calObj.getUTCDate();
+
+    return this.solar2lunar(cY, cM, cD);
+  } };var _default =
+
+
+calendar;exports.default = _default;
+
+/***/ }),
+
+/***/ 214:
+/*!****************************************************************************!*\
+  !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/province.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /* eslint-disable */
+var provinceData = [{
+  "label": "北京市",
+  "value": "11" },
+
+{
+  "label": "天津市",
+  "value": "12" },
+
+{
+  "label": "河北省",
+  "value": "13" },
+
+{
+  "label": "山西省",
+  "value": "14" },
+
+{
+  "label": "内蒙古自治区",
+  "value": "15" },
+
+{
+  "label": "辽宁省",
+  "value": "21" },
+
+{
+  "label": "吉林省",
+  "value": "22" },
+
+{
+  "label": "黑龙江省",
+  "value": "23" },
+
+{
+  "label": "上海市",
+  "value": "31" },
+
+{
+  "label": "江苏省",
+  "value": "32" },
+
+{
+  "label": "浙江省",
+  "value": "33" },
+
+{
+  "label": "安徽省",
+  "value": "34" },
+
+{
+  "label": "福建省",
+  "value": "35" },
+
+{
+  "label": "江西省",
+  "value": "36" },
+
+{
+  "label": "山东省",
+  "value": "37" },
+
+{
+  "label": "河南省",
+  "value": "41" },
+
+{
+  "label": "湖北省",
+  "value": "42" },
+
+{
+  "label": "湖南省",
+  "value": "43" },
+
+{
+  "label": "广东省",
+  "value": "44" },
+
+{
+  "label": "广西壮族自治区",
+  "value": "45" },
+
+{
+  "label": "海南省",
+  "value": "46" },
+
+{
+  "label": "重庆市",
+  "value": "50" },
+
+{
+  "label": "四川省",
+  "value": "51" },
+
+{
+  "label": "贵州省",
+  "value": "52" },
+
+{
+  "label": "云南省",
+  "value": "53" },
+
+{
+  "label": "西藏自治区",
+  "value": "54" },
+
+{
+  "label": "陕西省",
+  "value": "61" },
+
+{
+  "label": "甘肃省",
+  "value": "62" },
+
+{
+  "label": "青海省",
+  "value": "63" },
+
+{
+  "label": "宁夏回族自治区",
+  "value": "64" },
+
+{
+  "label": "新疆维吾尔自治区",
+  "value": "65" },
+
+{
+  "label": "台湾",
+  "value": "66" },
+
+{
+  "label": "香港",
+  "value": "67" },
+
+{
+  "label": "澳门",
+  "value": "68" }];var _default =
+
+
+provinceData;exports.default = _default;
+
+/***/ }),
+
+/***/ 215:
+/*!************************************************************************!*\
+  !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/city.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /* eslint-disable */
+var cityData = [
+[{
+  "label": "市辖区",
+  "value": "1101" }],
+
+[{
+  "label": "市辖区",
+  "value": "1201" }],
+
+[{
+  "label": "石家庄市",
+  "value": "1301" },
+
+{
+  "label": "唐山市",
+  "value": "1302" },
+
+{
+  "label": "秦皇岛市",
+  "value": "1303" },
+
+{
+  "label": "邯郸市",
+  "value": "1304" },
+
+{
+  "label": "邢台市",
+  "value": "1305" },
+
+{
+  "label": "保定市",
+  "value": "1306" },
+
+{
+  "label": "张家口市",
+  "value": "1307" },
+
+{
+  "label": "承德市",
+  "value": "1308" },
+
+{
+  "label": "沧州市",
+  "value": "1309" },
+
+{
+  "label": "廊坊市",
+  "value": "1310" },
+
+{
+  "label": "衡水市",
+  "value": "1311" }],
+
+
+[{
+  "label": "太原市",
+  "value": "1401" },
+
+{
+  "label": "大同市",
+  "value": "1402" },
+
+{
+  "label": "阳泉市",
+  "value": "1403" },
+
+{
+  "label": "长治市",
+  "value": "1404" },
+
+{
+  "label": "晋城市",
+  "value": "1405" },
+
+{
+  "label": "朔州市",
+  "value": "1406" },
+
+{
+  "label": "晋中市",
+  "value": "1407" },
+
+{
+  "label": "运城市",
+  "value": "1408" },
+
+{
+  "label": "忻州市",
+  "value": "1409" },
+
+{
+  "label": "临汾市",
+  "value": "1410" },
+
+{
+  "label": "吕梁市",
+  "value": "1411" }],
+
+
+[{
+  "label": "呼和浩特市",
+  "value": "1501" },
+
+{
+  "label": "包头市",
+  "value": "1502" },
+
+{
+  "label": "乌海市",
+  "value": "1503" },
+
+{
+  "label": "赤峰市",
+  "value": "1504" },
+
+{
+  "label": "通辽市",
+  "value": "1505" },
+
+{
+  "label": "鄂尔多斯市",
+  "value": "1506" },
+
+{
+  "label": "呼伦贝尔市",
+  "value": "1507" },
+
+{
+  "label": "巴彦淖尔市",
+  "value": "1508" },
+
+{
+  "label": "乌兰察布市",
+  "value": "1509" },
+
+{
+  "label": "兴安盟",
+  "value": "1522" },
+
+{
+  "label": "锡林郭勒盟",
+  "value": "1525" },
+
+{
+  "label": "阿拉善盟",
+  "value": "1529" }],
+
+
+[{
+  "label": "沈阳市",
+  "value": "2101" },
+
+{
+  "label": "大连市",
+  "value": "2102" },
+
+{
+  "label": "鞍山市",
+  "value": "2103" },
+
+{
+  "label": "抚顺市",
+  "value": "2104" },
+
+{
+  "label": "本溪市",
+  "value": "2105" },
+
+{
+  "label": "丹东市",
+  "value": "2106" },
+
+{
+  "label": "锦州市",
+  "value": "2107" },
+
+{
+  "label": "营口市",
+  "value": "2108" },
+
+{
+  "label": "阜新市",
+  "value": "2109" },
+
+{
+  "label": "辽阳市",
+  "value": "2110" },
+
+{
+  "label": "盘锦市",
+  "value": "2111" },
+
+{
+  "label": "铁岭市",
+  "value": "2112" },
+
+{
+  "label": "朝阳市",
+  "value": "2113" },
+
+{
+  "label": "葫芦岛市",
+  "value": "2114" }],
+
+
+[{
+  "label": "长春市",
+  "value": "2201" },
+
+{
+  "label": "吉林市",
+  "value": "2202" },
+
+{
+  "label": "四平市",
+  "value": "2203" },
+
+{
+  "label": "辽源市",
+  "value": "2204" },
+
+{
+  "label": "通化市",
+  "value": "2205" },
+
+{
+  "label": "白山市",
+  "value": "2206" },
+
+{
+  "label": "松原市",
+  "value": "2207" },
+
+{
+  "label": "白城市",
+  "value": "2208" },
+
+{
+  "label": "延边朝鲜族自治州",
+  "value": "2224" }],
+
+
+[{
+  "label": "哈尔滨市",
+  "value": "2301" },
+
+{
+  "label": "齐齐哈尔市",
+  "value": "2302" },
+
+{
+  "label": "鸡西市",
+  "value": "2303" },
+
+{
+  "label": "鹤岗市",
+  "value": "2304" },
+
+{
+  "label": "双鸭山市",
+  "value": "2305" },
+
+{
+  "label": "大庆市",
+  "value": "2306" },
+
+{
+  "label": "伊春市",
+  "value": "2307" },
+
+{
+  "label": "佳木斯市",
+  "value": "2308" },
+
+{
+  "label": "七台河市",
+  "value": "2309" },
+
+{
+  "label": "牡丹江市",
+  "value": "2310" },
+
+{
+  "label": "黑河市",
+  "value": "2311" },
+
+{
+  "label": "绥化市",
+  "value": "2312" },
+
+{
+  "label": "大兴安岭地区",
+  "value": "2327" }],
+
+
+[{
+  "label": "市辖区",
+  "value": "3101" }],
+
+[{
+  "label": "南京市",
+  "value": "3201" },
+
+{
+  "label": "无锡市",
+  "value": "3202" },
+
+{
+  "label": "徐州市",
+  "value": "3203" },
+
+{
+  "label": "常州市",
+  "value": "3204" },
+
+{
+  "label": "苏州市",
+  "value": "3205" },
+
+{
+  "label": "南通市",
+  "value": "3206" },
+
+{
+  "label": "连云港市",
+  "value": "3207" },
+
+{
+  "label": "淮安市",
+  "value": "3208" },
+
+{
+  "label": "盐城市",
+  "value": "3209" },
+
+{
+  "label": "扬州市",
+  "value": "3210" },
+
+{
+  "label": "镇江市",
+  "value": "3211" },
+
+{
+  "label": "泰州市",
+  "value": "3212" },
+
+{
+  "label": "宿迁市",
+  "value": "3213" }],
+
+
+[{
+  "label": "杭州市",
+  "value": "3301" },
+
+{
+  "label": "宁波市",
+  "value": "3302" },
+
+{
+  "label": "温州市",
+  "value": "3303" },
+
+{
+  "label": "嘉兴市",
+  "value": "3304" },
+
+{
+  "label": "湖州市",
+  "value": "3305" },
+
+{
+  "label": "绍兴市",
+  "value": "3306" },
+
+{
+  "label": "金华市",
+  "value": "3307" },
+
+{
+  "label": "衢州市",
+  "value": "3308" },
+
+{
+  "label": "舟山市",
+  "value": "3309" },
+
+{
+  "label": "台州市",
+  "value": "3310" },
+
+{
+  "label": "丽水市",
+  "value": "3311" }],
+
+
+[{
+  "label": "合肥市",
+  "value": "3401" },
+
+{
+  "label": "芜湖市",
+  "value": "3402" },
+
+{
+  "label": "蚌埠市",
+  "value": "3403" },
+
+{
+  "label": "淮南市",
+  "value": "3404" },
+
+{
+  "label": "马鞍山市",
+  "value": "3405" },
+
+{
+  "label": "淮北市",
+  "value": "3406" },
+
+{
+  "label": "铜陵市",
+  "value": "3407" },
+
+{
+  "label": "安庆市",
+  "value": "3408" },
+
+{
+  "label": "黄山市",
+  "value": "3410" },
+
+{
+  "label": "滁州市",
+  "value": "3411" },
+
+{
+  "label": "阜阳市",
+  "value": "3412" },
+
+{
+  "label": "宿州市",
+  "value": "3413" },
+
+{
+  "label": "六安市",
+  "value": "3415" },
+
+{
+  "label": "亳州市",
+  "value": "3416" },
+
+{
+  "label": "池州市",
+  "value": "3417" },
+
+{
+  "label": "宣城市",
+  "value": "3418" }],
+
+
+[{
+  "label": "福州市",
+  "value": "3501" },
+
+{
+  "label": "厦门市",
+  "value": "3502" },
+
+{
+  "label": "莆田市",
+  "value": "3503" },
+
+{
+  "label": "三明市",
+  "value": "3504" },
+
+{
+  "label": "泉州市",
+  "value": "3505" },
+
+{
+  "label": "漳州市",
+  "value": "3506" },
+
+{
+  "label": "南平市",
+  "value": "3507" },
+
+{
+  "label": "龙岩市",
+  "value": "3508" },
+
+{
+  "label": "宁德市",
+  "value": "3509" }],
+
+
+[{
+  "label": "南昌市",
+  "value": "3601" },
+
+{
+  "label": "景德镇市",
+  "value": "3602" },
+
+{
+  "label": "萍乡市",
+  "value": "3603" },
+
+{
+  "label": "九江市",
+  "value": "3604" },
+
+{
+  "label": "新余市",
+  "value": "3605" },
+
+{
+  "label": "鹰潭市",
+  "value": "3606" },
+
+{
+  "label": "赣州市",
+  "value": "3607" },
+
+{
+  "label": "吉安市",
+  "value": "3608" },
+
+{
+  "label": "宜春市",
+  "value": "3609" },
+
+{
+  "label": "抚州市",
+  "value": "3610" },
+
+{
+  "label": "上饶市",
+  "value": "3611" }],
+
+
+[{
+  "label": "济南市",
+  "value": "3701" },
+
+{
+  "label": "青岛市",
+  "value": "3702" },
+
+{
+  "label": "淄博市",
+  "value": "3703" },
+
+{
+  "label": "枣庄市",
+  "value": "3704" },
+
+{
+  "label": "东营市",
+  "value": "3705" },
+
+{
+  "label": "烟台市",
+  "value": "3706" },
+
+{
+  "label": "潍坊市",
+  "value": "3707" },
+
+{
+  "label": "济宁市",
+  "value": "3708" },
+
+{
+  "label": "泰安市",
+  "value": "3709" },
+
+{
+  "label": "威海市",
+  "value": "3710" },
+
+{
+  "label": "日照市",
+  "value": "3711" },
+
+{
+  "label": "莱芜市",
+  "value": "3712" },
+
+{
+  "label": "临沂市",
+  "value": "3713" },
+
+{
+  "label": "德州市",
+  "value": "3714" },
+
+{
+  "label": "聊城市",
+  "value": "3715" },
+
+{
+  "label": "滨州市",
+  "value": "3716" },
+
+{
+  "label": "菏泽市",
+  "value": "3717" }],
+
+
+[{
+  "label": "郑州市",
+  "value": "4101" },
+
+{
+  "label": "开封市",
+  "value": "4102" },
+
+{
+  "label": "洛阳市",
+  "value": "4103" },
+
+{
+  "label": "平顶山市",
+  "value": "4104" },
+
+{
+  "label": "安阳市",
+  "value": "4105" },
+
+{
+  "label": "鹤壁市",
+  "value": "4106" },
+
+{
+  "label": "新乡市",
+  "value": "4107" },
+
+{
+  "label": "焦作市",
+  "value": "4108" },
+
+{
+  "label": "濮阳市",
+  "value": "4109" },
+
+{
+  "label": "许昌市",
+  "value": "4110" },
+
+{
+  "label": "漯河市",
+  "value": "4111" },
+
+{
+  "label": "三门峡市",
+  "value": "4112" },
+
+{
+  "label": "南阳市",
+  "value": "4113" },
+
+{
+  "label": "商丘市",
+  "value": "4114" },
+
+{
+  "label": "信阳市",
+  "value": "4115" },
+
+{
+  "label": "周口市",
+  "value": "4116" },
+
+{
+  "label": "驻马店市",
+  "value": "4117" },
+
+{
+  "label": "省直辖县级行政区划",
+  "value": "4190" }],
+
+
+[{
+  "label": "武汉市",
+  "value": "4201" },
+
+{
+  "label": "黄石市",
+  "value": "4202" },
+
+{
+  "label": "十堰市",
+  "value": "4203" },
+
+{
+  "label": "宜昌市",
+  "value": "4205" },
+
+{
+  "label": "襄阳市",
+  "value": "4206" },
+
+{
+  "label": "鄂州市",
+  "value": "4207" },
+
+{
+  "label": "荆门市",
+  "value": "4208" },
+
+{
+  "label": "孝感市",
+  "value": "4209" },
+
+{
+  "label": "荆州市",
+  "value": "4210" },
+
+{
+  "label": "黄冈市",
+  "value": "4211" },
+
+{
+  "label": "咸宁市",
+  "value": "4212" },
+
+{
+  "label": "随州市",
+  "value": "4213" },
+
+{
+  "label": "恩施土家族苗族自治州",
+  "value": "4228" },
+
+{
+  "label": "省直辖县级行政区划",
+  "value": "4290" }],
+
+
+[{
+  "label": "长沙市",
+  "value": "4301" },
+
+{
+  "label": "株洲市",
+  "value": "4302" },
+
+{
+  "label": "湘潭市",
+  "value": "4303" },
+
+{
+  "label": "衡阳市",
+  "value": "4304" },
+
+{
+  "label": "邵阳市",
+  "value": "4305" },
+
+{
+  "label": "岳阳市",
+  "value": "4306" },
+
+{
+  "label": "常德市",
+  "value": "4307" },
+
+{
+  "label": "张家界市",
+  "value": "4308" },
+
+{
+  "label": "益阳市",
+  "value": "4309" },
+
+{
+  "label": "郴州市",
+  "value": "4310" },
+
+{
+  "label": "永州市",
+  "value": "4311" },
+
+{
+  "label": "怀化市",
+  "value": "4312" },
+
+{
+  "label": "娄底市",
+  "value": "4313" },
+
+{
+  "label": "湘西土家族苗族自治州",
+  "value": "4331" }],
+
+
+[{
+  "label": "广州市",
+  "value": "4401" },
+
+{
+  "label": "韶关市",
+  "value": "4402" },
+
+{
+  "label": "深圳市",
+  "value": "4403" },
+
+{
+  "label": "珠海市",
+  "value": "4404" },
+
+{
+  "label": "汕头市",
+  "value": "4405" },
+
+{
+  "label": "佛山市",
+  "value": "4406" },
+
+{
+  "label": "江门市",
+  "value": "4407" },
+
+{
+  "label": "湛江市",
+  "value": "4408" },
+
+{
+  "label": "茂名市",
+  "value": "4409" },
+
+{
+  "label": "肇庆市",
+  "value": "4412" },
+
+{
+  "label": "惠州市",
+  "value": "4413" },
+
+{
+  "label": "梅州市",
+  "value": "4414" },
+
+{
+  "label": "汕尾市",
+  "value": "4415" },
+
+{
+  "label": "河源市",
+  "value": "4416" },
+
+{
+  "label": "阳江市",
+  "value": "4417" },
+
+{
+  "label": "清远市",
+  "value": "4418" },
+
+{
+  "label": "东莞市",
+  "value": "4419" },
+
+{
+  "label": "中山市",
+  "value": "4420" },
+
+{
+  "label": "潮州市",
+  "value": "4451" },
+
+{
+  "label": "揭阳市",
+  "value": "4452" },
+
+{
+  "label": "云浮市",
+  "value": "4453" }],
+
+
+[{
+  "label": "南宁市",
+  "value": "4501" },
+
+{
+  "label": "柳州市",
+  "value": "4502" },
+
+{
+  "label": "桂林市",
+  "value": "4503" },
+
+{
+  "label": "梧州市",
+  "value": "4504" },
+
+{
+  "label": "北海市",
+  "value": "4505" },
+
+{
+  "label": "防城港市",
+  "value": "4506" },
+
+{
+  "label": "钦州市",
+  "value": "4507" },
+
+{
+  "label": "贵港市",
+  "value": "4508" },
+
+{
+  "label": "玉林市",
+  "value": "4509" },
+
+{
+  "label": "百色市",
+  "value": "4510" },
+
+{
+  "label": "贺州市",
+  "value": "4511" },
+
+{
+  "label": "河池市",
+  "value": "4512" },
+
+{
+  "label": "来宾市",
+  "value": "4513" },
+
+{
+  "label": "崇左市",
+  "value": "4514" }],
+
+
+[{
+  "label": "海口市",
+  "value": "4601" },
+
+{
+  "label": "三亚市",
+  "value": "4602" },
+
+{
+  "label": "三沙市",
+  "value": "4603" },
+
+{
+  "label": "儋州市",
+  "value": "4604" },
+
+{
+  "label": "省直辖县级行政区划",
+  "value": "4690" }],
+
+
+[{
+  "label": "市辖区",
+  "value": "5001" },
+
+{
+  "label": "县",
+  "value": "5002" }],
+
+
+[{
+  "label": "成都市",
+  "value": "5101" },
+
+{
+  "label": "自贡市",
+  "value": "5103" },
+
+{
+  "label": "攀枝花市",
+  "value": "5104" },
+
+{
+  "label": "泸州市",
+  "value": "5105" },
+
+{
+  "label": "德阳市",
+  "value": "5106" },
+
+{
+  "label": "绵阳市",
+  "value": "5107" },
+
+{
+  "label": "广元市",
+  "value": "5108" },
+
+{
+  "label": "遂宁市",
+  "value": "5109" },
+
+{
+  "label": "内江市",
+  "value": "5110" },
+
+{
+  "label": "乐山市",
+  "value": "5111" },
+
+{
+  "label": "南充市",
+  "value": "5113" },
+
+{
+  "label": "眉山市",
+  "value": "5114" },
+
+{
+  "label": "宜宾市",
+  "value": "5115" },
+
+{
+  "label": "广安市",
+  "value": "5116" },
+
+{
+  "label": "达州市",
+  "value": "5117" },
+
+{
+  "label": "雅安市",
+  "value": "5118" },
+
+{
+  "label": "巴中市",
+  "value": "5119" },
+
+{
+  "label": "资阳市",
+  "value": "5120" },
+
+{
+  "label": "阿坝藏族羌族自治州",
+  "value": "5132" },
+
+{
+  "label": "甘孜藏族自治州",
+  "value": "5133" },
+
+{
+  "label": "凉山彝族自治州",
+  "value": "5134" }],
+
+
+[{
+  "label": "贵阳市",
+  "value": "5201" },
+
+{
+  "label": "六盘水市",
+  "value": "5202" },
+
+{
+  "label": "遵义市",
+  "value": "5203" },
+
+{
+  "label": "安顺市",
+  "value": "5204" },
+
+{
+  "label": "毕节市",
+  "value": "5205" },
+
+{
+  "label": "铜仁市",
+  "value": "5206" },
+
+{
+  "label": "黔西南布依族苗族自治州",
+  "value": "5223" },
+
+{
+  "label": "黔东南苗族侗族自治州",
+  "value": "5226" },
+
+{
+  "label": "黔南布依族苗族自治州",
+  "value": "5227" }],
+
+
+[{
+  "label": "昆明市",
+  "value": "5301" },
+
+{
+  "label": "曲靖市",
+  "value": "5303" },
+
+{
+  "label": "玉溪市",
+  "value": "5304" },
+
+{
+  "label": "保山市",
+  "value": "5305" },
+
+{
+  "label": "昭通市",
+  "value": "5306" },
+
+{
+  "label": "丽江市",
+  "value": "5307" },
+
+{
+  "label": "普洱市",
+  "value": "5308" },
+
+{
+  "label": "临沧市",
+  "value": "5309" },
+
+{
+  "label": "楚雄彝族自治州",
+  "value": "5323" },
+
+{
+  "label": "红河哈尼族彝族自治州",
+  "value": "5325" },
+
+{
+  "label": "文山壮族苗族自治州",
+  "value": "5326" },
+
+{
+  "label": "西双版纳傣族自治州",
+  "value": "5328" },
+
+{
+  "label": "大理白族自治州",
+  "value": "5329" },
+
+{
+  "label": "德宏傣族景颇族自治州",
+  "value": "5331" },
+
+{
+  "label": "怒江傈僳族自治州",
+  "value": "5333" },
+
+{
+  "label": "迪庆藏族自治州",
+  "value": "5334" }],
+
+
+[{
+  "label": "拉萨市",
+  "value": "5401" },
+
+{
+  "label": "日喀则市",
+  "value": "5402" },
+
+{
+  "label": "昌都市",
+  "value": "5403" },
+
+{
+  "label": "林芝市",
+  "value": "5404" },
+
+{
+  "label": "山南市",
+  "value": "5405" },
+
+{
+  "label": "那曲地区",
+  "value": "5424" },
+
+{
+  "label": "阿里地区",
+  "value": "5425" }],
+
+
+[{
+  "label": "西安市",
+  "value": "6101" },
+
+{
+  "label": "铜川市",
+  "value": "6102" },
+
+{
+  "label": "宝鸡市",
+  "value": "6103" },
+
+{
+  "label": "咸阳市",
+  "value": "6104" },
+
+{
+  "label": "渭南市",
+  "value": "6105" },
+
+{
+  "label": "延安市",
+  "value": "6106" },
+
+{
+  "label": "汉中市",
+  "value": "6107" },
+
+{
+  "label": "榆林市",
+  "value": "6108" },
+
+{
+  "label": "安康市",
+  "value": "6109" },
+
+{
+  "label": "商洛市",
+  "value": "6110" }],
+
+
+[{
+  "label": "兰州市",
+  "value": "6201" },
+
+{
+  "label": "嘉峪关市",
+  "value": "6202" },
+
+{
+  "label": "金昌市",
+  "value": "6203" },
+
+{
+  "label": "白银市",
+  "value": "6204" },
+
+{
+  "label": "天水市",
+  "value": "6205" },
+
+{
+  "label": "武威市",
+  "value": "6206" },
+
+{
+  "label": "张掖市",
+  "value": "6207" },
+
+{
+  "label": "平凉市",
+  "value": "6208" },
+
+{
+  "label": "酒泉市",
+  "value": "6209" },
+
+{
+  "label": "庆阳市",
+  "value": "6210" },
+
+{
+  "label": "定西市",
+  "value": "6211" },
+
+{
+  "label": "陇南市",
+  "value": "6212" },
+
+{
+  "label": "临夏回族自治州",
+  "value": "6229" },
+
+{
+  "label": "甘南藏族自治州",
+  "value": "6230" }],
+
+
+[{
+  "label": "西宁市",
+  "value": "6301" },
+
+{
+  "label": "海东市",
+  "value": "6302" },
+
+{
+  "label": "海北藏族自治州",
+  "value": "6322" },
+
+{
+  "label": "黄南藏族自治州",
+  "value": "6323" },
+
+{
+  "label": "海南藏族自治州",
+  "value": "6325" },
+
+{
+  "label": "果洛藏族自治州",
+  "value": "6326" },
+
+{
+  "label": "玉树藏族自治州",
+  "value": "6327" },
+
+{
+  "label": "海西蒙古族藏族自治州",
+  "value": "6328" }],
+
+
+[{
+  "label": "银川市",
+  "value": "6401" },
+
+{
+  "label": "石嘴山市",
+  "value": "6402" },
+
+{
+  "label": "吴忠市",
+  "value": "6403" },
+
+{
+  "label": "固原市",
+  "value": "6404" },
+
+{
+  "label": "中卫市",
+  "value": "6405" }],
+
+
+[{
+  "label": "乌鲁木齐市",
+  "value": "6501" },
+
+{
+  "label": "克拉玛依市",
+  "value": "6502" },
+
+{
+  "label": "吐鲁番市",
+  "value": "6504" },
+
+{
+  "label": "哈密市",
+  "value": "6505" },
+
+{
+  "label": "昌吉回族自治州",
+  "value": "6523" },
+
+{
+  "label": "博尔塔拉蒙古自治州",
+  "value": "6527" },
+
+{
+  "label": "巴音郭楞蒙古自治州",
+  "value": "6528" },
+
+{
+  "label": "阿克苏地区",
+  "value": "6529" },
+
+{
+  "label": "克孜勒苏柯尔克孜自治州",
+  "value": "6530" },
+
+{
+  "label": "喀什地区",
+  "value": "6531" },
+
+{
+  "label": "和田地区",
+  "value": "6532" },
+
+{
+  "label": "伊犁哈萨克自治州",
+  "value": "6540" },
+
+{
+  "label": "塔城地区",
+  "value": "6542" },
+
+{
+  "label": "阿勒泰地区",
+  "value": "6543" },
+
+{
+  "label": "自治区直辖县级行政区划",
+  "value": "6590" }],
+
+
+[{
+  "label": "台北",
+  "value": "6601" },
+
+{
+  "label": "高雄",
+  "value": "6602" },
+
+{
+  "label": "基隆",
+  "value": "6603" },
+
+{
+  "label": "台中",
+  "value": "6604" },
+
+{
+  "label": "台南",
+  "value": "6605" },
+
+{
+  "label": "新竹",
+  "value": "6606" },
+
+{
+  "label": "嘉义",
+  "value": "6607" },
+
+{
+  "label": "宜兰",
+  "value": "6608" },
+
+{
+  "label": "桃园",
+  "value": "6609" },
+
+{
+  "label": "苗栗",
+  "value": "6610" },
+
+{
+  "label": "彰化",
+  "value": "6611" },
+
+{
+  "label": "南投",
+  "value": "6612" },
+
+{
+  "label": "云林",
+  "value": "6613" },
+
+{
+  "label": "屏东",
+  "value": "6614" },
+
+{
+  "label": "台东",
+  "value": "6615" },
+
+{
+  "label": "花莲",
+  "value": "6616" },
+
+{
+  "label": "澎湖",
+  "value": "6617" }],
+
+
+[{
+  "label": "香港岛",
+  "value": "6701" },
+
+{
+  "label": "九龙",
+  "value": "6702" },
+
+{
+  "label": "新界",
+  "value": "6703" }],
+
+
+[{
+  "label": "澳门半岛",
+  "value": "6801" },
+
+{
+  "label": "氹仔岛",
+  "value": "6802" },
+
+{
+  "label": "路环岛",
+  "value": "6803" },
+
+{
+  "label": "路氹城",
+  "value": "6804" }]];var _default =
+
+
+
+cityData;exports.default = _default;
+
+/***/ }),
+
+/***/ 216:
 /*!************************************************************************!*\
   !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/city-data/area.js ***!
   \************************************************************************/
@@ -22357,7 +22357,7 @@ areaData;exports.default = _default;
 
 /***/ }),
 
-/***/ 201:
+/***/ 217:
 /*!******************************************************************!*\
   !*** F:/谭鑫锋/miniProgram/uni-app/components/w-picker/w-picker.js ***!
   \******************************************************************/
@@ -29551,7 +29551,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "神经源性膀胱管理", "usingComponents": {} }, "pages/index/risk/risk": { "navigationBarTitleText": "风险评估", "usingComponents": {} }, "pages/index/risk/evaluate": { "navigationBarTitleText": "测试评估", "usingComponents": {} }, "pages/index/risk/report": { "navigationBarTitleText": "风险评估报告", "usingComponents": {} }, "pages/index/risk/historyRecord": { "navigationBarTitleText": "风险评估记录", "usingComponents": {} }, "pages/index/health/health": { "navigationBarTitleText": "健康知识", "usingComponents": {} }, "pages/index/health/article": { "navigationBarTitleText": "文章详情", "usingComponents": {} }, "pages/index/health/video": { "navigationBarTitleText": "视频详情", "usingComponents": {} }, "pages/index/bladder/bladder": { "navigationBarTitleText": "膀胱管理", "usingComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" } }, "pages/index/bladder/intervene": { "navigationBarTitleText": "干预方案", "usingComponents": {} }, "pages/index/online/online": { "navigationBarTitleText": "在线评测", "usingComponents": {} }, "pages/index/online/evaluate": { "navigationBarTitleText": "在线评测", "usingComponents": {} }, "pages/diary/diary": { "navigationBarTitleText": "排尿日记", "usingComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" } }, "pages/diary/record": { "navigationBarTitleText": "开始记录", "usingComponents": { "w-picker": "/components/w-picker/w-picker" } }, "pages/consultant/consultant": { "navigationBarTitleText": "在线咨询", "usingComponents": {} }, "pages/consultant/communicate": { "navigationBarTitleText": "", "usingComponents": {} }, "pages/video/video": { "navigationBarTitleText": "教育视频", "usingComponents": {} }, "pages/video/detail": { "navigationBarTitleText": "视频详情", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "个人中心", "usingComponents": {} }, "pages/user/userInfo": { "navigationBarTitleText": "个人资料", "usingComponents": {} }, "pages/user/changeInfo": { "navigationBarTitleText": "修改个人资料", "usingComponents": { "w-picker": "/components/w-picker/w-picker" } }, "pages/user/message": { "navigationBarTitleText": "消息通知", "usingComponents": {} }, "pages/user/changePhone": { "navigationBarTitleText": "修改手机" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "神经源性膀胱管理", "usingComponents": {} }, "pages/index/risk/risk": { "navigationBarTitleText": "风险评估", "usingComponents": {} }, "pages/index/risk/evaluate": { "navigationBarTitleText": "测试评估", "usingComponents": {} }, "pages/index/risk/report": { "navigationBarTitleText": "风险评估报告", "usingComponents": {} }, "pages/index/risk/historyRecord": { "navigationBarTitleText": "风险评估记录", "usingComponents": {} }, "pages/index/health/health": { "navigationBarTitleText": "健康知识", "usingComponents": {} }, "pages/index/health/article": { "navigationBarTitleText": "文章详情", "usingComponents": {} }, "pages/index/health/video": { "navigationBarTitleText": "视频详情", "usingComponents": {} }, "pages/index/bladder/bladder": { "navigationBarTitleText": "膀胱管理", "usingComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" } }, "pages/index/bladder/intervene": { "navigationBarTitleText": "干预方案", "usingComponents": {} }, "pages/index/online/online": { "navigationBarTitleText": "在线评测", "usingComponents": {} }, "pages/index/online/evaluate": { "navigationBarTitleText": "在线评测", "usingComponents": {} }, "pages/diary/diary": { "navigationBarTitleText": "排尿日记", "usingComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" } }, "pages/diary/record": { "navigationBarTitleText": "开始记录", "usingComponents": { "w-picker": "/components/w-picker/w-picker" } }, "pages/consultant/consultant": { "navigationBarTitleText": "在线咨询", "usingComponents": {} }, "pages/consultant/communicate": { "navigationBarTitleText": "", "usingComponents": {} }, "pages/video/video": { "navigationBarTitleText": "教育视频", "usingComponents": {} }, "pages/video/detail": { "navigationBarTitleText": "视频详情", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "个人中心", "usingComponents": {} }, "pages/user/userInfo": { "navigationBarTitleText": "个人资料", "usingComponents": {} }, "pages/user/changeInfo": { "navigationBarTitleText": "修改个人资料", "usingComponents": { "w-picker": "/components/w-picker/w-picker" } }, "pages/user/message": { "navigationBarTitleText": "消息通知", "usingComponents": {} }, "pages/user/changePhone": { "navigationBarTitleText": "修改手机", "usingComponents": {} }, "pages/index/info/info": { "navigationBarTitleText": "基本信息采集" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

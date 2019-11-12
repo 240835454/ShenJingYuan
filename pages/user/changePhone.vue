@@ -2,17 +2,22 @@
 	<view class="page">
 		<view class="box">
 			<view class="content">
-				<view class="info-item" :key='index'>
+				<view class="info-item-phone" :key='index'>
 					<text class='name'>
 						新手机号码
 					</text>
 					<input type="number" value="" class='input-box' placeholder-class="phcolor" placeholder="请输入新手机号码" maxlength="11" />
 				</view>
-				<view class="info-item" :key='index'>
+				<view class="info-item-phone" :key='index'>
 					<text class='name'>
 						手机验证码
 					</text>
-					<input type="number" value="" class='input-box' placeholder-class="phcolor" placeholder="请输入新手机号码" maxlength="11" />
+					<view class="verify-code">
+						<input type="number" value="" class='short-input-box' placeholder-class="phcolor" placeholder="请输入验证码" maxlength="11" />
+						<view class="">
+							<text class='code'>获取验证码</text>
+						</view>
+					</view>
 				</view>
 				<view class="footer">
 					<text class='button'>确定</text>
@@ -46,7 +51,7 @@
 		background-color: #fff;
 		color: #80899c;
 
-		.info-item {
+		.info-item-phone {
 			padding: 40rpx 30rpx 0;
 			font-size: 30rpx;
 			background-color: #fff;
@@ -75,6 +80,30 @@
 				margin-top: 20rpx;
 				border: 2rpx solid #e0e4ee;
 				font-size: 30rpx;
+			}
+			
+			.verify-code{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding-bottom: 20rpx;
+				margin-top: 20rpx;
+				.short-input-box{
+					width: 380rpx;
+					height: 70rpx;
+					border: 2rpx solid #e0e4ee;
+					padding-left: 20rpx;
+				}
+				.code{
+					display: block;
+					width: 200rpx;
+					padding: 15rpx;
+					text-align: center;
+					border: 2rpx solid #a69eff;
+					border-radius: 35rpx;
+					color: #a69eff;
+					font-size: 30rpx;
+				}
 			}
 
 			.phcolor {

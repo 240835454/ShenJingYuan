@@ -64,6 +64,7 @@ var _default =
         date: '2019.10.30 - 2019.11.25' }] };
 
 
+
   },
   methods: {
     enterDetail: function enterDetail() {

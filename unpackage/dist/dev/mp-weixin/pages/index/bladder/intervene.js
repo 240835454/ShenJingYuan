@@ -236,6 +236,9 @@ var _default =
       cleanIndex: -1 };
 
   },
+  onLoad: function onLoad(options) {
+    this.activeIndex = options.id;
+  },
   methods: {
     changeTab: function changeTab(e) {
       this.activeIndex = e;

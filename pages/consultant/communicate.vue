@@ -131,12 +131,6 @@
 </script> 
 
 <style lang="less">
-	page {
-		width: 100%;
-		height: 100%;
-		background-color: #f9fafd;
-	}
-	
 	.chat-box{
 		padding-bottom: 150rpx;
 		.chat-item{

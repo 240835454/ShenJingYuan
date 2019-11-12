@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/index/info/info",
     "pages/index/risk/risk",
     "pages/index/risk/evaluate",
     "pages/index/risk/report",

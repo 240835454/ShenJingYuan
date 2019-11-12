@@ -111,111 +111,11 @@
 				})
 			}
 		}
-	}
+	} 
 </script>
 
 <style lang="less">
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
-	.tabBar {
-		display: flex;
-		justify-content: space-around;
-		height: 90rpx;
-		line-height: 90rpx;
-		font-size: 28rpx;
-		color: #80899c;
-		background-color: #fff;
-		font-family: PingFang-SC-Bold;
-
-		.tab-active {
-			font-size: 34rpx;
-			color: #333;
-			position: relative;
-
-			&::after {
-				content: "";
-				position: absolute;
-				width: 80rpx;
-				height: 1rpx;
-				left: 50%;
-				transform: translate(-50%, 0);
-				bottom: 15rpx;
-				border-bottom: 6rpx solid #a69eff;
-				border-radius: 5rpx;
-			}
-		}
-	}
-
 	.content {
 		padding: 10rpx 20rpx 120rpx 20rpx;
-
-		.video {
-			margin-top: 10rpx;
-			background-color: #fff;
-
-			.picture {
-				position: relative;
-
-				image {
-					width: 100%;
-					height: 355rpx;
-				}
-
-				.play-icon {
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -50%);
-					width: 80rpx;
-					height: 80rpx;
-				}
-			}
-
-			.message {
-				padding: 0 30rpx;
-
-				.title {
-					font-size: 30rpx;
-					color: #80899c;
-				}
-
-				.info {
-					display: flex;
-					justify-content: space-between;
-					width: 380rpx;
-					padding: 20rpx 0;
-					margin-bottom: 30rpx;
-					font-size: 24rpx;
-					color: #cccccc;
-
-					.date {
-						display: flex;
-						align-items: center;
-
-						image {
-							flex: 0 0 26rpx;
-							width: 26rpx;
-							heihgt: 26rpx;
-							padding-right: 12rpx;
-						}
-					}
-
-					.visit {
-						display: flex;
-						align-items: center;
-
-						image {
-							flex: 1 1 30rpx;
-							width: 30rpx;
-							height: 25rpx;
-							padding-right: 12rpx;
-						}
-					}
-				}
-			}
-		}
 	}
 </style>

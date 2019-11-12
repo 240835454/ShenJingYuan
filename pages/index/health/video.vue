@@ -31,11 +31,6 @@
 </script>
 
 <style lang="less">
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
 	.page {
 		video {
 			display: block;
@@ -43,7 +38,6 @@
 			height: 380rpx;
 		}
 	}
-
 
 	.content {
 		padding: 40rpx 60rpx;

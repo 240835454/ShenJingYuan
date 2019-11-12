@@ -21,7 +21,7 @@
 			</view>
 			<view class="imgList">
 				<template v-for="(item,index) in imgList">
-					<image :src="item" mode="" :key='index' class='image' @click='previewImg' :data-src='item'></image>
+					<image :src="item" mode="aspectFit" :key='index' class='image' @click='previewImg' :data-src='item'></image>
 				</template>
 			</view>
 			<view class="footer">
@@ -108,11 +108,6 @@
 </script>
 
 <style lang='less'>
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-	
 	.content {
 		padding: 20rpx 20rpx 40rpx;
 		color: #80899c;

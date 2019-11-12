@@ -38,56 +38,8 @@ page {
   margin: 0 20rpx;
   background-color: #fff;
 }
-.info-item {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  position: relative;
-  padding: 40rpx 80rpx;
-  font-size: 30rpx;
-  border-top: 1rpx solid #e6e7eb;
-  background-color: #fff;
-}
 .info-item:last-child {
   border-bottom: 1rpx solid #e6e7eb;
-}
-.info-item .name::before {
-  content: "";
-  position: absolute;
-  top: 44%;
-  left: 50rpx;
-  display: inline-block;
-  width: 4rpx;
-  height: 20rpx;
-  border-left: 4rpx solid #b2b9c9;
-}
-.info-item .value {
-  font-size: 28rpx;
-  color: #b2b2b2;
-  position: relative;
-}
-.info-item .value::after {
-  content: "";
-  display: inline-block;
-  width: 18rpx;
-  height: 18rpx;
-  top: 28%;
-  right: -40rpx;
-  border-top: 1rpx solid #e5e5e5;
-  border-right: 1rpx solid #e5e5e5;
-  -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
-  position: absolute;
 }
 .info-item .complete {
   color: #a69eff;

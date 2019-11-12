@@ -37,11 +37,6 @@
 </script>
 
 <style lang="less">
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
 	.page {
 		padding: 40rpx 60rpx;
 

@@ -156,11 +156,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      userInfo: {} };
+      userInfo: {},
+      hasPhone: false,
+      bindPhone: false,
+      isHide: false };
 
   },
   onLoad: function onLoad() {
@@ -169,15 +184,15 @@ var _default =
   methods: {
     wxGetUserInfo: function wxGetUserInfo(res) {
       console.log(res);
-      // if (!res.detail.iv) {
-      // 	uni.showToast({
-      // 		title: "您取消了授权,登录失败",
-      // 		icon: "none"
-      // 	});
-      // 	return false;
-      // }
-      // console.log(res.detail);
-      // this.userInfo = res.detail.userInfo;
+      if (!res.detail.iv) {
+        uni.showToast({
+          title: "您取消了授权,登录失败",
+          icon: "none" });
+
+        return false;
+      }
+      console.log(res.detail);
+      this.userInfo = res.detail.userInfo;
     },
     enterUserInfo: function enterUserInfo() {
       uni.navigateTo({
@@ -190,9 +205,16 @@ var _default =
 
     },
     enterChangePhone: function enterChangePhone() {
-      uni.navigateTo({
-        url: 'changePhone' });
+      if (this.hasPhone) {
+        uni.navigateTo({
+          url: 'changePhone' });
 
+      } else {
+        this.isHide = true;
+      }
+    },
+    close: function close() {
+      this.isHide = false;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

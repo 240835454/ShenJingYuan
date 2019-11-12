@@ -170,7 +170,7 @@
 			},
 			nextPage() {
 				this.active = !this.active;
-			}, 
+			},  
 			openModel(){ 
 				this.isHide = !this.isHide;
 			},
@@ -182,11 +182,6 @@
 </script>
 
 <style lang="less">
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
 	.box {
 		padding: 20rpx;
 
@@ -311,18 +306,7 @@
 				color: #fff;
 			}
 		}
-		
-		.mask{
-			position: fixed;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			background-color: #000;
-			opacity: 0.3;
-			z-index:5;
-		}
-		
+	
 		.model{
 			position: absolute;
 			top: 200rpx;
@@ -372,59 +356,9 @@
 					linear-gradient(
 						#ffffff, 
 						#ffffff);
-					background-blend-mode: normal, 
+					background-blend-mode: normal,  
 						normal;
 			}
 		}
-	}
-
-	radio {
-		border-radius: 50%;
-		width: 40rpx;
-		height: 40rpx;
-		border: 1rpx solid #a6b5d5;
-		font-size: 0;
-	}
-
-	radio .wx-radio-input {
-		border-radius: 50%;
-		width: 40rpx;
-		height: 40rpx;
-		border: none;
-	}
-
-	radio .wx-radio-input.wx-radio-input-checked::before {
-		content: "";
-		width: 30rpx;
-		height: 30rpx;
-		background-color: #a6b5d5;
-		border-radius: 50%;
-	}
-
-	checkbox {
-		border-radius: 50%;
-		width: 60rpx;
-		height: 60rpx;
-	}
-
-	checkbox .wx-checkbox-input {
-		border-radius: 50%;
-		width: 60rpx;
-		height: 60rpx;
-	}
-
-	checkbox .wx-checkbox-input.wx-checkbox-input-checked {
-		border: 1rpx solid #a6b5d5;
-	}
-
-	checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
-		content: "";
-		width: 40rpx;
-		height: 40rpx;
-		background-color: #a6b5d5;
-		border: 1rpx solid #d2ddf5;
-		;
-		border-radius: 50%;
-		text-align: center;
 	}
 </style>

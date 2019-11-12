@@ -112,6 +112,9 @@
 				cleanIndex: -1
 			}
 		},
+		onLoad(options){
+			this.activeIndex = options.id;
+		},
 		methods: {
 			changeTab(e) {
 				this.activeIndex = e;

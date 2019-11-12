@@ -76,7 +76,7 @@
 			},
 			enterProject(index){
 				uni.navigateTo({
-					url:'intervene'
+					url:'intervene?id='+index
 				})
 			}
 		}
@@ -130,50 +130,9 @@
 	}
 
 	.info-item {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		position: relative;
-		padding: 40rpx 80rpx;
-		font-size: 30rpx;
-		border-top: 1rpx solid #e6e7eb;
-		background-color: #fff;
 		&:last-child{
 			border-bottom: 1rpx solid #e6e7eb;
 		}
-
-		.name {
-			&::before {
-				content: "";
-				position: absolute;
-				top: 44%;
-				left: 50rpx;
-				display: inline-block;
-				width: 4rpx;
-				height: 20rpx;
-				border-left: 4rpx solid #b2b9c9;
-			}
-		}
-
-		.value {
-			font-size: 28rpx;
-			color: #b2b2b2;
-			position: relative;
-
-			&::after {
-				content: "";
-				display: inline-block;
-				width: 18rpx;
-				height: 18rpx;
-				top: 28%;
-				right: -40rpx;
-				border-top: 1rpx solid #e5e5e5;
-				border-right: 1rpx solid #e5e5e5;
-				transform: rotate(45deg);
-				position: absolute;
-			}
-		}
-		
 		.complete{
 			color: #a69eff;
 		}

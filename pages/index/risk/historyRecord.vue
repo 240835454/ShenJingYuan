@@ -153,11 +153,6 @@
 </script>
 
 <style lang='less'>
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
 	.content {
 		padding: 20rpx;
 		font-family: PingFang-SC-Medium;
@@ -231,69 +226,6 @@
 					border-radius: 3rpx;
 				}
 			}
-
-			.info-item {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				position: relative;
-				padding: 40rpx 80rpx;
-				font-size: 30rpx;
-				border-top: 1rpx solid #e6e7eb;
-				background-color: #fff;
-
-				.name {
-					color: #80899c;
-					&::before {
-						content: "";
-						position: absolute;
-						top: 44%;
-						left: 50rpx;
-						display: inline-block;
-						width: 4rpx;
-						height: 20rpx;
-						border-left: 4rpx solid #b2b9c9;
-					}
-				}
-
-				.value {
-					font-size: 28rpx;
-					color: #b2b2b2;
-					position: relative;
-
-					&::after {
-						content: "";
-						display: inline-block;
-						width: 18rpx;
-						height: 18rpx;
-						top: 28%;
-						right: -40rpx;
-						border-top: 1rpx solid #e5e5e5;
-						border-right: 1rpx solid #e5e5e5;
-						transform: rotate(45deg);
-						position: absolute;
-					}
-				}
-				
-				.height{
-					color: #a69eff;
-				}
-			}
 		}
-
-	}
-
-
-
-	.qiun-charts {
-		width: 650rpx;
-		height: 500rpx;
-		background-color: #FFFFFF;
-	}
-
-	.charts {
-		width: 650rpx;
-		height: 500rpx;
-		background-color: #FFFFFF;
 	}
 </style>

@@ -12,6 +12,7 @@
 	}
 </script>
 
-<style>
+<style lang="less">
 	/*每个页面公共css */
+	@import './public/css/global.less';
 </style>

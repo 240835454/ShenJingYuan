@@ -76,7 +76,7 @@
 					<view class="imgList">
 						<template v-for="(item,index) in imgList">
 							<view class="image-item" :key='index'>
-								<image :src="item" mode=""  class='image' @click="previewImg" :data-src='item'>
+								<image :src="item" mode="aspectFit"  class='image' @click="previewImg" :data-src='item'>
 								</image>
 								<image src="../../static/icon_picture_del.png" mode="" class='clear-icon' @click='deleteImg(index)'></image>
 							</view>
@@ -164,7 +164,7 @@
 				uni.chooseImage({
 					count:3-this.imgList.length,
 					success:res=>{
-						this.imgList.push(res.tempFilePaths)
+						this.imgList.push(res.tempFilePaths[0])
 					},
 					fail: err=>{
 						console.log(err);
@@ -185,11 +185,6 @@
 </script>
 
 <style lang="less">
-	page {
-		height: 100%;
-		background-color: #f9fafd;
-	}
-
 	.content {
 		padding: 20rpx;
 		font-family: PingFang-SC-Medium;
@@ -336,28 +331,5 @@
 				}
 			}
 		}
-	}
-
-	radio {
-		border-radius: 50%;
-		width: 40rpx;
-		height: 40rpx;
-		border: 1rpx solid #a6b5d5;
-		font-size: 0;
-	}
-
-	radio .wx-radio-input {
-		border-radius: 50%;
-		width: 40rpx;
-		height: 40rpx;
-		border: none;
-	}
-
-	radio .wx-radio-input.wx-radio-input-checked::before {
-		content: "";
-		width: 30rpx;
-		height: 30rpx;
-		background-color: #a6b5d5;
-		border-radius: 50%;
 	}
 </style>

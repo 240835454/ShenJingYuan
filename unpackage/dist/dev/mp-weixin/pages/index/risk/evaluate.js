@@ -194,22 +194,37 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
     return {
-      value: 1,
-      year: '<=5年' };
+      gender: ['男性', '女性'],
+      isInfect: ['有', '无'],
+      bladder: ['正常或高', '低'],
+      course: ['<=5年', '>5年'],
+      incontinence: ['有', '无'],
+      genderIndex: -1,
+      isInfectIndex: -1,
+      bladderIndex: -1,
+      courseIndex: -1,
+      incontinenceIndex: -1 };
 
   },
   methods: {
     selectGender: function selectGender(e) {
-      console.log(e);
+      this.genderIndex = e;
+    },
+    selectInfect: function selectInfect(e) {
+      this.isInfectIndex = e;
+    },
+    selectBladder: function selectBladder(e) {
+      this.bladderIndex = e;
+    },
+    selectCourse: function selectCourse(e) {
+      this.courseIndex = e;
+    },
+    selectIncontinence: function selectIncontinence(e) {
+      this.incontinenceIndex = e;
     } } };exports.default = _default;
 
 /***/ }),

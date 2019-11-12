@@ -6,6 +6,13 @@
 				"navigationBarTitleText": "神经源性膀胱管理"
 			}
 		},
+		// 首页-基本信息采集
+		{
+			"path": "pages/index/info/info",
+			"style": {
+				"navigationBarTitleText": "基本信息采集"
+			}
+		},
 		// 首页-风险评估
 		{
 			"path": "pages/index/risk/risk",
