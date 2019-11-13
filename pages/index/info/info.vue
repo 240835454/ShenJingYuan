@@ -106,13 +106,13 @@
 				</view>
 			</view>
 		</view>
-		<view class="mask">
+		<view class="mask" v-show='isHide'>
 		</view>
-		<view class="hasComplete">
+		<view class="hasComplete" v-show='isHide'>
 			<image src="../../../static/illustration_collect_complete.png" mode="aspectFit"></image>
 			<text>基本信息采集完成!</text>
 			<view class="button-box">
-				<text class='button'>确定</text>
+				<text class='button' @click='reback'>确定</text>
 			</view>
 		</view>
 		<w-picker v-if="selectList.length!=0" mode="selector" @confirm="onConfirmAge" ref="selector" :selectList="selectList"
@@ -128,7 +128,7 @@
 				leftTopText: '年龄',
 				themeColor: '#a69eff',
 				age: '',
-				active: false,
+				active: false, 
 				selectList: [{
 					label: '22',
 					value: '22'
@@ -149,7 +149,8 @@
 				bladderIndex: -1,
 				courseIndex: -1,
 				incontinenceIndex: -1,
-				imgList: []
+				imgList: [],
+				isHide: false
 			}
 		},
 		methods: {
@@ -199,7 +200,12 @@
 				})
 			},
 			confirm() {
-
+				this.isHide = true;
+			},
+			reback(){
+				uni.navigateBack({  
+					delta: 1
+				})
 			}
 		},
 		components: {
@@ -425,18 +431,22 @@
 		background-color: #fff;
 
 		image {
+			display: block;
+			padding: 80rpx 0 20rpx;
 			width: 240rpx;
+			height: 240rpx;
 			margin: 0 auto;
 		}
 
 		text {
-			display: block;
+			display: inline-block;
 			font-size: 34rpx;
 			color: #a69eff;
 			letter-spacing: 1rpx;
 		}
 		
 		.button-box{
+			padding: 60rpx 0;
 			text-align: center;
 			.button {
 				display: inline-block;

@@ -234,6 +234,9 @@ var _default =
 
     },
     submit: function submit() {
+      this.isHide = false;
+      uni.showTabBar({});
+
       uni.navigateTo({
         url: 'info/info' });
 

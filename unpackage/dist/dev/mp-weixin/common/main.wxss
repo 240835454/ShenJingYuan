@@ -346,5 +346,6 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   background-color: #000;
   opacity: 0.3;
   z-index: 5;
+  overflow: hidden;
 }
 

@@ -200,16 +200,20 @@
   background-color: #fff;
 }
 .hasComplete image {
+  display: block;
+  padding: 80rpx 0 20rpx;
   width: 240rpx;
+  height: 240rpx;
   margin: 0 auto;
 }
 .hasComplete text {
-  display: block;
+  display: inline-block;
   font-size: 34rpx;
   color: #a69eff;
   letter-spacing: 1rpx;
 }
 .hasComplete .button-box {
+  padding: 60rpx 0;
   text-align: center;
 }
 .hasComplete .button-box .button {

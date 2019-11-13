@@ -5,48 +5,49 @@
   background-color: #fff;
   padding: 30rpx;
 }
-.box .content .title {
-  position: relative;
-  display: block;
-  font-size: 34rpx;
-  color: #333333;
-}
-.box .content .title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -10rpx;
-  width: 80rpx;
-  height: 6rpx;
-  background-color: #a69eff;
-  border-radius: 3rpx;
-}
 .box .item {
   color: #80899c;
   background-color: #fff;
-  padding: 0 20rpx;
 }
 .box .item .name {
-  display: block;
-  padding-left: 30rpx;
+  padding: 20rpx 0;
   font-size: 34rpx;
   position: relative;
 }
 .box .item .name::before {
   content: "";
   position: absolute;
-  top: 25rpx;
-  -webkit-transform: translate(0, -50%);
-      -ms-transform: translate(0, -50%);
-          transform: translate(0, -50%);
-  left: 10rpx;
-  width: 4rpx;
-  height: 20rpx;
-  border-left: 4rpx solid #b2b9c9;
+  left: 0;
+  bottom: 10rpx;
+  width: 80rpx;
+  height: 6rpx;
+  background-color: #a69eff;
+  border-radius: 3rpx;
 }
-.box .item picker {
-  font-size: 34rpx;
-  color: red;
+.box .item .name .add-icon {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  width: 40rpx;
+  height: 40rpx;
+}
+.box .item .name .add-icon::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 18rpx;
+  width: 39rpx;
+  height: 39rpx;
+  border-top: 3rpx solid #999999;
+}
+.box .item .name .add-icon::after {
+  content: '';
+  position: absolute;
+  right: 19rpx;
+  top: 0;
+  width: 39rpx;
+  height: 39rpx;
+  border-right: 3rpx solid #999999;
 }
 .box .item .water::after {
   content: " (\4E00\676F\5927\7EA6  250ml)";
@@ -55,6 +56,28 @@
 .box .item .surplus::after {
   content: "\FF08\6D4B\91CF\540E\586B\5199\FF0C\672A\6D4B\91CF\4E0D\586B\5199\FF09";
   font-size: 28rpx;
+}
+.box .item picker {
+  font-size: 34rpx;
+  color: red;
+}
+.box .item .result-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.box .item .result-box .short-input-box {
+  width: 280rpx;
+  height: 70rpx;
+  padding-left: 20rpx;
+  margin-top: 20rpx;
+  border: 2rpx solid #e0e4ee;
+  font-size: 30rpx;
 }
 .box .item .input-box {
   position: relative;
@@ -78,6 +101,13 @@
   border-color: #e0e5ee transparent transparent transparent;
   border-width: 12rpx;
 }
+.box .item .input-box-number {
+  height: 70rpx;
+  padding-left: 20rpx;
+  margin: 20rpx 0;
+  border: 2rpx solid #e0e4ee;
+  font-size: 30rpx;
+}
 .box .item .phcolor {
   font-size: 30rpx;
   color: #cccccc;
@@ -97,5 +127,56 @@
   background-blend-mode: normal,
 				normal;
   color: #fff;
+}
+.model-box {
+  position: fixed;
+  top: 200rpx;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 500rpx;
+  padding: 30rpx 40rpx 0;
+  background-color: #fff;
+  z-index: 10;
+  font-size: 30rpx;
+  text-align: center;
+}
+.model-box .surplus-input-box {
+  width: 400rpx;
+  border: 2rpx solid #e0e4ee;
+  margin: 20rpx auto;
+  position: relative;
+}
+.model-box .surplus-input-box::after {
+  content: 'ml';
+  position: absolute;
+  top: 5rpx;
+  right: 10rpx;
+}
+.model-box .surplus-button-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 30rpx 0;
+}
+.model-box .surplus-button-box .cancel {
+  display: block;
+  padding: 15rpx 80rpx;
+  border: solid 1px #80899c;
+}
+.model-box .surplus-button-box .confirm {
+  display: block;
+  padding: 15rpx 80rpx;
+  color: #fff;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#a69eff), to(#ccc7ff)), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+  background-image: -o-linear-gradient(bottom, #a69eff 0%, #ccc7ff 100%), -o-linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #a69eff 0%, #ccc7ff 100%), linear-gradient(#ffffff, #ffffff);
+  background-blend-mode: normal, normal;
 }
 

@@ -1,22 +1,30 @@
 <template>
 	<view class="page">
 		<view class="box">
-			<view class="content">
-				<view class="title">
-					<text>基本信息</text>
-				</view>
-			</view>
-			<view>
+
+			<view class='content'>
 				<view class="item">
-					<text class='name water'>饮水量</text>
-					<input type="text" :value="waterValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择饮水量"
-					 maxlength="5" @click="openOne" />
-					<text class='name'>排尿量</text>
-					<input type="text" :value="urinateValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择排尿量"
-					 maxlength="5" @click="openTwo" />
-					<text class='name surplus'>残留量</text>
-					<input type="text" :value="surplusValue" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择残留量"
-					 maxlength="5" @click="openThree" />
+					<view class='name water'>饮水量<text class='add-icon' @click='showWaterBox'></text></view>
+					<view class="result-box" v-if='hasWaterRecord'>
+						<input type="text" :value="currentTime" disabled class='short-input-box' />
+						<input type="text" :value="waterValue" disabled class='short-input-box' />
+					</view>
+					<input type="text" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择饮水量" maxlength="5"
+					 @click="openOne" v-if='!waterRecord' />
+					<view class='name'>排尿量 <text class='add-icon' @click='showUrinateBox'></text></view>
+					<view class="result-box" v-if='hasUrinateRecord'>
+						<input type="text" :value="currentTime" disabled class='short-input-box' />
+						<input type="text" :value="urinateValue" disabled class='short-input-box' />
+					</view>
+					<input type="text" value="" class='input-box' placeholder-class="phcolor" disabled placeholder="请选择排尿量" maxlength="5"
+					 @click="openTwo" v-if='!urinateRecord' />
+					<view class='name surplus'>残留量 <text class='add-icon' @click='showSurplusBox'></text></view>
+					<view class="result-box" v-if='hasSurplusRecord'>
+						<input type="text" :value="currentTime" disabled class='short-input-box' />
+						<input type="text" :value="surplusValue" disabled class='short-input-box' />
+					</view>
+					<input type="number" class='input-box-number' placeholder-class="phcolor" disabled placeholder="请选择残留量" maxlength="5"
+					 @click='openThree' v-if='!surplusRecord' />
 					<view class="footer">
 						<text class='button' @click='confirm'>
 							确定
@@ -25,12 +33,25 @@
 				</view>
 			</view>
 		</view>
+		<view v-if='isHide'>
+			<view class="mask" @click='closeModel'></view>
+			<view class="model-box">
+				<view class="">
+					输入残留量
+				</view>
+				<view class="surplus-box">
+					<input type="number" maxlength="5" @input='surplusInput' class='surplus-input-box' />
+				</view>
+				<view class="surplus-button-box">
+					<text class='cancel' @click='closeModel'>取消</text>
+					<text class='confirm' @click='onConfirmSurplus'>确定</text>
+				</view>
+			</view>
+		</view>
 		<w-picker v-if="selectList.length!=0" mode="selector" :defaultVal="['女']" @confirm="onConfirmWater" ref="selectorOne"
 		 :selectList="selectList" :themeColor='themeColor' :leftTopText='water'></w-picker>
 		<w-picker v-if="selectList.length!=0" mode="selector" :defaultVal="['女']" @confirm="onConfirmUrinate" ref="selectorTwo"
 		 :selectList="selectList" :themeColor='themeColor' :leftTopText='urinate'></w-picker>
-		<w-picker v-if="selectList.length!=0" mode="selector" :defaultVal="['女']" @confirm="onConfirmSurplus" ref="selectorThree"
-		 :selectList="selectList" :themeColor='themeColor' :leftTopText='surplus'></w-picker>
 	</view>
 </template>
 
@@ -60,7 +81,16 @@
 				surplus: '残留量',
 				waterValue: '',
 				urinateValue: '',
-				surplusValue: ''
+				surplusValue: '',
+				waterRecord: false,
+				urinateRecord: false,
+				surplusRecord: false,
+				hasWaterRecord: false,
+				hasUrinateRecord: false,
+				hasSurplusRecord: false,
+				currentTime: '',
+				inputSurplus: '',
+				isHide: false
 			}
 		},
 		methods: {
@@ -71,16 +101,95 @@
 				this.$refs.selectorTwo.show();
 			},
 			openThree() {
-				this.$refs.selectorThree.show();
+				this.isHide = true;
 			},
 			onConfirmWater(e) {
 				this.waterValue = e.result;
+				const date = new Date();
+				let Hours, Minutes = '';
+				if (date.getHours().toString().length < 2) {
+					Hours = '0' + date.getHours();
+				} else {
+					Hours = date.getHours();
+				}
+				if (date.getMinutes().toString().length < 2) {
+					Minutes = '0' + date.getMinutes();
+				} else {
+					Minutes = date.getMinutes();
+				}
+				this.currentTime = Hours + ':' + Minutes;
+				if (this.waterValue != '') {
+					this.hasWaterRecord = true;
+					this.waterRecord = true;
+				} else {
+					this.hasWaterRecord = false;
+				}
 			},
 			onConfirmUrinate(e) {
 				this.urinateValue = e.result;
+				const date = new Date();
+				let Hours, Minutes = '';
+				if (date.getHours().toString().length < 2) {
+					Hours = '0' + date.getHours();
+				} else {
+					Hours = date.getHours();
+				}
+				if (date.getMinutes().toString().length < 2) {
+					Minutes = '0' + date.getMinutes();
+				} else {
+					Minutes = date.getMinutes();
+				}
+				this.currentTime = Hours + ':' + Minutes;
+				if (this.urinateValue != '') {
+					this.hasUrinateRecord = true;
+					this.urinateRecord = true;
+				} else {
+					this.hasUrinateRecord = false;
+				}
 			},
 			onConfirmSurplus(e) {
-				this.surplusValue = e.result;
+				this.surplusValue = this.inputSurplus;
+				const date = new Date();
+				let Hours, Minutes = '';
+				if (date.getHours().toString().length < 2) {
+					Hours = '0' + date.getHours();
+				} else {
+					Hours = date.getHours();
+				}
+				if (date.getMinutes().toString().length < 2) {
+					Minutes = '0' + date.getMinutes();
+				} else {
+					Minutes = date.getMinutes();
+				}
+				this.currentTime = Hours + ':' + Minutes;
+				if (this.surplusValue != '') {
+					this.hasSurplusRecord = true;
+					this.surplusRecord = true;
+				} else {
+					this.hasSurplusRecord = false;
+				}
+				this.isHide = false;	
+			},
+			showWaterBox() {
+				if (this.hasWaterRecord == true) {
+					this.waterRecord = !this.waterRecord;
+				}
+			},
+			showUrinateBox() {
+				if (this.hasUrinateRecord == true) {
+					this.urinateRecord = !this.urinateRecord;
+				}
+			},
+			showSurplusBox() {
+				if (this.hasSurplusRecord == true) {
+					this.surplusRecord = !this.surplusRecord;
+				}
+			},
+			surplusInput(e) {
+				this.inputSurplus = e.detail.value;
+			},
+			closeModel() {
+				this.isHide = false;
 			},
 			confirm() {
 				uni.navigateBack({
@@ -101,52 +210,55 @@
 		.content {
 			background-color: #fff;
 			padding: 30rpx;
-
-			.title {
-				position: relative;
-				display: block;
-				font-size: 34rpx;
-				color: #333333;
-
-				&::before {
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom: -10rpx;
-					width: 80rpx;
-					height: 6rpx;
-					background-color: #a69eff;
-					border-radius: 3rpx;
-				}
-			}
 		}
 
 		.item {
 			color: #80899c;
 			background-color: #fff;
-			padding: 0 20rpx;
 
 			.name {
-				display: block;
-				padding-left: 30rpx;
+				padding: 20rpx 0;
 				font-size: 34rpx;
 				position: relative;
 
 				&::before {
 					content: "";
 					position: absolute;
-					top: 25rpx;
-					transform: translate(0, -50%);
-					left: 10rpx;
-					width: 4rpx;
-					height: 20rpx;
-					border-left: 4rpx solid #b2b9c9;
+					left: 0;
+					bottom: 10rpx;
+					width: 80rpx;
+					height: 6rpx;
+					background-color: #a69eff;
+					border-radius: 3rpx;
 				}
-			}
 
-			picker {
-				font-size: 34rpx;
-				color: red;
+				.add-icon {
+					display: inline-block;
+					position: absolute;
+					right: 0;
+					width: 40rpx;
+					height: 40rpx;
+
+					&::before {
+						content: '';
+						position: absolute;
+						right: 0;
+						top: 18rpx;
+						width: 39rpx;
+						height: 39rpx;
+						border-top: 3rpx solid #999999;
+					}
+
+					&::after {
+						content: '';
+						position: absolute;
+						right: 19rpx;
+						top: 0;
+						width: 39rpx;
+						height: 39rpx;
+						border-right: 3rpx solid #999999;
+					}
+				}
 			}
 
 			.water {
@@ -162,6 +274,26 @@
 					font-size: 28rpx;
 				}
 			}
+
+			picker {
+				font-size: 34rpx;
+				color: red;
+			}
+
+			.result-box {
+				display: flex;
+				justify-content: space-between;
+
+				.short-input-box {
+					width: 280rpx;
+					height: 70rpx;
+					padding-left: 20rpx;
+					margin-top: 20rpx;
+					border: 2rpx solid #e0e4ee;
+					font-size: 30rpx;
+				}
+			}
+
 
 			.input-box {
 				position: relative;
@@ -183,6 +315,14 @@
 					border-color: #e0e5ee transparent transparent transparent;
 					border-width: 12rpx;
 				}
+			}
+
+			.input-box-number {
+				height: 70rpx;
+				padding-left: 20rpx;
+				margin: 20rpx 0;
+				border: 2rpx solid #e0e4ee;
+				font-size: 30rpx;
 			}
 
 			.phcolor {
@@ -208,6 +348,57 @@
 				background-blend-mode: normal,
 					normal;
 				color: #fff;
+			}
+		}
+	}
+
+	.model-box {
+		position: fixed;
+		top: 200rpx;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 500rpx;
+		padding: 30rpx 40rpx 0;
+		background-color: #fff;
+		z-index: 10;
+		font-size: 30rpx;
+		text-align: center;
+
+		.surplus-input-box {
+			width: 400rpx;
+			border: 2rpx solid #e0e4ee;
+			margin: 20rpx auto;
+			position: relative;
+
+			&::after {
+				content: 'ml';
+				position: absolute;
+				top: 5rpx;
+				right: 10rpx;
+			}
+		}
+
+		.surplus-button-box {
+			display: flex;
+			justify-content: space-between;
+			padding: 30rpx 0;
+
+			.cancel {
+				display: block;
+				padding: 15rpx 80rpx;
+				border: solid 1px #80899c;
+			}
+
+			.confirm {
+				display: block;
+				padding: 15rpx 80rpx;
+				color: #fff;
+				background-image: linear-gradient(0deg,
+					#a69eff 0%,
+					#ccc7ff 100%),
+					linear-gradient(#ffffff,
+					#ffffff);
+				background-blend-mode: normal, normal;
 			}
 		}
 	}
